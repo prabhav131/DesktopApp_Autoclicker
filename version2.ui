@@ -114,7 +114,7 @@ border: none; }
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/Hambuger.png</normaloff>images/Hambuger.png</iconset>
+          <normaloff>../../.designer/backup/images/Hambuger.png</normaloff>../../.designer/backup/images/Hambuger.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -199,7 +199,7 @@ border-color:  rgb(239, 229, 220);
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/LogOut.png</normaloff>images/LogOut.png</iconset>
+          <normaloff>../../.designer/backup/images/LogOut.png</normaloff>../../.designer/backup/images/LogOut.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -238,7 +238,7 @@ border-color:  rgb(239, 229, 220);
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/liliajohn.png</normaloff>images/liliajohn.png</iconset>
+          <normaloff>../../.designer/backup/images/liliajohn.png</normaloff>../../.designer/backup/images/liliajohn.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -519,7 +519,7 @@ background-color: #3A5A40;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/Run.png</normaloff>images/Run.png</iconset>
+           <normaloff>../../.designer/backup/images/Run.png</normaloff>../../.designer/backup/images/Run.png</iconset>
          </property>
         </widget>
         <widget class="QFrame" name="frame">
@@ -1340,6 +1340,24 @@ border: 1px solid;
 border-color: rgb(218, 218, 218)</string>
           </property>
          </widget>
+         <widget class="QPushButton" name="snipping_push_button">
+          <property name="geometry">
+           <rect>
+            <x>180</x>
+            <y>23</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Snip Area</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_6">
          <property name="geometry">
@@ -1580,7 +1598,7 @@ border: none; }</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/icons8-upload-96.png</normaloff>images/icons8-upload-96.png</iconset>
+           <normaloff>../../.designer/backup/images/icons8-upload-96.png</normaloff>../../.designer/backup/images/icons8-upload-96.png</iconset>
          </property>
         </widget>
         <widget class="QPushButton" name="record_play_button">
@@ -1617,7 +1635,7 @@ background-color: #3A5A40;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/Run.png</normaloff>images/Run.png</iconset>
+           <normaloff>../../.designer/backup/images/Run.png</normaloff>../../.designer/backup/images/Run.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1657,7 +1675,7 @@ border: none; }</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/icons8-ui-64.png</normaloff>images/icons8-ui-64.png</iconset>
+           <normaloff>../../.designer/backup/images/icons8-ui-64.png</normaloff>../../.designer/backup/images/icons8-ui-64.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1740,7 +1758,7 @@ background-color: black;
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/red-circle.png</normaloff>images/red-circle.png</iconset>
+           <normaloff>../../.designer/backup/images/red-circle.png</normaloff>../../.designer/backup/images/red-circle.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1962,7 +1980,7 @@ border: none;</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/empty_checkbox.png</normaloff>images/empty_checkbox.png</iconset>
+           <normaloff>../../.designer/backup/images/empty_checkbox.png</normaloff>../../.designer/backup/images/empty_checkbox.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -1993,7 +2011,7 @@ border: none;</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/empty_checkbox.png</normaloff>images/empty_checkbox.png</iconset>
+           <normaloff>../../.designer/backup/images/empty_checkbox.png</normaloff>../../.designer/backup/images/empty_checkbox.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -2194,7 +2212,7 @@ border-radius: 10px;</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>images/empty_checkbox.png</normaloff>images/empty_checkbox.png</iconset>
+           <normaloff>../../.designer/backup/images/empty_checkbox.png</normaloff>../../.designer/backup/images/empty_checkbox.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -2244,12 +2262,12 @@ border-radius: 10px;</string>
         </widget>
         <zorder>frame_6</zorder>
         <zorder>label_7</zorder>
-        <zorder>hide_while_click_checkbox2</zorder>
         <zorder>hide_to_tray_checkbox2</zorder>
         <zorder>hide_while_click_checkbox</zorder>
         <zorder>hide_to_tray_checkbox</zorder>
         <zorder>mouse_location_checkbox</zorder>
         <zorder>mouse_location_checkbox2</zorder>
+        <zorder>hide_while_click_checkbox2</zorder>
        </widget>
        <widget class="QLabel" name="foot_note_label">
         <property name="geometry">
@@ -2431,7 +2449,7 @@ border: none;
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>images/icon_1.png</normaloff>images/icon_1.png</iconset>
+             <normaloff>../../.designer/backup/images/icon_1.png</normaloff>../../.designer/backup/images/icon_1.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -2517,7 +2535,7 @@ border: none;
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>images/icon_1.png</normaloff>images/icon_1.png</iconset>
+             <normaloff>../../.designer/backup/images/icon_1.png</normaloff>../../.designer/backup/images/icon_1.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -2624,7 +2642,7 @@ border: none;
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>images/icon_1.png</normaloff>images/icon_1.png</iconset>
+             <normaloff>../../.designer/backup/images/icon_1.png</normaloff>../../.designer/backup/images/icon_1.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -2731,7 +2749,7 @@ border: none;
            </property>
            <property name="icon">
             <iconset>
-             <normaloff>images/icon_1.png</normaloff>images/icon_1.png</iconset>
+             <normaloff>../../.designer/backup/images/icon_1.png</normaloff>../../.designer/backup/images/icon_1.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -3136,9 +3154,9 @@ background-color: rgb(242,242,242);
        <zorder>navigation_frame</zorder>
        <zorder>foot_note_label</zorder>
        <zorder>live_mouse_label</zorder>
-       <zorder>view_settings_frame</zorder>
-       <zorder>hotkey_settings_frame</zorder>
        <zorder>record_frame</zorder>
+       <zorder>hotkey_settings_frame</zorder>
+       <zorder>view_settings_frame</zorder>
        <zorder>home_frame</zorder>
       </widget>
       <widget class="QFrame" name="left_frame">
@@ -3220,7 +3238,7 @@ border: none; }</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/home.png</normaloff>images/home.png</iconset>
+          <normaloff>../../.designer/backup/images/home.png</normaloff>../../.designer/backup/images/home.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3265,7 +3283,7 @@ color:  rgb(218, 218, 218)}</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/Record.png</normaloff>images/Record.png</iconset>
+          <normaloff>../../.designer/backup/images/Record.png</normaloff>../../.designer/backup/images/Record.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3310,7 +3328,7 @@ color:  rgb(218, 218, 218)}</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/Settings.png</normaloff>images/Settings.png</iconset>
+          <normaloff>../../.designer/backup/images/Settings.png</normaloff>../../.designer/backup/images/Settings.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3355,7 +3373,7 @@ color:  rgb(218, 218, 218)}</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/Mode.png</normaloff>images/Mode.png</iconset>
+          <normaloff>../../.designer/backup/images/Mode.png</normaloff>../../.designer/backup/images/Mode.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3403,7 +3421,7 @@ color:  rgb(218, 218, 218)}</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/HotkeyBlack.png</normaloff>images/HotkeyBlack.png</iconset>
+          <normaloff>../../.designer/backup/images/HotkeyBlack.png</normaloff>../../.designer/backup/images/HotkeyBlack.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -3429,7 +3447,7 @@ color:  rgb(218, 218, 218)}</string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>images/app_logo.png</normaloff>images/app_logo.png</iconset>
+          <normaloff>../../.designer/backup/images/app_logo.png</normaloff>../../.designer/backup/images/app_logo.png</iconset>
         </property>
         <property name="iconSize">
          <size>

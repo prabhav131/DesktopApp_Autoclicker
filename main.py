@@ -2,8 +2,8 @@ import csv
 import pandas as pd
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
-    QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
-    QCheckBox, QDialog, QListWidget, QToolButton, QScrollBar
+    QLineEdit, QSpinBox, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
+    QCheckBox, QDialog, QListWidget, QToolButton, QScrollBar, QSplashScreen
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import Qt
@@ -275,8 +275,7 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
     UIWindow.after_home_thread()
 
 # starts the dragging actions set in home screen
-def home_random_clicking(mouse_type, click_type, click_repeat, location_x, location_y,
-                         wait_interval, area_width, area_height):
+def home_random_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval, area_width, area_height):
     stop_home_event.clear()
     end_x = location_x + area_width
     end_y = location_y + area_height
@@ -562,6 +561,13 @@ class UI(QMainWindow):
         self.integer = QIntValidator()
         self.main_frame = self.findChild(QFrame, "main_frame")
         self.home_frame = self.findChild(QFrame, "home_frame")
+
+        self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
+        self.snipping_push_button.clicked.connect(self.screenCapture)
+
+        # Dim Splashscreen object, also responsible for tracking mouse and capturing screenshot.
+        self.tmpDimScreen = CaptureScreen()
+
         self.fixed_location_radio_button = self.findChild(QRadioButton, "fixed_location_radio_button")
         self.current_location_radio_button = self.findChild(QRadioButton, "current_location_radio_button")
         self.fixed_location_x = self.findChild(QLineEdit, "fixed_location_x")
@@ -578,6 +584,8 @@ class UI(QMainWindow):
         self.x_right_label = self.findChild(QLabel, "x_right_label")
         self.y_left_label = self.findChild(QLabel, "y_left_label")
         self.y_right_label = self.findChild(QLabel, "y_right_label")
+        self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
+
         self.click_options_groupbox = self.findChild(QGroupBox, "click_options_groupbox")
         self.click_type_combobox = self.findChild(QComboBox, "click_type_combobox")
         self.click_type_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
@@ -1032,6 +1040,10 @@ class UI(QMainWindow):
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
+    def screenCapture(self):
+        """Show the dim Splashscreen"""
+        self.tmpDimScreen.show()
+
     # triggers show tool checkbox
     def trigger_show_tool(self):
         if self.show_after_complete_checkbox.isChecked():
@@ -1269,7 +1281,7 @@ class UI(QMainWindow):
         self.scrollAreaWidgetContents.setStyleSheet("border: none;"
                                                     "background-color: #10131b")
 
-        self.scroll_bar.setStyleSheet("""QScrollBar:vertical {              
+        self.scroll_bar.setStyleSheet("""QScrollBar:vertical {
                                         border-color: #10131b;
                                         border-width: 1px;
                                         border-style: solid;
@@ -1550,7 +1562,7 @@ class UI(QMainWindow):
                                               "border-radius: 5px;}")
         self.scrollAreaWidgetContents.setStyleSheet("border: none;"
                                                     "background-color: rgb(239, 229, 220)")
-        self.scroll_bar.setStyleSheet("""QScrollBar:vertical {              
+        self.scroll_bar.setStyleSheet("""QScrollBar:vertical {
                                         border-color: rgb(239, 229, 220);
                                         border-width: 1px;
                                         border-style: solid;
@@ -2135,7 +2147,7 @@ class UI(QMainWindow):
         self.load_list.setGeometry(10, 10, 380, 340)
         scroll_bar = self.load_list.findChildren(QWidget)[4]
         if self.dark_theme_activated:
-            scroll_bar.setStyleSheet("""QScrollBar:vertical {              
+            scroll_bar.setStyleSheet("""QScrollBar:vertical {
                                                        border-color: #10131b;
                                                        border-width: 1px;
                                                        border-style: solid;
@@ -2167,7 +2179,7 @@ class UI(QMainWindow):
                                                    QScrollBar::down-arrow:vertical {
                                                      background-color: #10131b;}""")
         else:
-            scroll_bar.setStyleSheet("""QScrollBar:vertical {              
+            scroll_bar.setStyleSheet("""QScrollBar:vertical {
                                                border-color: rgb(239, 229, 220);
                                                border-width: 1px;
                                                border-style: solid;
@@ -3783,6 +3795,59 @@ class UI(QMainWindow):
         self.showNormal()
         self.record_play_button.setEnabled(True)
 
+class CaptureScreen(QtWidgets.QSplashScreen):
+    """QSplashScreen, that track mouse event for capturing screenshot."""
+    def __init__(self):
+
+        super(CaptureScreen, self).__init__()
+
+        # Points on screen marking the origin and end of regtangle area.
+        self.origin = QtCore.QPoint(0,0)
+        self.end = QtCore.QPoint(0,0)
+
+        # A drawing widget for representing bounding area
+        self.rubberBand = QtWidgets.QRubberBand(QtWidgets.QRubberBand.Rectangle, self)
+
+        self.createDimScreenEffect()
+
+    def createDimScreenEffect(self):
+        """Fill splashScreen with black color and reduce the widget opacity to create dim screen effect"""
+
+        # Get the screen geometry of the main desktop screen for size ref
+        primScreenGeo = QtGui.QGuiApplication.primaryScreen().geometry()
+
+        screenPixMap = QtGui.QPixmap(primScreenGeo.width(), primScreenGeo.height())
+        screenPixMap.fill(QtGui.QColor(0,0,0))
+
+        self.setPixmap(screenPixMap)
+
+        self.setWindowState(QtCore.Qt.WindowFullScreen)
+        self.setWindowOpacity(0.4)
+
+    def mousePressEvent(self, event):
+        """Show rectangle at mouse position when left-clicked"""
+        if event.button() == QtCore.Qt.LeftButton:
+            self.origin = event.pos()
+            print("origin_x: " + str(self.origin.x()))
+            print("origin_y: " + str(self.origin.y()))
+            self.rubberBand.setGeometry(QtCore.QRect(self.origin, QtCore.QSize()))
+            self.rubberBand.show()
+
+    def mouseMoveEvent(self, event):
+        """Resize rectangle as we move mouse, after left-clicked."""
+        self.rubberBand.setGeometry(QtCore.QRect(self.origin, event.pos()).normalized())
+
+    def mouseReleaseEvent(self, event):
+        """Upon mouse released, ask the main desktop's QScreen to capture screen on defined area."""
+        if event.button() == QtCore.Qt.LeftButton:
+            self.end = event.pos()
+            print("end_x: " + str(self.end.x()))
+            print("end_y: " + str(self.end.y()))
+            self.rubberBand.hide()
+            self.hide()
+            primaryScreen = QtGui.QGuiApplication.primaryScreen()
+            grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
+            grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
 
 # below 7 lines gets the latest preferences of the user from the database
 conn = sqlite3.connect('autoclicker.db')
