@@ -3833,6 +3833,15 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.rubberBand.setGeometry(QtCore.QRect(self.origin, QtCore.QSize()))
             self.rubberBand.show()
 
+    def getOriginal_x(self):
+        return self.origin_x()
+    def getOriginal_y(self):
+        return self.origin_y()
+    def getFinal_x(self):
+        return self.end_x()
+    def getFinal_y(self):
+        return self.end_y()
+
     def mouseMoveEvent(self, event):
         """Resize rectangle as we move mouse, after left-clicked."""
         self.rubberBand.setGeometry(QtCore.QRect(self.origin, event.pos()).normalized())
@@ -3847,7 +3856,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.hide()
             primaryScreen = QtGui.QGuiApplication.primaryScreen()
             grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
-            grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
+            # grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
 
 # below 7 lines gets the latest preferences of the user from the database
 conn = sqlite3.connect('autoclicker.db')
