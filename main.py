@@ -562,6 +562,7 @@ class UI(QMainWindow):
         self.main_frame = self.findChild(QFrame, "main_frame")
         self.home_frame = self.findChild(QFrame, "home_frame")
 
+        self.flag = 0
         self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
         self.snipping_push_button.clicked.connect(self.screenCapture)
 
@@ -584,7 +585,6 @@ class UI(QMainWindow):
         self.x_right_label = self.findChild(QLabel, "x_right_label")
         self.y_left_label = self.findChild(QLabel, "y_left_label")
         self.y_right_label = self.findChild(QLabel, "y_right_label")
-        self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
 
         self.click_options_groupbox = self.findChild(QGroupBox, "click_options_groupbox")
         self.click_type_combobox = self.findChild(QComboBox, "click_type_combobox")
@@ -1039,9 +1039,13 @@ class UI(QMainWindow):
         faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
+        
+
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
+        self.showMinimized()
+        self.flag = 1
         self.tmpDimScreen.show()
 
     # triggers show tool checkbox
@@ -2368,6 +2372,7 @@ class UI(QMainWindow):
                 self.select_area_y.setText('')
                 self.select_area_width.setText('')
                 self.select_area_height.setText('')
+            elif self.flag == 1    
             else:
                 self.select_area_radio_button.setChecked(True)
                 self.select_area_x.setText(str(fetched_data_home[5]))
