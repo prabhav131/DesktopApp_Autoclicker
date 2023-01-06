@@ -1343,9 +1343,9 @@ border-color: rgb(218, 218, 218)</string>
          <widget class="QPushButton" name="snipping_push_button">
           <property name="geometry">
            <rect>
-            <x>180</x>
-            <y>23</y>
-            <width>81</width>
+            <x>295</x>
+            <y>21</y>
+            <width>91</width>
             <height>21</height>
            </rect>
           </property>
@@ -1354,8 +1354,12 @@ border-color: rgb(218, 218, 218)</string>
             <pointsize>9</pointsize>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background: transparent;
+border: none;</string>
+          </property>
           <property name="text">
-           <string>Snip Area</string>
+           <string/>
           </property>
          </widget>
         </widget>

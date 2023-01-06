@@ -3875,7 +3875,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
             # grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
             UIWindow = UI()
-            UIWindow.show()
+
             self.original_x = self.getOriginal_x()
             self.original_y = self.getOriginal_y()
             self.final_x = self.getFinal_x()
@@ -3888,6 +3888,9 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             UIWindow.select_area_y.setText(str(self.snip_y))
             UIWindow.select_area_width.setText(str(self.snipping_width))
             UIWindow.select_area_height.setText(str(self.snipping_height))
+            UIWindow.select_area_radio_button.setChecked(True)
+            UIWindow.show()
+
 
 # below 7 lines gets the latest preferences of the user from the database
 conn = sqlite3.connect('autoclicker.db')
