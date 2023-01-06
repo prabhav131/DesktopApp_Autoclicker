@@ -554,6 +554,7 @@ class UI(QMainWindow):
         uic.loadUi("version2.ui", self)
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
+        self.flag = 0
         self.setFixedWidth(662)
         self.setFixedHeight(533)
         self.central_widget = self.findChild(QWidget, "central_widget")
@@ -567,7 +568,7 @@ class UI(QMainWindow):
 
         # Dim Splashscreen object, also responsible for tracking mouse and capturing screenshot.
         self.tmpDimScreen = CaptureScreen()
-
+        self.snipping_radio_button = self.findChild(QRadioButton, "snipping_radio_button")
         self.fixed_location_radio_button = self.findChild(QRadioButton, "fixed_location_radio_button")
         self.current_location_radio_button = self.findChild(QRadioButton, "current_location_radio_button")
         self.fixed_location_x = self.findChild(QLineEdit, "fixed_location_x")
@@ -584,7 +585,6 @@ class UI(QMainWindow):
         self.x_right_label = self.findChild(QLabel, "x_right_label")
         self.y_left_label = self.findChild(QLabel, "y_left_label")
         self.y_right_label = self.findChild(QLabel, "y_right_label")
-        self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
 
         self.click_options_groupbox = self.findChild(QGroupBox, "click_options_groupbox")
         self.click_type_combobox = self.findChild(QComboBox, "click_type_combobox")
@@ -1042,7 +1042,18 @@ class UI(QMainWindow):
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
+        self.hide()
+
         self.tmpDimScreen.show()
+        self.original_x = self.tmpDimScreen.getOriginal_x()
+        self.original_y = self.tmpDimScreen.getOriginal_y()
+        self.final_x = self.tmpDimScreen.getFinal_x()
+        self.final_y = self.tmpDimScreen.getFinal_y()
+        self.snipping_width = abs(self.final_x - self.original_x)
+        self.snipping_height = abs(self.final_y - self.original_y)
+        self.snip_x = min(self.final_x,self.original_x)
+        self.snip_y = min(self.final_y,self.original_y)
+        self.flag = 1
 
     # triggers show tool checkbox
     def trigger_show_tool(self):
@@ -3411,11 +3422,16 @@ class UI(QMainWindow):
             area_height = 0
         else:
             area_height = int(self.select_area_height.text())
+        if self.flag == 1:
+            area_height = int(self.snipping_height)
+            area_width = int(self.snipping_width)
         self.foot_note_label.setText('')
         if self.fixed_location_radio_button.isChecked():
             radio_button = 1
         elif self.current_location_radio_button.isChecked():
             radio_button = 2
+        elif self.flag == 1:
+            radio_button = 4
         else:
             radio_button = 3
         self.showMinimized()
@@ -3799,11 +3815,13 @@ class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
     def __init__(self):
 
+
         super(CaptureScreen, self).__init__()
 
         # Points on screen marking the origin and end of regtangle area.
         self.origin = QtCore.QPoint(0,0)
         self.end = QtCore.QPoint(0,0)
+        self.signal = 0
 
         # A drawing widget for representing bounding area
         self.rubberBand = QtWidgets.QRubberBand(QtWidgets.QRubberBand.Rectangle, self)
@@ -3834,17 +3852,20 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.rubberBand.show()
 
     def getOriginal_x(self):
-        return self.origin_x()
+        return self.origin.x()
     def getOriginal_y(self):
-        return self.origin_y()
+        return self.origin.y()
     def getFinal_x(self):
-        return self.end_x()
+        return self.end.x()
     def getFinal_y(self):
-        return self.end_y()
+        return self.end.y()
 
     def mouseMoveEvent(self, event):
         """Resize rectangle as we move mouse, after left-clicked."""
         self.rubberBand.setGeometry(QtCore.QRect(self.origin, event.pos()).normalized())
+
+    def indicator(self):
+        return self.signal
 
     def mouseReleaseEvent(self, event):
         """Upon mouse released, ask the main desktop's QScreen to capture screen on defined area."""
@@ -3854,9 +3875,24 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             print("end_y: " + str(self.end.y()))
             self.rubberBand.hide()
             self.hide()
+            self.signal = 1
             primaryScreen = QtGui.QGuiApplication.primaryScreen()
             grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
             # grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
+            UIWindow = UI()
+            UIWindow.show()
+            self.original_x = self.getOriginal_x()
+            self.original_y = self.getOriginal_y()
+            self.final_x = self.getFinal_x()
+            self.final_y = self.getFinal_y()
+            self.snipping_width = abs(self.final_x - self.original_x)
+            self.snipping_height = abs(self.final_y - self.original_y)
+            self.snip_x = min(self.final_x,self.original_x)
+            self.snip_y = min(self.final_y,self.original_y)
+            UIWindow.select_area_x.setText(str(self.snip_x))
+            UIWindow.select_area_y.setText(str(self.snip_y))
+            UIWindow.select_area_width.setText(str(self.snipping_width))
+            UIWindow.select_area_height.setText(str(self.snipping_height))
 
 # below 7 lines gets the latest preferences of the user from the database
 conn = sqlite3.connect('autoclicker.db')
