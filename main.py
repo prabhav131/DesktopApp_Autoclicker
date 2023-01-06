@@ -554,7 +554,6 @@ class UI(QMainWindow):
         uic.loadUi("version2.ui", self)
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
-        self.flag = 0
         self.setFixedWidth(662)
         self.setFixedHeight(533)
         self.central_widget = self.findChild(QWidget, "central_widget")
@@ -1040,6 +1039,8 @@ class UI(QMainWindow):
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
+
+
     def screenCapture(self):
         """Show the dim Splashscreen"""
         self.hide()
@@ -1053,7 +1054,6 @@ class UI(QMainWindow):
         self.snipping_height = abs(self.final_y - self.original_y)
         self.snip_x = min(self.final_x,self.original_x)
         self.snip_y = min(self.final_y,self.original_y)
-        self.flag = 1
 
     # triggers show tool checkbox
     def trigger_show_tool(self):
@@ -3422,16 +3422,11 @@ class UI(QMainWindow):
             area_height = 0
         else:
             area_height = int(self.select_area_height.text())
-        if self.flag == 1:
-            area_height = int(self.snipping_height)
-            area_width = int(self.snipping_width)
         self.foot_note_label.setText('')
         if self.fixed_location_radio_button.isChecked():
             radio_button = 1
         elif self.current_location_radio_button.isChecked():
             radio_button = 2
-        elif self.flag == 1:
-            radio_button = 4
         else:
             radio_button = 3
         self.showMinimized()
