@@ -1,5 +1,6 @@
 import csv
 import pandas as pd
+import device_id
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
     QLineEdit, QSpinBox, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
@@ -552,6 +553,8 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
+        self.login_signup_button.clicked.connect(self.gotologin_signup)
+        self.initial_user_screen = login_signup_screen()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
@@ -1039,7 +1042,10 @@ class UI(QMainWindow):
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
-
+    def gotologin_signup(self):
+        # initial_screen = login_signup_screen()
+        self.hide()
+        self.initial_user_screen.show()
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
@@ -3806,6 +3812,83 @@ class UI(QMainWindow):
         self.showNormal()
         self.record_play_button.setEnabled(True)
 
+class login_signup_screen(QMainWindow):
+    def __init__(self):
+        super(login_signup_screen, self).__init__()
+        uic.loadUi("login_signup.ui", self)
+        self.login_Button.clicked.connect(self.gotologin)
+        self.login_user_screen = login_screen()
+
+        self.signup_Button.clicked.connect(self.gotosignup)
+        self.signup_user_screen = signup_screen()
+
+    def gotologin(self):
+        self.hide()
+        self.login_user_screen.show()
+
+    def gotosignup(self):
+        self.hide()
+        self.signup_user_screen.show()
+
+class login_screen(QMainWindow):
+    def __init__(self):
+        super(login_screen, self).__init__()
+        uic.loadUi("login_screen.ui", self)
+        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.login_Button.clicked.connect(self.loginfunction)
+
+    def loginfunction(self):
+        username = self.username_login.text()
+        password = self.password_login.text()
+        unique_id = str(device_id.get_windows_uuid())
+        uic.loadUi("login_screen.ui", self)
+        if len(username)==0 or len(password)==0:
+            self.message.setText("Please input all fields.")
+
+        else:
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+            query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
+            cur.execute(query)
+
+            result_tuple = cur.fetchone()
+            # print(result_tuple)
+            result_pass = result_tuple[0]
+            result_device_id = result_tuple[1]
+            if result_pass == password and result_device_id == unique_id:
+                self.message.setText("Successfully logged in!")
+            else:
+                self.message.setText("Invalid credentials!")
+            conn.close()
+
+
+class signup_screen(QMainWindow):
+    def __init__(self):
+        super(signup_screen, self).__init__()
+        uic.loadUi("signup_screen.ui", self)
+        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.signup_Button.clicked.connect(self.signupfunction)
+
+
+    def signupfunction(self):
+        username = self.username_signup.text()
+        password = self.password_signup.text()
+        unique_id = str(device_id.get_windows_uuid())
+        whether_subscribed = 0
+        uic.loadUi("signup_screen.ui", self)
+        if len(username)==0 or len(password)==0:
+            self.message.setText("Please fill in all inputs.")
+
+        else:
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+            user_info = [username, password, whether_subscribed,  unique_id]
+            cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
+
+            conn.commit()
+            conn.close()
+            self.message.setText("Account Created!")
+
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
     def __init__(self):
@@ -3902,6 +3985,8 @@ conn.close()
 show_tool_after, hide_system_tray, disable_cursor_location, dark_theme, home_start_hotkey, record_start_hotkey, \
 record_recording_hotkey, mouse_location_hotkey, new_username = app_settings
 toaster = ToastNotifier()
+# fetch the hardware UUID
+# print(device_id.get_windows_uuid())
 # ---------
 stop_home_event = threading.Event()
 stop_record_event = threading.Event()

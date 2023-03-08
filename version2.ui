@@ -338,6 +338,19 @@ border: none; }</string>
          <string>Stranger</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="login_signup_button">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>30</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>login/signup</string>
+        </property>
+       </widget>
        <zorder>navigate_button</zorder>
        <zorder>complete_combobox</zorder>
        <zorder>profile_button</zorder>
@@ -345,6 +358,7 @@ border: none; }</string>
        <zorder>label_10</zorder>
        <zorder>lineEdit</zorder>
        <zorder>log_out_button</zorder>
+       <zorder>login_signup_button</zorder>
       </widget>
       <widget class="QFrame" name="main_frame">
        <property name="geometry">
