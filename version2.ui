@@ -3169,6 +3169,40 @@ background-color: rgb(242,242,242);
          </property>
         </widget>
        </widget>
+       <widget class="QFrame" name="subscription_check_frame">
+        <property name="geometry">
+         <rect>
+          <x>72</x>
+          <y>0</y>
+          <width>570</width>
+          <height>441</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QFrame" name="access_denied_frame">
+        <property name="geometry">
+         <rect>
+          <x>72</x>
+          <y>0</y>
+          <width>570</width>
+          <height>441</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <zorder>subscription_check_frame</zorder>
+       <zorder>access_denied_frame</zorder>
        <zorder>navigation_frame</zorder>
        <zorder>foot_note_label</zorder>
        <zorder>live_mouse_label</zorder>

@@ -1684,6 +1684,26 @@ class UI(QMainWindow):
         self.hotkey_settings_frame.hide()
         self.foot_note_label.setText('')
 
+    # gets subscription check screen in front (only if the user is not logged
+    # in, prompt user to login if they try to access a premium feature
+    # and havent logged in yet)
+    def get_subscription_check_screen(self):
+        self.subscription_check_frame.show()
+        # self.record_frame.hide()
+        # self.view_settings_frame.hide()
+        # self.hotkey_settings_frame.hide()
+        # self.foot_note_label.setText('')
+
+    # gets access denied screen in front (only if the user is logged
+    # in, prompt user to pay if they try to access a premium feature
+    # and havent subscribed to it yet)
+    def get_access_denied_screen(self):
+        self.access_denied_frame.show()
+        # self.record_frame.hide()
+        # self.view_settings_frame.hide()
+        # self.hotkey_settings_frame.hide()
+        # self.foot_note_label.setText('')
+
     # gets record screen in front
     def get_record_screen(self):
         self.home_frame.hide()
@@ -3821,6 +3841,12 @@ class login_signup_screen(QMainWindow):
 
         self.signup_Button.clicked.connect(self.gotosignup)
         self.signup_user_screen = signup_screen()
+        self.gotohome.clicked.connect(self.return_to_home)
+
+    def return_to_home(self):
+        self.hide()
+        UIWindow = UI()
+        UIWindow.show()
 
     def gotologin(self):
         self.hide()
@@ -3835,9 +3861,16 @@ class login_screen(QMainWindow):
         super(login_screen, self).__init__()
         uic.loadUi("login_screen.ui", self)
         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.login_Button.clicked.connect(self.loginfunction)
+        self.login_Butt.clicked.connect(self.loginfunction)
+        self.logingotohome.clicked.connect(self.return_to_home)
+
+    def return_to_home(self):
+        self.hide()
+        UIWindow = UI()
+        UIWindow.show()
 
     def loginfunction(self):
+
         username = self.username_login.text()
         password = self.password_login.text()
         unique_id = str(device_id.get_windows_uuid())
@@ -3853,24 +3886,36 @@ class login_screen(QMainWindow):
 
             result_tuple = cur.fetchone()
             # print(result_tuple)
-            result_pass = result_tuple[0]
-            result_device_id = result_tuple[1]
-            if result_pass == password and result_device_id == unique_id:
-                self.message.setText("Successfully logged in!")
+            if result_tuple is None:
+                self.message.setText("Invalid Username!")
             else:
-                self.message.setText("Invalid credentials!")
-            conn.close()
-
+                result_pass = result_tuple[0]
+                result_device_id = result_tuple[1]
+                if result_pass == password and result_device_id == unique_id:
+                    self.message.setText("Successfully logged in!")
+                else:
+                    self.message.setText("Invalid credentials!")
+            # conn.close()
+        self.login_Butt.clicked.connect(self.loginfunction)
+        self.logingotohome.clicked.connect(self.return_to_home)
+        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
 
 class signup_screen(QMainWindow):
     def __init__(self):
         super(signup_screen, self).__init__()
         uic.loadUi("signup_screen.ui", self)
         self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signup_Button.clicked.connect(self.signupfunction)
+        self.signup_Butt.clicked.connect(self.signupfunction)
+        self.signupgotohome.clicked.connect(self.return_to_home)
+
+    def return_to_home(self):
+        self.hide()
+        UIWindow = UI()
+        UIWindow.show()
 
 
     def signupfunction(self):
+
         username = self.username_signup.text()
         password = self.password_signup.text()
         unique_id = str(device_id.get_windows_uuid())
@@ -3888,6 +3933,9 @@ class signup_screen(QMainWindow):
             conn.commit()
             conn.close()
             self.message.setText("Account Created!")
+        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.signup_Butt.clicked.connect(self.signupfunction)
+        self.signupgotohome.clicked.connect(self.return_to_home)
 
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
