@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, 
     QCheckBox, QDialog, QListWidget, QToolButton, QScrollBar, QSplashScreen
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSettings
 import sys
 import os
 import threading
@@ -554,7 +554,8 @@ class UI(QMainWindow):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
         self.login_signup_button.clicked.connect(self.gotologin_signup)
-        self.initial_user_screen = login_signup_screen()
+        # self.initial_user_screen = login_signup_screen()
+        self.settings = QSettings()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
@@ -1044,8 +1045,92 @@ class UI(QMainWindow):
 
     def gotologin_signup(self):
         # initial_screen = login_signup_screen()
-        self.hide()
-        self.initial_user_screen.show()
+        # self.hide()
+        # self.initial_user_screen.show()
+        self.get_login_signup_screen()
+        self.login_Button.clicked.connect(self.gotologin)
+        self.signup_Button.clicked.connect(self.gotosignup)
+
+    def gotosignup(self):
+        self.get_signup_screen()
+        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.signup_Butt.clicked.connect(self.signupfunction)
+        self.message_2.setText("")
+        self.username_signup.setText("")
+        self.password_signup.setText("")
+
+    def signupfunction(self):
+
+        username = self.username_signup.text()
+        password = self.password_signup.text()
+        unique_id = str(device_id.get_windows_uuid())
+        whether_subscribed = 1
+        # uic.loadUi("signup_screen.ui", self)
+        if len(username)==0 or len(password)==0:
+            self.message.setText("Please fill in all inputs.")
+
+        else:
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+            user_info = [username, password, whether_subscribed,  unique_id]
+            cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
+
+            conn.commit()
+            conn.close()
+            self.message_2.setText("Account Created!")
+        # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+        # self.signup_Butt.clicked.connect(self.signupfunction)
+
+
+    def gotologin(self):
+        self.get_login_screen()
+        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.login_Butt.clicked.connect(self.loginfunction)
+        self.message.setText("")
+        self.username_login.setText("")
+        self.password_login.setText("")
+
+    def loginfunction(self):
+
+        username = self.username_login.text()
+        password = self.password_login.text()
+        unique_id = str(device_id.get_windows_uuid())
+        self.createNewAppKey(unique_id,functions.randomword(12)) # creating new app id and app key.
+        ## TODO: have to assign expiration date to this app key and insert a new row in SESSIONS_TABLE
+        id, key = self.getAppIdKey()
+        print(id)
+        print("-------")
+        print(key)
+        print(".............")
+
+        if len(username)==0 or len(password)==0:
+            self.message.setText("Please input all fields.")
+
+        else:
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+            query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
+            cur.execute(query)
+
+            result_tuple = cur.fetchone()
+            # print(result_tuple)
+            if result_tuple is None:
+                self.message.setText("Invalid Username!")
+            else:
+                result_pass = result_tuple[0]
+                result_device_id = result_tuple[1]
+                if result_pass == password and result_device_id == unique_id:
+                    self.message.setText("Successfully logged in!")
+                    # Save the returned app key and id
+                    # functions.AppFunctions.createNewAppKey(self, result_device_id, functions.AppFunctions.randomword(12))
+                    # # then validate the saved app key and id
+                    # functions.AppFunctions.checkAppKey(self)
+                else:
+                    self.message.setText("Invalid credentials!")
+            conn.close()
+        self.login_Butt.clicked.connect(self.loginfunction)
+        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
+
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
@@ -1679,53 +1764,163 @@ class UI(QMainWindow):
     # gets home screen in front
     def get_home_screen(self):
         self.home_frame.show()
+        self.login_signup_frame.show()
         self.record_frame.hide()
         self.view_settings_frame.hide()
         self.hotkey_settings_frame.hide()
+        self.subscription_check_frame.hide()
+        self.access_denied_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
+        self.foot_note_label.setText('')
+
+    def get_login_signup_screen(self):
+        self.login_signup_frame.show()
+        self.record_frame.hide()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.subscription_check_frame.hide()
+        self.access_denied_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
+        self.foot_note_label.setText('')
+
+    def get_login_screen(self):
+        self.login_signup_frame.hide()
+        self.record_frame.hide()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.subscription_check_frame.hide()
+        self.access_denied_frame.hide()
+        self.login_frame.show()
+        self.signup_frame.hide()
+        self.foot_note_label.setText('')
+
+    def get_signup_screen(self):
+        self.login_signup_frame.hide()
+        self.record_frame.hide()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.subscription_check_frame.hide()
+        self.access_denied_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.show()
         self.foot_note_label.setText('')
 
     # gets subscription check screen in front (only if the user is not logged
     # in, prompt user to login if they try to access a premium feature
     # and havent logged in yet)
+
     def get_subscription_check_screen(self):
         self.subscription_check_frame.show()
-        # self.record_frame.hide()
-        # self.view_settings_frame.hide()
-        # self.hotkey_settings_frame.hide()
-        # self.foot_note_label.setText('')
+        self.login_signup_frame.hide()
+        self.record_frame.hide()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.access_denied_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
+        self.foot_note_label.setText('')
 
     # gets access denied screen in front (only if the user is logged
     # in, prompt user to pay if they try to access a premium feature
     # and havent subscribed to it yet)
     def get_access_denied_screen(self):
         self.access_denied_frame.show()
-        # self.record_frame.hide()
-        # self.view_settings_frame.hide()
-        # self.hotkey_settings_frame.hide()
-        # self.foot_note_label.setText('')
+        self.subscription_check_frame.hide()
+        self.login_signup_frame.hide()
+        self.record_frame.hide()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
+        self.foot_note_label.setText('')
+
+    # function to create new app key and id
+    def createNewAppKey(self, id, key):
+        # settings = QSettings()
+        self.settings.setValue("APPID", id)
+        self.settings.setValue("APPKEY", key)
+
+    # function to get the current app id and key stored in Qsettings
+    def getAppIdKey(self):
+        # settings = QSettings()
+        id = self.settings.value("APPID")
+        key = self.settings.value("APPKEY")
+
+        return id, key
 
     # gets record screen in front
     def get_record_screen(self):
-        self.home_frame.hide()
-        self.record_frame.show()
+        self.access_denied_frame.hide()
+        self.subscription_check_frame.hide()
+        self.login_signup_frame.hide()
+
         self.view_settings_frame.hide()
         self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
         self.foot_note_label.setText('')
+        # settings = QSettings()
+        id = self.settings.value("APPID")
+        key = self.settings.value("APPKEY")
+        if key == "":
+            # logged out state
+            self.subscription_check_frame.show()
+        else:
+            # logged in state, check if the current App id is of a subscribed user or not
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+            query = 'SELECT whether_subscribed FROM user_info WHERE unique_device_id =\''+id+"\'"
+            cur.execute(query)
+
+            result_tuple = cur.fetchone()
+            # print(result_tuple)
+
+            result_whether_subscribed = result_tuple[0]
+            if result_whether_subscribed == 1:
+                # grant access to premium feature
+                self.record_frame.show()
+
+            else:
+                # access denied page hows up and prompt the user to subscribe
+                self.access_denied_frame.show()
+
+            conn.close()
+
+
+
 
     # gets view settings screen in front
     def get_view_screen(self):
-        self.home_frame.hide()
+        self.access_denied_frame.hide()
+        self.subscription_check_frame.hide()
+        self.login_signup_frame.hide()
         self.record_frame.hide()
-        self.hotkey_settings_frame.hide()
         self.view_settings_frame.show()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
         self.foot_note_label.setText('')
 
     # gets hotkey settings screen in front
     def get_hotkey_screen(self):
-        self.home_frame.hide()
+        self.access_denied_frame.hide()
+        self.subscription_check_frame.hide()
+        self.login_signup_frame.hide()
         self.record_frame.hide()
         self.view_settings_frame.hide()
         self.hotkey_settings_frame.show()
+        self.home_frame.hide()
+        self.login_frame.hide()
+        self.signup_frame.hide()
         self.foot_note_label.setText('')
 
     # changes hotkey of home -> start/stop button
@@ -3832,110 +4027,110 @@ class UI(QMainWindow):
         self.showNormal()
         self.record_play_button.setEnabled(True)
 
-class login_signup_screen(QMainWindow):
-    def __init__(self):
-        super(login_signup_screen, self).__init__()
-        uic.loadUi("login_signup.ui", self)
-        self.login_Button.clicked.connect(self.gotologin)
-        self.login_user_screen = login_screen()
-
-        self.signup_Button.clicked.connect(self.gotosignup)
-        self.signup_user_screen = signup_screen()
-        self.gotohome.clicked.connect(self.return_to_home)
-
-    def return_to_home(self):
-        self.hide()
-        UIWindow = UI()
-        UIWindow.show()
-
-    def gotologin(self):
-        self.hide()
-        self.login_user_screen.show()
-
-    def gotosignup(self):
-        self.hide()
-        self.signup_user_screen.show()
-
-class login_screen(QMainWindow):
-    def __init__(self):
-        super(login_screen, self).__init__()
-        uic.loadUi("login_screen.ui", self)
-        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.login_Butt.clicked.connect(self.loginfunction)
-        self.logingotohome.clicked.connect(self.return_to_home)
-
-    def return_to_home(self):
-        self.hide()
-        UIWindow = UI()
-        UIWindow.show()
-
-    def loginfunction(self):
-
-        username = self.username_login.text()
-        password = self.password_login.text()
-        unique_id = str(device_id.get_windows_uuid())
-        uic.loadUi("login_screen.ui", self)
-        if len(username)==0 or len(password)==0:
-            self.message.setText("Please input all fields.")
-
-        else:
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-            query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
-            cur.execute(query)
-
-            result_tuple = cur.fetchone()
-            # print(result_tuple)
-            if result_tuple is None:
-                self.message.setText("Invalid Username!")
-            else:
-                result_pass = result_tuple[0]
-                result_device_id = result_tuple[1]
-                if result_pass == password and result_device_id == unique_id:
-                    self.message.setText("Successfully logged in!")
-                else:
-                    self.message.setText("Invalid credentials!")
-            # conn.close()
-        self.login_Butt.clicked.connect(self.loginfunction)
-        self.logingotohome.clicked.connect(self.return_to_home)
-        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-
-class signup_screen(QMainWindow):
-    def __init__(self):
-        super(signup_screen, self).__init__()
-        uic.loadUi("signup_screen.ui", self)
-        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signup_Butt.clicked.connect(self.signupfunction)
-        self.signupgotohome.clicked.connect(self.return_to_home)
-
-    def return_to_home(self):
-        self.hide()
-        UIWindow = UI()
-        UIWindow.show()
-
-
-    def signupfunction(self):
-
-        username = self.username_signup.text()
-        password = self.password_signup.text()
-        unique_id = str(device_id.get_windows_uuid())
-        whether_subscribed = 0
-        uic.loadUi("signup_screen.ui", self)
-        if len(username)==0 or len(password)==0:
-            self.message.setText("Please fill in all inputs.")
-
-        else:
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-            user_info = [username, password, whether_subscribed,  unique_id]
-            cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
-
-            conn.commit()
-            conn.close()
-            self.message.setText("Account Created!")
-        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signup_Butt.clicked.connect(self.signupfunction)
-        self.signupgotohome.clicked.connect(self.return_to_home)
+# class login_signup_screen(QMainWindow):
+#     def __init__(self):
+#         super(login_signup_screen, self).__init__()
+#         uic.loadUi("login_signup.ui", self)
+#         self.login_Button.clicked.connect(self.gotologin)
+#         self.login_user_screen = login_screen()
+#
+#         self.signup_Button.clicked.connect(self.gotosignup)
+#         self.signup_user_screen = signup_screen()
+#         self.gotohome.clicked.connect(self.return_to_home)
+#
+#     def return_to_home(self):
+#         self.hide()
+#         UIWindow = UI()
+#         UIWindow.show()
+#
+#     def gotologin(self):
+#         self.hide()
+#         self.login_user_screen.show()
+#
+#     def gotosignup(self):
+#         self.hide()
+#         self.signup_user_screen.show()
+#
+# class login_screen(QMainWindow):
+#     def __init__(self):
+#         super(login_screen, self).__init__()
+#         uic.loadUi("login_screen.ui", self)
+#         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
+#         self.login_Butt.clicked.connect(self.loginfunction)
+#         self.logingotohome.clicked.connect(self.return_to_home)
+#
+#     def return_to_home(self):
+#         self.hide()
+#         UIWindow = UI()
+#         UIWindow.show()
+#
+#     def loginfunction(self):
+#
+#         username = self.username_login.text()
+#         password = self.password_login.text()
+#         unique_id = str(device_id.get_windows_uuid())
+#         uic.loadUi("login_screen.ui", self)
+#         if len(username)==0 or len(password)==0:
+#             self.message.setText("Please input all fields.")
+#
+#         else:
+#             conn = sqlite3.connect('autoclicker.db')
+#             cur = conn.cursor()
+#             query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
+#             cur.execute(query)
+#
+#             result_tuple = cur.fetchone()
+#             # print(result_tuple)
+#             if result_tuple is None:
+#                 self.message.setText("Invalid Username!")
+#             else:
+#                 result_pass = result_tuple[0]
+#                 result_device_id = result_tuple[1]
+#                 if result_pass == password and result_device_id == unique_id:
+#                     self.message.setText("Successfully logged in!")
+#                 else:
+#                     self.message.setText("Invalid credentials!")
+#             # conn.close()
+#         self.login_Butt.clicked.connect(self.loginfunction)
+#         self.logingotohome.clicked.connect(self.return_to_home)
+#         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
+#
+# class signup_screen(QMainWindow):
+#     def __init__(self):
+#         super(signup_screen, self).__init__()
+#         uic.loadUi("signup_screen.ui", self)
+#         self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+#         self.signup_Butt.clicked.connect(self.signupfunction)
+#         self.signupgotohome.clicked.connect(self.return_to_home)
+#
+#     def return_to_home(self):
+#         self.hide()
+#         UIWindow = UI()
+#         UIWindow.show()
+#
+#
+#     def signupfunction(self):
+#
+#         username = self.username_signup.text()
+#         password = self.password_signup.text()
+#         unique_id = str(device_id.get_windows_uuid())
+#         whether_subscribed = 0
+#         uic.loadUi("signup_screen.ui", self)
+#         if len(username)==0 or len(password)==0:
+#             self.message.setText("Please fill in all inputs.")
+#
+#         else:
+#             conn = sqlite3.connect('autoclicker.db')
+#             cur = conn.cursor()
+#             user_info = [username, password, whether_subscribed,  unique_id]
+#             cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
+#
+#             conn.commit()
+#             conn.close()
+#             self.message.setText("Account Created!")
+#         self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
+#         self.signup_Butt.clicked.connect(self.signupfunction)
+#         self.signupgotohome.clicked.connect(self.return_to_home)
 
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""

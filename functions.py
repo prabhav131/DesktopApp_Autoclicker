@@ -1,17 +1,18 @@
 import sqlite3
 import sys
 import os
+import random, string
 import pynput
-
+from PyQt5.QtCore import Qt, QSettings
 
 def add_run_home_db(save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed,
                     location_x, location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height,
                     saved_date):
     conn = sqlite3.connect('autoclicker.db')
     cursor = conn.cursor()
-    sql = f'''INSERT INTO home_run_settings 
-        (save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x, 
-        location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height, saved_date) 
+    sql = f'''INSERT INTO home_run_settings
+        (save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x,
+        location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height, saved_date)
         VALUES (
         '{save_name}', '{mouse_type}', '{click_type}', '{repeat_or_range}', '{click_repeat}', '{select_or_fixed}',
         '{location_x}', '{location_y}', '{wait_interval_min}', '{wait_interval_max}', '{wait_type}',
@@ -25,8 +26,8 @@ def add_run_home_db(save_name, mouse_type, click_type, repeat_or_range, click_re
 def add_run_record_db(save_name, csv_text, saved_date, repeat_all, delay_time, delay_type):
     conn = sqlite3.connect('autoclicker.db')
     cursor = conn.cursor()
-    sql = f'''INSERT INTO record_run_settings 
-        (save_name, csv_text, saved_date, repeat_all, delay_time, delay_type) 
+    sql = f'''INSERT INTO record_run_settings
+        (save_name, csv_text, saved_date, repeat_all, delay_time, delay_type)
         VALUES (
         '{save_name}', '{csv_text}', '{saved_date}', '{repeat_all}', '{delay_time}', '{delay_type}'
         )'''
@@ -240,3 +241,8 @@ def char_converter(key):
         return "\\"
     else:
         return key
+
+
+def randomword(length):
+   letters = string.ascii_lowercase
+   return ''.join(random.choice(letters) for i in range(length))
