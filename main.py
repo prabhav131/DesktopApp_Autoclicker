@@ -555,7 +555,7 @@ class UI(QMainWindow):
         uic.loadUi("version2.ui", self)
         self.login_signup_button.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
-        self.settings = QSettings()
+        self.settings = QSettings("GG", "autoclicker")
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
@@ -1072,7 +1072,7 @@ class UI(QMainWindow):
         else:
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
-            user_info = [username, password, whether_subscribed,  unique_id]
+            user_info = [username, password, whether_subscribed, unique_id]
             cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
 
             conn.commit()
@@ -1095,7 +1095,11 @@ class UI(QMainWindow):
         username = self.username_login.text()
         password = self.password_login.text()
         unique_id = str(device_id.get_windows_uuid())
-        self.createNewAppKey(unique_id,functions.randomword(12)) # creating new app id and app key.
+        app_key_temp = functions.randomword(12)
+        # print(unique_id)
+        # print(app_key_temp)
+        # print("#################")
+        self.createNewAppKey(username,app_key_temp) # creating new app id and app key.
         ## TODO: have to assign expiration date to this app key and insert a new row in SESSIONS_TABLE
         id, key = self.getAppIdKey()
         print(id)
@@ -1121,12 +1125,8 @@ class UI(QMainWindow):
                 result_device_id = result_tuple[1]
                 if result_pass == password and result_device_id == unique_id:
                     self.message.setText("Successfully logged in!")
-                    # Save the returned app key and id
-                    # functions.AppFunctions.createNewAppKey(self, result_device_id, functions.AppFunctions.randomword(12))
-                    # # then validate the saved app key and id
-                    # functions.AppFunctions.checkAppKey(self)
                 else:
-                    self.message.setText("Invalid credentials!")
+                    self.message.setText("Invalid password!")
             conn.close()
         self.login_Butt.clicked.connect(self.loginfunction)
         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -1843,9 +1843,13 @@ class UI(QMainWindow):
 
     # function to create new app key and id
     def createNewAppKey(self, id, key):
-        # settings = QSettings()
-        self.settings.setValue("APPID", id)
+        # self.settings = QSettings()
+        self.settings.setValue('APPID', id)
         self.settings.setValue("APPKEY", key)
+        print("^^^^^^6666")
+        print(self.settings.value("APPID"))
+        print(self.settings.value("APPKEY"))
+        print("^^^^^^6666")
 
     # function to get the current app id and key stored in Qsettings
     def getAppIdKey(self):
@@ -1877,20 +1881,24 @@ class UI(QMainWindow):
             # logged in state, check if the current App id is of a subscribed user or not
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
-            query = 'SELECT whether_subscribed FROM user_info WHERE unique_device_id =\''+id+"\'"
+            query = 'SELECT whether_subscribed FROM user_info WHERE username =\''+id+"\'"
             cur.execute(query)
 
             result_tuple = cur.fetchone()
             # print(result_tuple)
-
-            result_whether_subscribed = result_tuple[0]
-            if result_whether_subscribed == 1:
-                # grant access to premium feature
-                self.record_frame.show()
-
+            if result_tuple is None:
+                # the app_id doesnt exist in database, prompt the user to sign up.
+                self.subscription_check_frame.show()
             else:
-                # access denied page hows up and prompt the user to subscribe
-                self.access_denied_frame.show()
+                    
+                result_whether_subscribed = result_tuple[0]
+                if result_whether_subscribed == 1:
+                    # grant access to premium feature
+                    self.record_frame.show()
+
+                else:
+                    # access denied page hows up and prompt the user to subscribe
+                    self.access_denied_frame.show()
 
             conn.close()
 
