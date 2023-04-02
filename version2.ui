@@ -3319,10 +3319,10 @@ p, li { white-space: pre-wrap; }
         <widget class="QLabel" name="message">
          <property name="geometry">
           <rect>
-           <x>220</x>
+           <x>130</x>
            <y>290</y>
-           <width>181</width>
-           <height>16</height>
+           <width>341</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -3392,7 +3392,7 @@ p, li { white-space: pre-wrap; }
          <property name="geometry">
           <rect>
            <x>270</x>
-           <y>320</y>
+           <y>326</y>
            <width>75</width>
            <height>23</height>
           </rect>
@@ -3414,10 +3414,10 @@ p, li { white-space: pre-wrap; }
         <widget class="QLabel" name="message_2">
          <property name="geometry">
           <rect>
-           <x>230</x>
+           <x>110</x>
            <y>290</y>
-           <width>171</width>
-           <height>16</height>
+           <width>401</width>
+           <height>31</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -3524,10 +3524,10 @@ p, li { white-space: pre-wrap; }
        <zorder>hotkey_settings_frame</zorder>
        <zorder>view_settings_frame</zorder>
        <zorder>login_signup_frame</zorder>
-       <zorder>signup_frame</zorder>
-       <zorder>login_frame</zorder>
        <zorder>access_denied_frame</zorder>
        <zorder>subscription_check_frame</zorder>
+       <zorder>login_frame</zorder>
+       <zorder>signup_frame</zorder>
        <zorder>home_frame</zorder>
       </widget>
       <widget class="QFrame" name="left_frame">

@@ -556,6 +556,28 @@ class UI(QMainWindow):
         self.login_signup_button.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
+        initial_app_id, initial_app_key, initial_username = getAppIdKey()
+        initial_device_id = str(device_id.get_windows_uuid())
+        if initial_app_id == initial_device_id:
+            app_id_temp = initial_device_id
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+
+            query = 'SELECT * FROM session_details WHERE application_id =\''+app_id_temp+"\'"
+            cur.execute(query)
+
+            result_tuple = cur.fetchone()
+            if result_tuple is not None:
+                app_key_temp = result_tuple[2]
+                if app_key_temp == initial_app_key:
+                    is_key_valid = checkAppKey(app_key_temp)
+                    if is_key_valid == 1:
+                        pass
+                        # TODO: redirect to home screen in logged in state
+                    else:
+                        self.logout()
+
+
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
@@ -1072,12 +1094,35 @@ class UI(QMainWindow):
         else:
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
-            user_info = [username, password, whether_subscribed, unique_id]
-            cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
 
-            conn.commit()
-            conn.close()
-            self.message_2.setText("Account Created!")
+            #check if username already exists
+            query_1 = 'SELECT * FROM user_info WHERE username =\''+username+"\'"
+            cur.execute(query_1)
+
+            result_tuple_username = cur.fetchone()
+
+            #check if device_id already exists
+            query_2 = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
+            cur.execute(query_2)
+
+            result_tuple_device_id = cur.fetchone()
+
+            if result_tuple_device_id is not None:
+                # device_id already exists
+                self.message_2.setText("This device is already registered. Log in to continue!")
+
+            elif result_tuple_username is not None:
+                # username already exists
+                self.message_2.setText("username already exists. Choose a different username!")
+
+            else:
+
+                user_info = [username, password, whether_subscribed, unique_id]
+                cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
+
+                conn.commit()
+                conn.close()
+                self.message_2.setText("Account Created!")
         # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
         # self.signup_Butt.clicked.connect(self.signupfunction)
 
@@ -1096,12 +1141,9 @@ class UI(QMainWindow):
         password = self.password_login.text()
         unique_id = str(device_id.get_windows_uuid())
         app_key_temp = functions.randomword(12)
-        # print(unique_id)
-        # print(app_key_temp)
-        # print("#################")
-        self.createNewAppKey(username,app_key_temp) # creating new app id and app key.
+        self.createNewAppKey(unique_id,app_key_temp,username) # creating new app id and app key.
         ## TODO: have to assign expiration date to this app key and insert a new row in SESSIONS_TABLE
-        id, key = self.getAppIdKey()
+        id, key, username = self.getAppIdKey()
         print(id)
         print("-------")
         print(key)
@@ -1113,20 +1155,26 @@ class UI(QMainWindow):
         else:
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
-            query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
+            query = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
             cur.execute(query)
 
             result_tuple = cur.fetchone()
             # print(result_tuple)
             if result_tuple is None:
-                self.message.setText("Invalid Username!")
+                self.message.setText("Device is not registered!")
             else:
-                result_pass = result_tuple[0]
-                result_device_id = result_tuple[1]
-                if result_pass == password and result_device_id == unique_id:
+                result_username = result_tuple[0]
+                result_pass = result_tuple[1]
+                result_whether_subscribed = result_tuple[2]
+                result_device_id = result_tuple[3]
+                if result_pass == password and result_device_id == unique_id and result_username == username:
                     self.message.setText("Successfully logged in!")
-                else:
+                elif result_pass != password:
                     self.message.setText("Invalid password!")
+                elif result_username != username:
+                    self.message.setText("Invalid username!")
+                elif result_device_id != unique_id:
+                    self.message.setText("Please use the original device of this user to login")
             conn.close()
         self.login_Butt.clicked.connect(self.loginfunction)
         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -1842,22 +1890,52 @@ class UI(QMainWindow):
         self.foot_note_label.setText('')
 
     # function to create new app key and id
-    def createNewAppKey(self, id, key):
-        # self.settings = QSettings()
+    def createNewAppKey(self, id, key, username):
         self.settings.setValue('APPID', id)
         self.settings.setValue("APPKEY", key)
-        print("^^^^^^6666")
+        self.settings.setValue("USERNAME", username)
+        print("^^^^^^")
         print(self.settings.value("APPID"))
         print(self.settings.value("APPKEY"))
-        print("^^^^^^6666")
+        print(self.settings.value("USERNAME"))
+        print("^^^^^^")
 
     # function to get the current app id and key stored in Qsettings
     def getAppIdKey(self):
         # settings = QSettings()
         id = self.settings.value("APPID")
         key = self.settings.value("APPKEY")
+        username = self.settings.value("USERNAME")
+        return id, key, username
 
-        return id, key
+    def logout(self):
+
+        conn = sqlite3.connect('autoclicker.db')
+        cursor = conn.cursor()
+        query = 'UPDATE session_details SET application_key = '', key_expiration_date = '' WHERE application_id =\''+self.settings.value("APPID")+"\'"
+        cur.execute(query)
+
+        self.settings.setValue("APPKEY", "")
+
+    # function to check if a given app_key is valid or expired
+    def checkAppKey(self, key):
+        conn = sqlite3.connect('autoclicker.db')
+        cur = conn.cursor()
+
+        query = 'SELECT * FROM session_details WHERE application_key =\''+key+"\'"
+        cur.execute(query)
+        result_tuple = cur.fetchone()
+        if result_tuple is not None:
+            app_key_expiration_time = result_tuple[3]
+            if app_key_expiration_time == '':
+                return 0 # the expiration date stored in database is an empty string. Hence it cant be valid.
+            current_time = datetime.datetime.now()
+            expiration_datetime_object = datetime.strptime(app_key_expiration_time, '%Y-%m-%d %H:%M:%S')
+            if expiration_datetime_object > current_time:
+                # key hasnt expired yet
+                return 1
+        return 0 # 0 is returned if app_key is expired or if it doesnt exist in the database
+
 
     # gets record screen in front
     def get_record_screen(self):
@@ -1890,7 +1968,7 @@ class UI(QMainWindow):
                 # the app_id doesnt exist in database, prompt the user to sign up.
                 self.subscription_check_frame.show()
             else:
-                    
+
                 result_whether_subscribed = result_tuple[0]
                 if result_whether_subscribed == 1:
                     # grant access to premium feature

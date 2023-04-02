@@ -135,10 +135,10 @@ border: none; }</string>
        <widget class="QLabel" name="message">
         <property name="geometry">
          <rect>
-          <x>230</x>
+          <x>80</x>
           <y>200</y>
-          <width>171</width>
-          <height>16</height>
+          <width>461</width>
+          <height>21</height>
          </rect>
         </property>
         <property name="styleSheet">
