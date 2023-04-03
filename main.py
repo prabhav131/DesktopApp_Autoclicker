@@ -556,7 +556,7 @@ class UI(QMainWindow):
         self.login_signup_button.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
-        initial_app_id, initial_app_key, initial_username = getAppIdKey()
+        initial_app_id, initial_app_key, initial_username = self.getAppIdKey()
         initial_device_id = str(device_id.get_windows_uuid())
         if initial_app_id == initial_device_id:
             app_id_temp = initial_device_id
@@ -567,6 +567,7 @@ class UI(QMainWindow):
             cur.execute(query)
 
             result_tuple = cur.fetchone()
+            conn.close()
             if result_tuple is not None:
                 app_key_temp = result_tuple[2]
                 if app_key_temp == initial_app_key:
@@ -576,6 +577,7 @@ class UI(QMainWindow):
                         # TODO: redirect to home screen in logged in state
                     else:
                         self.logout()
+
 
 
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
@@ -750,6 +752,8 @@ class UI(QMainWindow):
                                              'height: 8px;}')
         self.log_out_button = self.findChild(QPushButton, "log_out_button")
         self.log_out_button.setIcon(QtGui.QIcon("images/LogOut"))
+        self.GG_icon = self.findChild(QPushButton, "GG_icon")
+        self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
         self.navigate_button = self.findChild(QPushButton, "navigate_button")
         self.navigate_button.setIcon(QtGui.QIcon("images/Hambuger"))
         self.profile_button = self.findChild(QPushButton, "profile_button")
@@ -817,7 +821,7 @@ class UI(QMainWindow):
         self.set_new_hotkey_button_3 = self.findChild(QPushButton, "set_new_hotkey_3")
         self.set_new_hotkey_button_4 = self.findChild(QPushButton, "set_new_hotkey_4")
         self.on_click_complete_label = self.findChild(QLabel, "on_click_label")
-        self.username_box = self.findChild(QLineEdit, "lineEdit")
+        self.username_box = self.findChild(QLabel, "name")
         self.label = self.findChild(QPushButton, "label")
         self.frame = self.findChild(QFrame, "frame")
         self.frame_2 = self.findChild(QFrame, "frame_2")
@@ -873,6 +877,7 @@ class UI(QMainWindow):
         for widget in self.home_frame.findChildren(QLineEdit):
             widget.setValidator(self.integer)
         # --------------
+        self.log_out_button.clicked.connect(self.logout)
         self.record_button.clicked.connect(self.get_record_screen)
         self.home_button.clicked.connect(self.get_home_screen)
         self.view_settings_button.clicked.connect(self.get_view_screen)
@@ -985,7 +990,7 @@ class UI(QMainWindow):
             self.mouse_location_checkbox2.click()
         if dark_theme == 1:
             self.get_dark_theme()
-        self.username_box.setText(str(new_username))
+        # self.username_box.setText(str(new_username))
         self.home_start_stop_hotkey = home_start_hotkey
         self.record_start_stop_hotkey = record_start_hotkey
         self.record_recording_hotkey = record_recording_hotkey
@@ -1100,12 +1105,16 @@ class UI(QMainWindow):
             cur.execute(query_1)
 
             result_tuple_username = cur.fetchone()
+            # conn.close()
 
             #check if device_id already exists
+            # conn = sqlite3.connect('autoclicker.db')
+            # cur = conn.cursor()
             query_2 = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
             cur.execute(query_2)
 
             result_tuple_device_id = cur.fetchone()
+            conn.close()
 
             if result_tuple_device_id is not None:
                 # device_id already exists
@@ -1116,13 +1125,15 @@ class UI(QMainWindow):
                 self.message_2.setText("username already exists. Choose a different username!")
 
             else:
-
+                conn = sqlite3.connect('autoclicker.db')
+                cur = conn.cursor()
                 user_info = [username, password, whether_subscribed, unique_id]
                 cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
 
                 conn.commit()
                 conn.close()
                 self.message_2.setText("Account Created!")
+
         # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
         # self.signup_Butt.clicked.connect(self.signupfunction)
 
@@ -1159,6 +1170,7 @@ class UI(QMainWindow):
             cur.execute(query)
 
             result_tuple = cur.fetchone()
+            conn.close()
             # print(result_tuple)
             if result_tuple is None:
                 self.message.setText("Device is not registered!")
@@ -1175,7 +1187,7 @@ class UI(QMainWindow):
                     self.message.setText("Invalid username!")
                 elif result_device_id != unique_id:
                     self.message.setText("Please use the original device of this user to login")
-            conn.close()
+
         self.login_Butt.clicked.connect(self.loginfunction)
         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
 
@@ -1235,7 +1247,7 @@ class UI(QMainWindow):
             new_dark_theme = 1
         else:
             new_dark_theme = 0
-        user_name = self.username_box.text()
+        # user_name = self.username_box.text()
         new_home_start_hotkey = self.home_start_stop_hotkey
         new_record_start_hotkey = self.record_start_stop_hotkey
         new_record_recording_hotkey = self.record_recording_hotkey
@@ -1252,8 +1264,7 @@ class UI(QMainWindow):
                 '{new_home_start_hotkey}',
                 '{new_record_start_hotkey}',
                 '{new_record_recording_hotkey}',
-                '{new_mouse_location_hotkey}',
-                '{user_name}'
+                '{new_mouse_location_hotkey}'
                 )'''
         cursor.execute(add_new_row)
         conn.commit()
@@ -1287,8 +1298,8 @@ class UI(QMainWindow):
                                       "color: #bfcfb2;"
                                       "border: 2px solid #bfcfb2;"
                                       "border-radius: 10px;")
-        self.label.setStyleSheet("border:none;")
-        self.label.setIcon(QtGui.QIcon('images/GG_dark'))
+        self.GG_icon.setStyleSheet("border:none;")
+        self.GG_icon.setIcon(QtGui.QIcon('images/GG_dark'))
         self.home_button.setStyleSheet("border:none;")
         self.home_button.setIcon(QtGui.QIcon('images/Home_dark'))
         self.record_button.setStyleSheet("border:none;")
@@ -1559,8 +1570,8 @@ class UI(QMainWindow):
                                       "color: black;"
                                       "border: 2px solid rgb(196, 177, 174);"
                                       "border-radius: 10px;")
-        self.label.setStyleSheet("border:none;")
-        self.label.setIcon(QtGui.QIcon('images/GGicon'))
+        self.GG_icon.setStyleSheet("border:none;")
+        self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
         self.home_button.setStyleSheet("border:none;")
         self.home_button.setIcon(QtGui.QIcon('images/home'))
         self.record_button.setStyleSheet("border:none;")
@@ -1656,7 +1667,7 @@ class UI(QMainWindow):
                                                    'border: none;}')
         self.profile_button.setStyleSheet("border: none;")
         self.profile_button.setIcon(QtGui.QIcon("images/liliajohn.png"))
-        self.username_box.setStyleSheet("QLineEdit {background-color: rgb(239, 229, 220);"
+        self.username_box.setStyleSheet("QLabel {background-color: rgb(239, 229, 220);"
                                         "color: rgb(30, 30, 30);"
                                         "border: none;}"
                                         "QToolTip {background-color: #e0e0e0;}")
@@ -1909,13 +1920,14 @@ class UI(QMainWindow):
         return id, key, username
 
     def logout(self):
-
+        print("logging out!")
         conn = sqlite3.connect('autoclicker.db')
-        cursor = conn.cursor()
-        query = 'UPDATE session_details SET application_key = '', key_expiration_date = '' WHERE application_id =\''+self.settings.value("APPID")+"\'"
+        cur = conn.cursor()
+        query = 'UPDATE session_details SET application_key = \'\', key_expiration_date = \'\' WHERE application_id =\''+self.settings.value("APPID")+"\'"
         cur.execute(query)
-
+        conn.close()
         self.settings.setValue("APPKEY", "")
+        self.username_box.setText("")
 
     # function to check if a given app_key is valid or expired
     def checkAppKey(self, key):
@@ -1924,7 +1936,9 @@ class UI(QMainWindow):
 
         query = 'SELECT * FROM session_details WHERE application_key =\''+key+"\'"
         cur.execute(query)
+
         result_tuple = cur.fetchone()
+        conn.close()
         if result_tuple is not None:
             app_key_expiration_time = result_tuple[3]
             if app_key_expiration_time == '':
@@ -1963,6 +1977,7 @@ class UI(QMainWindow):
             cur.execute(query)
 
             result_tuple = cur.fetchone()
+            conn.close()
             # print(result_tuple)
             if result_tuple is None:
                 # the app_id doesnt exist in database, prompt the user to sign up.
@@ -1978,7 +1993,7 @@ class UI(QMainWindow):
                     # access denied page hows up and prompt the user to subscribe
                     self.access_denied_frame.show()
 
-            conn.close()
+
 
 
 
@@ -4312,7 +4327,7 @@ cursor.execute(sql)
 app_settings = cursor.fetchone()
 conn.close()
 show_tool_after, hide_system_tray, disable_cursor_location, dark_theme, home_start_hotkey, record_start_hotkey, \
-record_recording_hotkey, mouse_location_hotkey, new_username = app_settings
+record_recording_hotkey, mouse_location_hotkey = app_settings
 toaster = ToastNotifier()
 # fetch the hardware UUID
 # print(device_id.get_windows_uuid())

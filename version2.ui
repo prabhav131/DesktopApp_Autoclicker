@@ -52,9 +52,9 @@ border: none; }</string>
       <widget class="QFrame" name="top_frame">
        <property name="geometry">
         <rect>
-         <x>92</x>
+         <x>102</x>
          <y>0</y>
-         <width>571</width>
+         <width>561</width>
          <height>72</height>
         </rect>
        </property>
@@ -295,49 +295,6 @@ border: none; }</string>
          <string>Good Morning</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="geometry">
-         <rect>
-          <x>455</x>
-          <y>41</y>
-          <width>73</width>
-          <height>14</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <weight>50</weight>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="cursor">
-         <cursorShape>ArrowCursor</cursorShape>
-        </property>
-        <property name="toolTip">
-         <string>
-&lt;p style='white-space:pre'&gt;Enter your nickname here&lt;/p&gt;</string>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit { border: none;
-background-color: rgb(239, 229, 220);}
-
-QToolTip {
-background-color: #e0e0e0;
-border: none; }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="maxLength">
-         <number>10</number>
-        </property>
-        <property name="placeholderText">
-         <string>Stranger</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="login_signup_button">
         <property name="geometry">
          <rect>
@@ -351,14 +308,27 @@ border: none; }</string>
          <string>login/signup</string>
         </property>
        </widget>
+       <widget class="QLabel" name="name">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>40</y>
+          <width>71</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>NAME</string>
+        </property>
+       </widget>
        <zorder>navigate_button</zorder>
        <zorder>complete_combobox</zorder>
        <zorder>profile_button</zorder>
        <zorder>on_click_label</zorder>
        <zorder>label_10</zorder>
-       <zorder>lineEdit</zorder>
-       <zorder>log_out_button</zorder>
        <zorder>login_signup_button</zorder>
+       <zorder>log_out_button</zorder>
+       <zorder>name</zorder>
       </widget>
       <widget class="QFrame" name="main_frame">
        <property name="geometry">
@@ -3417,7 +3387,7 @@ p, li { white-space: pre-wrap; }
            <x>110</x>
            <y>290</y>
            <width>401</width>
-           <height>31</height>
+           <height>21</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -3804,7 +3774,7 @@ color:  rgb(218, 218, 218)}</string>
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
        </widget>
-       <widget class="QPushButton" name="label">
+       <widget class="QPushButton" name="GG_icon">
         <property name="geometry">
          <rect>
           <x>24</x>
@@ -3832,8 +3802,229 @@ color:  rgb(218, 218, 218)}</string>
        <zorder>view_settings_button</zorder>
        <zorder>hotkey_settings_button</zorder>
        <zorder>home_button</zorder>
-       <zorder>label</zorder>
+       <zorder>GG_icon</zorder>
       </widget>
+      <widget class="QFrame" name="top_frame_logged_out">
+       <property name="geometry">
+        <rect>
+         <x>102</x>
+         <y>0</y>
+         <width>561</width>
+         <height>72</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QPushButton" name="navigate_button_3">
+        <property name="geometry">
+         <rect>
+          <x>29</x>
+          <y>20</y>
+          <width>46</width>
+          <height>46</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>45</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>132131</width>
+          <height>1231231</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>&lt;p style='white-space:pre'&gt;Help section&lt;/p&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+border-radius: 3px;
+border: 1px solid;
+border-color:  rgb(239, 229, 220);
+}
+
+QToolTip {
+background-color: #e0e0e0;
+border: none; }
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../.designer/backup/images/Hambuger.png</normaloff>../../.designer/backup/images/Hambuger.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="complete_combobox_3">
+        <property name="geometry">
+         <rect>
+          <x>288</x>
+          <y>25</y>
+          <width>121</width>
+          <height>34</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>341231</width>
+          <height>1231313</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="currentText">
+         <string/>
+        </property>
+        <property name="currentIndex">
+         <number>-1</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>10</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="profile_button_3">
+        <property name="geometry">
+         <rect>
+          <x>415</x>
+          <y>25</y>
+          <width>41</width>
+          <height>37</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+border-radius: 3px;
+border: 1px solid;
+border-color:  rgb(239, 229, 220);
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>../../.designer/backup/images/liliajohn.png</normaloff>../../.designer/backup/images/liliajohn.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>35</width>
+          <height>35</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QLabel" name="on_click_label_3">
+        <property name="geometry">
+         <rect>
+          <x>293</x>
+          <y>36</y>
+          <width>89</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>&lt;p style='white-space:pre'&gt;Choose what happens after clicking completes&lt;/p&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel { background-color: rgb(249, 249, 245);
+
+border: none; }
+
+QToolTip {
+background-color: #e0e0e0;
+border: none; }</string>
+        </property>
+        <property name="text">
+         <string> On Click Complete</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_26">
+        <property name="geometry">
+         <rect>
+          <x>456</x>
+          <y>28</y>
+          <width>76</width>
+          <height>14</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>7</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Welcome!</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="login_signup_button_3">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>40</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>login/signup</string>
+        </property>
+       </widget>
+      </widget>
+      <zorder>main_frame</zorder>
+      <zorder>left_frame</zorder>
+      <zorder>top_frame_logged_out</zorder>
+      <zorder>top_frame</zorder>
      </widget>
     </item>
    </layout>
