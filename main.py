@@ -554,6 +554,7 @@ class UI(QMainWindow):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
         self.login_signup_button.clicked.connect(self.gotologin_signup)
+        self.login_signup_button_3.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
         initial_app_id, initial_app_key, initial_username = self.getAppIdKey()
@@ -732,9 +733,27 @@ class UI(QMainWindow):
         self.hotkey_settings_button.setIcon(QtGui.QIcon("images/HotkeyBlack"))
         self.hotkey_settings_frame = self.findChild(QFrame, "hotkey_settings_frame")
         self.top_frame = self.findChild(QFrame, "top_frame")
+        self.top_frame_logged_out = self.findChild(QFrame, "top_frame_logged_out")
         self.app_icon = self.findChild(QLabel, "app_icon")
         self.complete_combobox = self.findChild(QComboBox, "complete_combobox")
         self.complete_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
+                                             'border: 2px solid;'
+                                             'border-radius: 7px;'
+                                             'border-color: rgb(217, 217, 217);}'
+                                             'QComboBox QAbstractItemView {'
+                                             'background-color: rgb(249, 249, 245);'
+                                             'border: none;'
+                                             'color: black;}'
+                                             'QComboBox::drop-down {'
+                                             'border: 2px;'
+                                             'border-radius: 5px;'
+                                             'border-color: rgb(249, 249, 245);}'
+                                             'QComboBox::down-arrow {'
+                                             'image: url(images/arrow1);'
+                                             'width: 8px;'
+                                             'height: 8px;}')
+        self.complete_combobox_3 = self.findChild(QComboBox, "complete_combobox_3")
+        self.complete_combobox_3.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
                                              'border: 2px solid;'
                                              'border-radius: 7px;'
                                              'border-color: rgb(217, 217, 217);}'
@@ -821,6 +840,7 @@ class UI(QMainWindow):
         self.set_new_hotkey_button_3 = self.findChild(QPushButton, "set_new_hotkey_3")
         self.set_new_hotkey_button_4 = self.findChild(QPushButton, "set_new_hotkey_4")
         self.on_click_complete_label = self.findChild(QLabel, "on_click_label")
+        self.on_click_complete_label_3 = self.findChild(QLabel, "on_click_label_3")
         self.username_box = self.findChild(QLabel, "name")
         self.label = self.findChild(QPushButton, "label")
         self.frame = self.findChild(QFrame, "frame")
@@ -861,6 +881,13 @@ class UI(QMainWindow):
         self.complete_combobox.addItem(" Log off")
         self.complete_combobox.addItem(" Standby")
         self.complete_combobox.addItem(" Hibernate")
+        self.complete_combobox_3.addItem(" Idle")
+        self.complete_combobox_3.addItem(" Quit")
+        self.complete_combobox_3.addItem(" Lock")
+        self.complete_combobox_3.addItem(" Turn off")
+        self.complete_combobox_3.addItem(" Log off")
+        self.complete_combobox_3.addItem(" Standby")
+        self.complete_combobox_3.addItem(" Hibernate")
         self.delay_time_combobox_2.addItem("ms")
         self.delay_time_combobox_2.addItem("s")
         self.delay_time_combobox_2.addItem("min")
@@ -894,6 +921,7 @@ class UI(QMainWindow):
         self.record_remove_all_button.clicked.connect(self.remove_all_lines)
         self.never_stop_combobox.currentIndexChanged.connect(self.check_repeat_style)
         self.complete_combobox.activated.connect(lambda: self.on_click_complete_label.hide())
+        self.complete_combobox_3.activated.connect(lambda: self.on_click_complete_label_3.hide())
         # --------------
         # below defines hotkey settings
         self.label_21 = self.findChild(QLabel, "label_21")
@@ -967,6 +995,13 @@ class UI(QMainWindow):
         self.complete_combobox.setItemData(4, "Sign out of the PC with all the apps closed", QtCore.Qt.ToolTipRole)
         self.complete_combobox.setItemData(5, "Put the PC to Standby mode", QtCore.Qt.ToolTipRole)
         self.complete_combobox.setItemData(6, "Put the  PC to Hibernate mode", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(0, "No changes to PC", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(1, "Close the tool (PC keeps running)", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(2, "Sign out of PC with apps still running", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(3, "Shut down the PC", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(4, "Sign out of the PC with all the apps closed", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(5, "Put the PC to Standby mode", QtCore.Qt.ToolTipRole)
+        self.complete_combobox_3.setItemData(6, "Put the  PC to Hibernate mode", QtCore.Qt.ToolTipRole)
         # --------------
         # below are app settings initialized
         self.hide_to_tray_checkbox2 = self.findChild(QPushButton, "hide_to_tray_checkbox2")
@@ -1028,6 +1063,7 @@ class UI(QMainWindow):
             item.setFont(self.font)
         self.font.setPixelSize(11)
         self.on_click_complete_label.setFont(self.font)
+        self.on_click_complete_label_3.setFont(self.font)
         self.font.setPixelSize(10)
         self.label_10.setFont(self.font)
         self.font.setPixelSize(11)
@@ -1091,7 +1127,7 @@ class UI(QMainWindow):
         username = self.username_signup.text()
         password = self.password_signup.text()
         unique_id = str(device_id.get_windows_uuid())
-        whether_subscribed = 1
+        whether_subscribed = 0
         # uic.loadUi("signup_screen.ui", self)
         if len(username)==0 or len(password)==0:
             self.message.setText("Please fill in all inputs.")
@@ -1118,6 +1154,7 @@ class UI(QMainWindow):
 
             if result_tuple_device_id is not None:
                 # device_id already exists
+                print(result_tuple_device_id)
                 self.message_2.setText("This device is already registered. Log in to continue!")
 
             elif result_tuple_username is not None:
@@ -1137,6 +1174,8 @@ class UI(QMainWindow):
         # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
         # self.signup_Butt.clicked.connect(self.signupfunction)
 
+    def whether_logged_in(self):
+        return self.settings.value("LOGGED_IN")
 
     def gotologin(self):
         self.get_login_screen()
@@ -1180,6 +1219,10 @@ class UI(QMainWindow):
                 result_whether_subscribed = result_tuple[2]
                 result_device_id = result_tuple[3]
                 if result_pass == password and result_device_id == unique_id and result_username == username:
+                    self.settings.setValue("LOGGED_IN",True)
+                    self.top_frame_logged_out.hide()
+                    self.top_frame.show()
+                    self.name.setText(str(username))
                     self.message.setText("Successfully logged in!")
                 elif result_pass != password:
                     self.message.setText("Invalid password!")
@@ -1339,6 +1382,15 @@ class UI(QMainWindow):
                                      "QLineEdit {color: black;"
                                      "background-color: rgb(249, 249, 245);"
                                      "border: none}")
+        self.top_frame_logged_out.setStyleSheet("QFrame {background-color: #10131b;"
+                                     "color: #bfcfb2;"
+                                     "border: none;}"
+                                     "QComboBox {color: black;"
+                                     "background-color: rgb(249, 249, 245);"
+                                     "border: none}"
+                                     "QLineEdit {color: black;"
+                                     "background-color: rgb(249, 249, 245);"
+                                     "border: none}")
         self.home_frame.setStyleSheet("QFrame {background-color: #10131b;"
                                       "color: #bfcfb2;"
                                       "border: none;}"
@@ -1375,6 +1427,12 @@ class UI(QMainWindow):
                                             "border: 1px solid #bfcfb2;"
                                             "color: #bfcfb2;}")
         self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
+                                                   "background-color: rgb(249, 249, 245);"
+                                                   "border: none;}"
+                                                   'QToolTip {'
+                                                   'background-color: #e0e0e0;'
+                                                   'border: none;}')
+        self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
                                                    'QToolTip {'
@@ -1621,6 +1679,19 @@ class UI(QMainWindow):
                                      "border-radius: 3px solid;}"
                                      "QRadioButton {color: rgb(30, 30, 30);"
                                      "border: none;}")
+        self.top_frame_logged_out.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
+                                     "color: rgb(30, 30, 30);"
+                                     "border: none;}"
+                                     "QComboBox {color: rgb(30, 30, 30);"
+                                     "background-color: rgb(249, 249, 245);"
+                                     "border: 1px solid;"
+                                     "border-radius: 3px;}"
+                                     "QLineEdit {color: rgb(30, 30, 30);"
+                                     "background-color: rgb(249, 249, 245);"
+                                     "border: 1px solid;"
+                                     "border-radius: 3px solid;}"
+                                     "QRadioButton {color: rgb(30, 30, 30);"
+                                     "border: none;}")
         self.home_frame.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
                                       "color: rgb(30, 30, 30);"
                                       "border: none;}"
@@ -1660,6 +1731,12 @@ class UI(QMainWindow):
                                             "border: 1px solid rgb(204, 204, 204);"
                                             "color: rgb(30, 30, 30);}")
         self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
+                                                   "background-color: rgb(249, 249, 245);"
+                                                   "border: none;}"
+                                                   'QToolTip {'
+                                                   'background-color: #e0e0e0;'
+                                                   'border: none;}')
+        self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
                                                    'QToolTip {'
@@ -1905,10 +1982,12 @@ class UI(QMainWindow):
         self.settings.setValue('APPID', id)
         self.settings.setValue("APPKEY", key)
         self.settings.setValue("USERNAME", username)
+        self.settings.setValue("LOGGED_IN", False)
         print("^^^^^^")
         print(self.settings.value("APPID"))
         print(self.settings.value("APPKEY"))
         print(self.settings.value("USERNAME"))
+        print(self.settings.value("LOGGED_IN"))
         print("^^^^^^")
 
     # function to get the current app id and key stored in Qsettings
@@ -1927,7 +2006,11 @@ class UI(QMainWindow):
         cur.execute(query)
         conn.close()
         self.settings.setValue("APPKEY", "")
+        self.settings.setValue("LOGGED_IN", False)
         self.username_box.setText("")
+        self.top_frame.hide()
+        self.top_frame_logged_out.show()
+        self.get_home_screen
 
     # function to check if a given app_key is valid or expired
     def checkAppKey(self, key):
@@ -1966,9 +2049,9 @@ class UI(QMainWindow):
         # settings = QSettings()
         id = self.settings.value("APPID")
         key = self.settings.value("APPKEY")
-        if key == "":
+        if self.settings.value("LOGGED_IN") == False:
             # logged out state
-            self.subscription_check_frame.show()
+            self.get_subscription_check_screen()
         else:
             # logged in state, check if the current App id is of a subscribed user or not
             conn = sqlite3.connect('autoclicker.db')
@@ -1981,21 +2064,17 @@ class UI(QMainWindow):
             # print(result_tuple)
             if result_tuple is None:
                 # the app_id doesnt exist in database, prompt the user to sign up.
-                self.subscription_check_frame.show()
+                self.get_subscription_check_screen()
             else:
 
                 result_whether_subscribed = result_tuple[0]
                 if result_whether_subscribed == 1:
                     # grant access to premium feature
-                    self.record_frame.show()
+                    self.get_record_screen()
 
                 else:
                     # access denied page hows up and prompt the user to subscribe
-                    self.access_denied_frame.show()
-
-
-
-
+                    self.get_access_denied_screen()
 
 
     # gets view settings screen in front
@@ -3782,7 +3861,12 @@ class UI(QMainWindow):
             self.showNormal()
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
-        computer_type = self.complete_combobox.currentText()
+
+        if self.whether_logged_in() == True:
+            computer_type = self.complete_combobox.currentText()
+        else:
+            computer_type = self.complete_combobox_3.currentText()
+
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
         elif computer_type == " Log off":
@@ -3904,7 +3988,12 @@ class UI(QMainWindow):
         toaster.show_toast(title="Playback completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
-        computer_type = self.complete_combobox.currentText()
+
+        if self.whether_logged_in() == True:
+            computer_type = self.complete_combobox.currentText()
+        else:
+            computer_type = self.complete_combobox_3.currentText()
+
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
         elif computer_type == " Log off":

@@ -4023,8 +4023,8 @@ border: none; }</string>
       </widget>
       <zorder>main_frame</zorder>
       <zorder>left_frame</zorder>
-      <zorder>top_frame_logged_out</zorder>
       <zorder>top_frame</zorder>
+      <zorder>top_frame_logged_out</zorder>
      </widget>
     </item>
    </layout>
