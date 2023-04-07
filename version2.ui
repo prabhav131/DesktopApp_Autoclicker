@@ -295,19 +295,6 @@ border: none; }</string>
          <string>Good Morning</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="login_signup_button">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>30</y>
-          <width>75</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>login/signup</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="name">
         <property name="geometry">
          <rect>
@@ -326,7 +313,6 @@ border: none; }</string>
        <zorder>profile_button</zorder>
        <zorder>on_click_label</zorder>
        <zorder>label_10</zorder>
-       <zorder>login_signup_button</zorder>
        <zorder>log_out_button</zorder>
        <zorder>name</zorder>
       </widget>
@@ -4010,8 +3996,8 @@ border: none; }</string>
        <widget class="QPushButton" name="login_signup_button_3">
         <property name="geometry">
          <rect>
-          <x>450</x>
-          <y>40</y>
+          <x>459</x>
+          <y>43</y>
           <width>75</width>
           <height>23</height>
          </rect>

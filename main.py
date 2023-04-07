@@ -20,7 +20,8 @@ import functions
 import ctypes
 from win10toast import ToastNotifier
 import pynput
-from datetime import datetime
+import datetime
+from datetime import timedelta
 import webbrowser
 
 
@@ -553,7 +554,7 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
-        self.login_signup_button.clicked.connect(self.gotologin_signup)
+        # self.login_signup_button.clicked.connect(self.gotologin_signup)
         self.login_signup_button_3.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
@@ -572,14 +573,16 @@ class UI(QMainWindow):
             if result_tuple is not None:
                 app_key_temp = result_tuple[2]
                 if app_key_temp == initial_app_key:
-                    is_key_valid = checkAppKey(app_key_temp)
+                    is_key_valid = self.checkAppKey(app_key_temp)
                     if is_key_valid == 1:
                         pass
                         # TODO: redirect to home screen in logged in state
+                        self.top_frame_logged_out.hide()
+                        self.top_frame.show()
+                        self.settings.setValue("LOGGED_IN",True)
+                        self.name.setText(str(initial_username))
                     else:
                         self.logout()
-
-
 
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
@@ -775,8 +778,12 @@ class UI(QMainWindow):
         self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
         self.navigate_button = self.findChild(QPushButton, "navigate_button")
         self.navigate_button.setIcon(QtGui.QIcon("images/Hambuger"))
+        self.navigate_button_3 = self.findChild(QPushButton, "navigate_button_3")
+        self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
         self.profile_button = self.findChild(QPushButton, "profile_button")
         self.profile_button.setIcon(QtGui.QIcon("images/liliajohn"))
+        self.profile_button_3 = self.findChild(QPushButton, "profile_button_3")
+        self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn"))
         self.record_add_button = self.findChild(QPushButton, "record_add_button")
         self.record_add_button.setIcon(QtGui.QIcon("images/icons8-ui-64"))
         self.record_add_items = self.findChild(QComboBox, "record_add_items")
@@ -910,6 +917,7 @@ class UI(QMainWindow):
         self.view_settings_button.clicked.connect(self.get_view_screen)
         self.hotkey_settings_button.clicked.connect(self.get_hotkey_screen)
         self.navigate_button.clicked.connect(self.open_menu)
+        self.navigate_button_3.clicked.connect(self.open_menu)
         self.play_button.clicked.connect(self.home_start_process)
         self.reset_settings_button.clicked.connect(self.home_reset_settings)
         self.record_add_button.clicked.connect(self.add_new_line)
@@ -1192,12 +1200,12 @@ class UI(QMainWindow):
         unique_id = str(device_id.get_windows_uuid())
         app_key_temp = functions.randomword(12)
         self.createNewAppKey(unique_id,app_key_temp,username) # creating new app id and app key.
-        ## TODO: have to assign expiration date to this app key and insert a new row in SESSIONS_TABLE
-        id, key, username = self.getAppIdKey()
-        print(id)
-        print("-------")
-        print(key)
-        print(".............")
+
+        # app_id, app_key, username = self.getAppIdKey()
+        # print(app_id)
+        # print("-------")
+        # print(app_key)
+        # print(".............")
 
         if len(username)==0 or len(password)==0:
             self.message.setText("Please input all fields.")
@@ -1224,6 +1232,28 @@ class UI(QMainWindow):
                     self.top_frame.show()
                     self.name.setText(str(username))
                     self.message.setText("Successfully logged in!")
+
+                    current_datetime_temp = datetime.datetime.now()
+
+                    expiration_datetime = current_datetime_temp + timedelta(days=1) # calculating new expiry date for app session
+                    key_expiration = str(expiration_datetime) # converting from datetime object to string object to store in the database
+                    # updating session_details table with new expiration date for exisiting/new app id
+
+                    conn = sqlite3.connect('autoclicker.db')
+                    cursor = conn.cursor()
+                    delete_existing_session_if_exists = 'DELETE FROM session_details WHERE application_id = \'' + unique_id + "\'"
+                    cursor.execute(delete_existing_session_if_exists)
+                    print('deleted row if present')
+                    add_new_row = f'''INSERT INTO session_details VALUES (
+                            '{username}',
+                            '{unique_id}',
+                            '{app_key_temp}',
+                            '{key_expiration}'
+                            )'''
+                    cursor.execute(add_new_row)
+                    conn.commit()
+                    conn.close()
+                    print('added row in session_details')
                 elif result_pass != password:
                     self.message.setText("Invalid password!")
                 elif result_username != username:
@@ -1426,6 +1456,11 @@ class UI(QMainWindow):
         self.navigation_frame.setStyleSheet("QPushButton {background-color: #10131b;"
                                             "border: 1px solid #bfcfb2;"
                                             "color: #bfcfb2;}")
+        self.navigate_button_3.setStyleSheet("border:none;")
+        self.navigate_button_3.setIcon(QtGui.QIcon("images/Menu_dark.png"))
+        self.navigation_frame.setStyleSheet("QPushButton {background-color: #10131b;"
+                                            "border: 1px solid #bfcfb2;"
+                                            "color: #bfcfb2;}")
         self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
@@ -1440,6 +1475,8 @@ class UI(QMainWindow):
                                                    'border: none;}')
         self.profile_button.setStyleSheet("border: none;")
         self.profile_button.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
+        self.profile_button_3.setStyleSheet("border: none;")
+        self.profile_button_3.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
         self.username_box.setStyleSheet("QLineEdit {background-color: #10131b;"
                                         "color: #bfcfb2;}"
                                         "QToolTip {background-color: #e0e0e0;}")
@@ -1727,6 +1764,8 @@ class UI(QMainWindow):
         self.foot_note_label.setStyleSheet("border:none;")
         self.navigate_button.setStyleSheet("border:none;")
         self.navigate_button.setIcon(QtGui.QIcon("images/Hambuger"))
+        self.navigate_button_3.setStyleSheet("border:none;")
+        self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
         self.navigation_frame.setStyleSheet("QPushButton {background-color: rgb(242,242,242);"
                                             "border: 1px solid rgb(204, 204, 204);"
                                             "color: rgb(30, 30, 30);}")
@@ -1744,6 +1783,8 @@ class UI(QMainWindow):
                                                    'border: none;}')
         self.profile_button.setStyleSheet("border: none;")
         self.profile_button.setIcon(QtGui.QIcon("images/liliajohn.png"))
+        self.profile_button_3.setStyleSheet("border: none;")
+        self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn.png"))
         self.username_box.setStyleSheet("QLabel {background-color: rgb(239, 229, 220);"
                                         "color: rgb(30, 30, 30);"
                                         "border: none;}"
@@ -2027,10 +2068,19 @@ class UI(QMainWindow):
             if app_key_expiration_time == '':
                 return 0 # the expiration date stored in database is an empty string. Hence it cant be valid.
             current_time = datetime.datetime.now()
-            expiration_datetime_object = datetime.strptime(app_key_expiration_time, '%Y-%m-%d %H:%M:%S')
+            expiration_datetime_object = datetime.datetime.strptime(app_key_expiration_time, '%Y-%m-%d %H:%M:%S.%f')
+            # expiration_datetime_object = datetime.datetime(
+            #  app_key_expiration_time.date().year,
+            #  app_key_expiration_time.date().month,
+            #  app_key_expiration_time.date().day,
+            #  app_key_expiration_time.time().hour,
+            #  app_key_expiration_time.time().minute,
+            #  app_key_expiration_time.time().second)
+
             if expiration_datetime_object > current_time:
                 # key hasnt expired yet
                 return 1
+
         return 0 # 0 is returned if app_key is expired or if it doesnt exist in the database
 
 
@@ -2280,12 +2330,16 @@ class UI(QMainWindow):
         self.navigation_frame.raise_()
         self.navigate_button.clicked.disconnect()
         self.navigate_button.clicked.connect(self.close_menu)
+        self.navigate_button_3.clicked.disconnect()
+        self.navigate_button_3.clicked.connect(self.close_menu)
 
     # closes the menu bar
     def close_menu(self):
         self.navigation_frame.lower()
         self.navigate_button.clicked.disconnect()
         self.navigate_button.clicked.connect(self.open_menu)
+        self.navigate_button_3.clicked.disconnect()
+        self.navigate_button_3.clicked.connect(self.open_menu)
 
     # triggered by record -> save button (pop-up window)
     def window_record_save(self):
