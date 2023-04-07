@@ -575,8 +575,7 @@ class UI(QMainWindow):
                 if app_key_temp == initial_app_key:
                     is_key_valid = self.checkAppKey(app_key_temp)
                     if is_key_valid == 1:
-                        pass
-                        # TODO: redirect to home screen in logged in state
+                        # redirect to home screen in logged in state
                         self.top_frame_logged_out.hide()
                         self.top_frame.show()
                         self.settings.setValue("LOGGED_IN",True)
@@ -1134,11 +1133,12 @@ class UI(QMainWindow):
 
         username = self.username_signup.text()
         password = self.password_signup.text()
-        unique_id = str(device_id.get_windows_uuid())
+        # unique_id = str(device_id.get_windows_uuid())
+        unique_id = 'abcf33' # for sample
         whether_subscribed = 0
         # uic.loadUi("signup_screen.ui", self)
         if len(username)==0 or len(password)==0:
-            self.message.setText("Please fill in all inputs.")
+            self.message_2.setText("Please fill in all inputs.")
 
         else:
             conn = sqlite3.connect('autoclicker.db')
@@ -1152,8 +1152,6 @@ class UI(QMainWindow):
             # conn.close()
 
             #check if device_id already exists
-            # conn = sqlite3.connect('autoclicker.db')
-            # cur = conn.cursor()
             query_2 = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
             cur.execute(query_2)
 
@@ -1177,7 +1175,17 @@ class UI(QMainWindow):
 
                 conn.commit()
                 conn.close()
+                # redirect to home screen in logged in state
+
+
                 self.message_2.setText("Account Created!")
+
+                self.top_frame_logged_out.hide()
+                self.top_frame.show()
+                self.settings.setValue("LOGGED_IN",True)
+                self.name.setText(str(username))
+                time.sleep(1)
+                self.get_home_screen()
 
         # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
         # self.signup_Butt.clicked.connect(self.signupfunction)
@@ -1198,8 +1206,6 @@ class UI(QMainWindow):
         username = self.username_login.text()
         password = self.password_login.text()
         unique_id = str(device_id.get_windows_uuid())
-        app_key_temp = functions.randomword(12)
-        self.createNewAppKey(unique_id,app_key_temp,username) # creating new app id and app key.
 
         # app_id, app_key, username = self.getAppIdKey()
         # print(app_id)
@@ -1221,17 +1227,25 @@ class UI(QMainWindow):
             # print(result_tuple)
             if result_tuple is None:
                 self.message.setText("Device is not registered!")
+                username = self.username_login.setText("")
+                password = self.password_login.setText("")
             else:
                 result_username = result_tuple[0]
                 result_pass = result_tuple[1]
                 result_whether_subscribed = result_tuple[2]
                 result_device_id = result_tuple[3]
                 if result_pass == password and result_device_id == unique_id and result_username == username:
+
+                    self.message.setText("Successfully logged in!")
+                    app_key_temp = functions.randomword(12)
+                    self.createNewAppKey(unique_id,app_key_temp,username) # creating new app id and app key.
+                    # redirect to home screen in logged in state
+                    time.sleep(1)
+                    self.get_home_screen()
                     self.settings.setValue("LOGGED_IN",True)
                     self.top_frame_logged_out.hide()
                     self.top_frame.show()
                     self.name.setText(str(username))
-                    self.message.setText("Successfully logged in!")
 
                     current_datetime_temp = datetime.datetime.now()
 
@@ -1243,7 +1257,7 @@ class UI(QMainWindow):
                     cursor = conn.cursor()
                     delete_existing_session_if_exists = 'DELETE FROM session_details WHERE application_id = \'' + unique_id + "\'"
                     cursor.execute(delete_existing_session_if_exists)
-                    print('deleted row if present')
+                    print('deleted app_id row if already present in session_details')
                     add_new_row = f'''INSERT INTO session_details VALUES (
                             '{username}',
                             '{unique_id}',
@@ -1254,12 +1268,19 @@ class UI(QMainWindow):
                     conn.commit()
                     conn.close()
                     print('added row in session_details')
+                elif result_username != username:
+                    self.message.setText("Invalid username for this device")
+                    time.sleep(2)
+                    self.message.setText("")
+                    username = self.username_login.setText("")
+                    password = self.password_login.setText("")
                 elif result_pass != password:
                     self.message.setText("Invalid password!")
-                elif result_username != username:
-                    self.message.setText("Invalid username!")
-                elif result_device_id != unique_id:
-                    self.message.setText("Please use the original device of this user to login")
+                    time.sleep(2)
+                    self.message.setText("")
+                    password = self.password_login.setText("")
+
+
 
         self.login_Butt.clicked.connect(self.loginfunction)
         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
@@ -2051,7 +2072,7 @@ class UI(QMainWindow):
         self.username_box.setText("")
         self.top_frame.hide()
         self.top_frame_logged_out.show()
-        self.get_home_screen
+        self.get_home_screen()
 
     # function to check if a given app_key is valid or expired
     def checkAppKey(self, key):
