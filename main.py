@@ -1,6 +1,6 @@
 import csv
 import pandas as pd
-import device_id
+from device_id_file import device_id
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
     QLineEdit, QSpinBox, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
@@ -16,7 +16,7 @@ import time
 import mouse
 import keyboard
 import random
-import functions
+from functions_file import functions
 import ctypes
 from win10toast import ToastNotifier
 import pynput
@@ -2127,7 +2127,7 @@ class UI(QMainWindow):
             # logged in state, check if the current App id is of a subscribed user or not
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
-            query = 'SELECT whether_subscribed FROM user_info WHERE username =\''+id+"\'"
+            query = 'SELECT whether_subscribed FROM user_info WHERE unique_device_id =\''+id+"\'"
             cur.execute(query)
 
             result_tuple = cur.fetchone()
@@ -2136,6 +2136,7 @@ class UI(QMainWindow):
             if result_tuple is None:
                 # the app_id doesnt exist in database, prompt the user to sign up.
                 self.get_subscription_check_screen()
+                print("heree")
             else:
 
                 result_whether_subscribed = result_tuple[0]
