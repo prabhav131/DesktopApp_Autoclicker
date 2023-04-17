@@ -308,6 +308,19 @@ border: none; }</string>
          <string>NAME</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="buy_button">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>BUY SUBSCRIPTION</string>
+        </property>
+       </widget>
        <zorder>navigate_button</zorder>
        <zorder>complete_combobox</zorder>
        <zorder>profile_button</zorder>
@@ -315,6 +328,7 @@ border: none; }</string>
        <zorder>label_10</zorder>
        <zorder>log_out_button</zorder>
        <zorder>name</zorder>
+       <zorder>buy_button</zorder>
       </widget>
       <widget class="QFrame" name="main_frame">
        <property name="geometry">
@@ -2396,18 +2410,18 @@ background-color: rgb(252, 252, 252)</string>
             <rect>
              <x>187</x>
              <y>14</y>
-             <width>25</width>
-             <height>25</height>
+             <width>31</width>
+             <height>21</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <pointsize>7</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(239, 229, 220);
+background-color: rgb(158, 27 ,163);
 border: none;
 
 }
@@ -2419,7 +2433,7 @@ border: none;
 </string>
            </property>
            <property name="text">
-            <string/>
+            <string>change</string>
            </property>
            <property name="icon">
             <iconset>
@@ -2482,18 +2496,18 @@ background-color: rgb(252, 252, 252)</string>
             <rect>
              <x>187</x>
              <y>14</y>
-             <width>25</width>
-             <height>25</height>
+             <width>31</width>
+             <height>21</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <pointsize>7</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(239, 229, 220);
+background-color: rgb(158, 27 ,163);
 border: none;
 
 }
@@ -2505,7 +2519,7 @@ border: none;
 </string>
            </property>
            <property name="text">
-            <string/>
+            <string>change</string>
            </property>
            <property name="icon">
             <iconset>
@@ -2589,18 +2603,18 @@ background-color: rgb(252, 252, 252)</string>
             <rect>
              <x>187</x>
              <y>14</y>
-             <width>25</width>
-             <height>25</height>
+             <width>31</width>
+             <height>21</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <pointsize>7</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(239, 229, 220);
+background-color: rgb(158, 27 ,163);
 border: none;
 
 }
@@ -2612,7 +2626,7 @@ border: none;
 </string>
            </property>
            <property name="text">
-            <string/>
+            <string>change</string>
            </property>
            <property name="icon">
             <iconset>
@@ -2696,18 +2710,18 @@ background-color: rgb(252, 252, 252)</string>
             <rect>
              <x>187</x>
              <y>14</y>
-             <width>25</width>
-             <height>25</height>
+             <width>31</width>
+             <height>21</height>
             </rect>
            </property>
            <property name="font">
             <font>
-             <pointsize>9</pointsize>
+             <pointsize>7</pointsize>
             </font>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton{
-background-color: rgb(239, 229, 220);
+background-color: rgb(158, 27 ,163);
 border: none;
 
 }
@@ -2719,7 +2733,7 @@ border: none;
 </string>
            </property>
            <property name="text">
-            <string/>
+            <string>change</string>
            </property>
            <property name="icon">
             <iconset>
@@ -3197,6 +3211,43 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#ff0000;&quot;&gt;Subscribe to premium version to access this.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
+        <widget class="QFrame" name="buying_frame">
+         <property name="geometry">
+          <rect>
+           <x>72</x>
+           <y>0</y>
+           <width>570</width>
+           <height>441</height>
+          </rect>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QTextEdit" name="textEdit_3">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>30</y>
+            <width>281</width>
+            <height>161</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: none</string>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#ff0000;&quot;&gt;Sorry! This is a Premium feature. You currently dont have access to this.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#ff0000;&quot;&gt;Subscribe to premium version to access this.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </widget>
        </widget>
        <widget class="QFrame" name="login_frame">
         <property name="geometry">
@@ -3473,18 +3524,18 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </widget>
-       <zorder>navigation_frame</zorder>
+       <zorder>hotkey_settings_frame</zorder>
        <zorder>foot_note_label</zorder>
        <zorder>live_mouse_label</zorder>
        <zorder>record_frame</zorder>
-       <zorder>hotkey_settings_frame</zorder>
        <zorder>view_settings_frame</zorder>
        <zorder>login_signup_frame</zorder>
-       <zorder>access_denied_frame</zorder>
+       <zorder>navigation_frame</zorder>
        <zorder>subscription_check_frame</zorder>
        <zorder>login_frame</zorder>
        <zorder>signup_frame</zorder>
        <zorder>home_frame</zorder>
+       <zorder>access_denied_frame</zorder>
       </widget>
       <widget class="QFrame" name="left_frame">
        <property name="geometry">
@@ -4004,6 +4055,19 @@ border: none; }</string>
         </property>
         <property name="text">
          <string>login/signup</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buy_button_3">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>111</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>BUY SUBSCRIPTION</string>
         </property>
        </widget>
       </widget>

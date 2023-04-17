@@ -1,5 +1,5 @@
 import csv
-import pandas as pd
+# import pandas as pd
 from device_id_file import device_id
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
@@ -558,30 +558,6 @@ class UI(QMainWindow):
         self.login_signup_button_3.clicked.connect(self.gotologin_signup)
         # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
-        initial_app_id, initial_app_key, initial_username = self.getAppIdKey()
-        initial_device_id = str(device_id.get_windows_uuid())
-        if initial_app_id == initial_device_id:
-            app_id_temp = initial_device_id
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-
-            query = 'SELECT * FROM session_details WHERE application_id =\''+app_id_temp+"\'"
-            cur.execute(query)
-
-            result_tuple = cur.fetchone()
-            conn.close()
-            if result_tuple is not None:
-                app_key_temp = result_tuple[2]
-                if app_key_temp == initial_app_key:
-                    is_key_valid = self.checkAppKey(app_key_temp)
-                    if is_key_valid == 1:
-                        # redirect to home screen in logged in state
-                        self.top_frame_logged_out.hide()
-                        self.top_frame.show()
-                        self.settings.setValue("LOGGED_IN",True)
-                        self.name.setText(str(initial_username))
-                    else:
-                        self.logout()
 
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
@@ -1113,6 +1089,49 @@ class UI(QMainWindow):
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
+        # checking if there is a valid user session on startup of app
+        initial_app_id, initial_app_key, initial_username = self.getAppIdKey()
+        initial_device_id = str(device_id.get_windows_uuid())
+
+        if initial_app_id == initial_device_id:
+            # print(initial_app_key + "$$$")
+            app_id_temp = initial_device_id
+            conn = sqlite3.connect('autoclicker.db')
+            cur = conn.cursor()
+
+            query = 'SELECT * FROM session_details WHERE application_id =\''+app_id_temp+"\'"
+            cur.execute(query)
+
+            result_tuple = cur.fetchone()
+            conn.close()
+            if result_tuple is not None:
+                # print("hereeee")
+                # print(self.settings.value("LOGGED_IN"))
+                app_key_temp = result_tuple[2]
+                # print(app_key_temp + "---")
+                # print(initial_app_key)
+                if initial_app_key!= "" and app_key_temp == initial_app_key:
+                    print("kokos")
+                    is_key_valid = self.checkAppKey(app_key_temp)
+                    print(is_key_valid)
+                    if is_key_valid == 1:
+                        # redirect to home screen in logged in state
+                        self.top_frame_logged_out.hide()
+                        self.top_frame.show()
+                        self.settings.setValue("LOGGED_IN",1)
+                        print("key validated")
+                        self.name.setText(str(initial_username))
+                    else:
+                        print("no valid key")
+                        self.logout()
+                else:
+                    print("no valid key")
+                    self.logout()
+            else:
+                print("no valid key")
+                self.logout()
+
+
     def gotologin_signup(self):
         # initial_screen = login_signup_screen()
         # self.hide()
@@ -1133,9 +1152,9 @@ class UI(QMainWindow):
 
         username = self.username_signup.text()
         password = self.password_signup.text()
-        # unique_id = str(device_id.get_windows_uuid())
-        unique_id = 'abcf33' # for sample
-        whether_subscribed = 0
+        unique_id = str(device_id.get_windows_uuid())
+        # unique_id = 'abcf33' # for sample
+        whether_subscribed = 1
         # uic.loadUi("signup_screen.ui", self)
         if len(username)==0 or len(password)==0:
             self.message_2.setText("Please fill in all inputs.")
@@ -1182,7 +1201,7 @@ class UI(QMainWindow):
 
                 self.top_frame_logged_out.hide()
                 self.top_frame.show()
-                self.settings.setValue("LOGGED_IN",True)
+                self.settings.setValue("LOGGED_IN",1)
                 self.name.setText(str(username))
                 time.sleep(1)
                 self.get_home_screen()
@@ -1242,7 +1261,7 @@ class UI(QMainWindow):
                     # redirect to home screen in logged in state
                     time.sleep(1)
                     self.get_home_screen()
-                    self.settings.setValue("LOGGED_IN",True)
+                    self.settings.setValue("LOGGED_IN",1)
                     self.top_frame_logged_out.hide()
                     self.top_frame.show()
                     self.name.setText(str(username))
@@ -1479,9 +1498,7 @@ class UI(QMainWindow):
                                             "color: #bfcfb2;}")
         self.navigate_button_3.setStyleSheet("border:none;")
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Menu_dark.png"))
-        self.navigation_frame.setStyleSheet("QPushButton {background-color: #10131b;"
-                                            "border: 1px solid #bfcfb2;"
-                                            "color: #bfcfb2;}")
+
         self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
@@ -1494,6 +1511,7 @@ class UI(QMainWindow):
                                                    'QToolTip {'
                                                    'background-color: #e0e0e0;'
                                                    'border: none;}')
+        # self.set_new_hotkey_1.setStyleSheet
         self.profile_button.setStyleSheet("border: none;")
         self.profile_button.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
         self.profile_button_3.setStyleSheet("border: none;")
@@ -1961,6 +1979,7 @@ class UI(QMainWindow):
 
     # gets home screen in front
     def get_home_screen(self):
+        self.navigation_frame.lower()
         self.home_frame.show()
         self.login_signup_frame.show()
         self.record_frame.hide()
@@ -2044,7 +2063,7 @@ class UI(QMainWindow):
         self.settings.setValue('APPID', id)
         self.settings.setValue("APPKEY", key)
         self.settings.setValue("USERNAME", username)
-        self.settings.setValue("LOGGED_IN", False)
+        self.settings.setValue("LOGGED_IN", 0)
         print("^^^^^^")
         print(self.settings.value("APPID"))
         print(self.settings.value("APPKEY"))
@@ -2061,14 +2080,15 @@ class UI(QMainWindow):
         return id, key, username
 
     def logout(self):
-        print("logging out!")
+
         conn = sqlite3.connect('autoclicker.db')
         cur = conn.cursor()
         query = 'UPDATE session_details SET application_key = \'\', key_expiration_date = \'\' WHERE application_id =\''+self.settings.value("APPID")+"\'"
         cur.execute(query)
         conn.close()
         self.settings.setValue("APPKEY", "")
-        self.settings.setValue("LOGGED_IN", False)
+        self.settings.setValue("LOGGED_IN", 0)
+        print("logging out!")
         self.username_box.setText("")
         self.top_frame.hide()
         self.top_frame_logged_out.show()
@@ -2107,23 +2127,20 @@ class UI(QMainWindow):
 
     # gets record screen in front
     def get_record_screen(self):
-        self.access_denied_frame.hide()
-        self.subscription_check_frame.hide()
-        self.login_signup_frame.hide()
 
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
-        self.foot_note_label.setText('')
+        self.navigation_frame.lower()
         # settings = QSettings()
         id = self.settings.value("APPID")
         key = self.settings.value("APPKEY")
-        if self.settings.value("LOGGED_IN") == False:
+        status = self.settings.value("LOGGED_IN")
+        # print(id + "-" + key + "-" + str(status))
+        if status == 0:
             # logged out state
             self.get_subscription_check_screen()
+            print("logged out state mein hu")
         else:
+            print(status)
+            print("logged in mein hu")
             # logged in state, check if the current App id is of a subscribed user or not
             conn = sqlite3.connect('autoclicker.db')
             cur = conn.cursor()
@@ -2142,7 +2159,16 @@ class UI(QMainWindow):
                 result_whether_subscribed = result_tuple[0]
                 if result_whether_subscribed == 1:
                     # grant access to premium feature
-                    self.get_record_screen()
+                    self.access_denied_frame.hide()
+                    self.subscription_check_frame.hide()
+                    self.login_signup_frame.hide()
+                    self.view_settings_frame.hide()
+                    self.hotkey_settings_frame.hide()
+                    self.home_frame.hide()
+                    self.login_frame.hide()
+                    self.signup_frame.hide()
+                    self.foot_note_label.setText('')
+                    self.record_frame.show()
 
                 else:
                     # access denied page hows up and prompt the user to subscribe
@@ -2151,6 +2177,7 @@ class UI(QMainWindow):
 
     # gets view settings screen in front
     def get_view_screen(self):
+        self.navigation_frame.lower()
         self.access_denied_frame.hide()
         self.subscription_check_frame.hide()
         self.login_signup_frame.hide()
@@ -2164,6 +2191,7 @@ class UI(QMainWindow):
 
     # gets hotkey settings screen in front
     def get_hotkey_screen(self):
+        self.navigation_frame.lower()
         self.access_denied_frame.hide()
         self.subscription_check_frame.hide()
         self.login_signup_frame.hide()
@@ -2521,7 +2549,7 @@ class UI(QMainWindow):
             csv_text = ', '.join(csv_list)
             actions_data.append(csv_text)
         full_csv_text = '---'.join(actions_data)
-        saved_date = datetime.today().strftime('%Y-%m-%d %H:%M')
+        saved_date = datetime.datetime.today().strftime('%Y-%m-%d %H:%M')
         if self.repeat_for_number_2.text() == '':
             repeat_all = '1'
         else:
@@ -2618,7 +2646,7 @@ class UI(QMainWindow):
         self.load_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
         self.load_window.setWindowTitle("Load")
         self.load_window.setWindowIcon(QtGui.QIcon("images/uplode_dark"))
-        self.load_window.setGeometry(770, 350, 400, 400)
+        self.load_window.setGeometry(575, 250, 400, 400)
         self.load_window.setFixedWidth(400)
         self.load_window.setFixedHeight(400)
         self.invisible_widget_2 = QWidget(self.load_window)
@@ -2804,17 +2832,45 @@ class UI(QMainWindow):
             self.load_list.addItem(list_item)
             self.j += 1
 
+    # function to read a CSV without using pandas
+    def read_csv(self, csv_file):
+        data = []
+        with open(csv_file, 'r') as f:
+
+            # create a list of rows in the CSV file
+            rows = f.readlines()
+
+            # strip white-space and newlines
+            rows = list(map(lambda x:x.strip(), rows))
+
+            for row in rows:
+
+                # further split each row into columns assuming delimiter is comma
+                row = row.split(',')
+
+                # append to data-frame our new row-object with columns
+                data.append(row)
+
+        return data
+
     # loads selected action from pc (csv files)
     def load_selected_from_pc(self):
         fetched_data_home = []
         file_name, _ = QFileDialog.getOpenFileName(self, "Choose File", "", "CSV Files(*.csv)")
+        # print(type(file_name))
         if file_name:
-            f = pd.read_csv(file_name, header=None)
+            # f = pd.read_csv(file_name, header=None)
+            f = self.read_csv(file_name)
+            # print(f)
+
         else:
             return
         try:
             for i in range(12):
-                fetched_data_home.append(f[i][0])
+                # fetched_data_home.append(f[i][0])
+                fetched_data_home.append(f[0][i]) # taking the first row of csv file
+            # print(fetched_data_home)
+            # print(",,,,,,,,,,,,,,,,,,")
             self.load_window.close()
             self.get_home_screen()
             delay_type = fetched_data_home[9]
@@ -2865,36 +2921,36 @@ class UI(QMainWindow):
                 self.fixed_location_x.setText('')
                 self.fixed_location_y.setText('')
         except KeyError:
-            row_count = len(f[0])
+            row_count = len(f)
             self.load_window.close()
             self.remove_all_lines()
             for a in range(row_count - 3):
-                if f[0][a] == 'mouse':
+                if f[a][0] == 'mouse':
                     self.add_mouse_line()
                     row_elements = self.line_list[a][1].children()
-                    row_elements[3].setText(str(int(f[1][a])))
-                    row_elements[5].setText(str(int(f[2][a])))
-                    row_elements[7].setCurrentText(f[3][a])
-                    row_elements[9].setCurrentText(f[4][a])
-                    row_elements[11].setText(str(int(f[5][a])))
-                if f[0][a] == 'scroll':
+                    row_elements[3].setText(str(int(f[a][1])))
+                    row_elements[5].setText(str(int(f[a][2])))
+                    row_elements[7].setCurrentText(f[a][3])
+                    row_elements[9].setCurrentText(f[a][4])
+                    row_elements[11].setText(str(int(f[a][5])))
+                if f[a][0] == 'scroll':
                     self.add_scroll_line()
                     row_elements = self.line_list[a][1].children()
-                    row_elements[3].setText(str(int(f[1][a])))
-                    row_elements[5].setText(str(int(f[2][a])))
-                    row_elements[7].setCurrentText(f[3][a])
-                    row_elements[9].setText(f[4][a])
-                    row_elements[11].setText(str(int(f[5][a])))
-                if f[0][a] == 'keyboard':
+                    row_elements[3].setText(str(int(f[a][1])))
+                    row_elements[5].setText(str(int(f[a][2])))
+                    row_elements[7].setCurrentText(f[a][3])
+                    row_elements[9].setText(f[a][4])
+                    row_elements[11].setText(str(int(f[a][5])))
+                if f[a][0] == 'keyboard':
                     self.add_keyboard_line()
                     row_elements = self.line_list[a][1].children()
-                    row_elements[3].setText(str(f[1][a]))
-                    row_elements[5].setCurrentText(str(f[2][a]))
-                    row_elements[7].setCurrentText(f[3][a])
-                    row_elements[9].setText(str(f[4][a]))
-            self.repeat_for_number_2.setText(f[0][row_count - 3])
-            self.delay_2.setText(f[0][row_count - 2])
-            self.delay_time_combobox_record.setCurrentText(f[0][row_count - 1])
+                    row_elements[3].setText(str(f[a][1]))
+                    row_elements[5].setCurrentText(str(f[a][2]))
+                    row_elements[7].setCurrentText(f[a][3])
+                    row_elements[9].setText(str(f[a][4]))
+            self.repeat_for_number_2.setText(f[row_count - 3][0])
+            self.delay_2.setText(f[row_count - 2][0])
+            self.delay_time_combobox_record.setCurrentText(f[row_count - 1][0])
 
     # deletes selected action from database
     def delete_from_db(self):
@@ -3938,7 +3994,7 @@ class UI(QMainWindow):
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
 
-        if self.whether_logged_in() == True:
+        if self.whether_logged_in() == 1:
             computer_type = self.complete_combobox.currentText()
         else:
             computer_type = self.complete_combobox_3.currentText()
@@ -4065,7 +4121,7 @@ class UI(QMainWindow):
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
 
-        if self.whether_logged_in() == True:
+        if self.whether_logged_in() == 1:
             computer_type = self.complete_combobox.currentText()
         else:
             computer_type = self.complete_combobox_3.currentText()
