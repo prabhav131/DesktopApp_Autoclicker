@@ -23,7 +23,7 @@ import pynput
 import datetime
 from datetime import timedelta
 import webbrowser
-
+from payment_dialog import Ui_Dialog
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
@@ -563,6 +563,8 @@ class UI(QMainWindow):
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
         self.setFixedHeight(533)
+        self.buy_button.clicked.connect(self.open_payment_dialog)
+        self.buy_button_3.clicked.connect(self.open_payment_dialog)
         self.central_widget = self.findChild(QWidget, "central_widget")
         self.central_widget_2 = self.findChild(QFrame, "central_widget_2")
         self.integer = QIntValidator()
@@ -1131,6 +1133,11 @@ class UI(QMainWindow):
                 print("no valid key")
                 self.logout()
 
+    def open_payment_dialog(self):
+        self.dialog = QtWidgets.QDialog()
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self.dialog)
+        self.dialog.show()
 
     def gotologin_signup(self):
         # initial_screen = login_signup_screen()
