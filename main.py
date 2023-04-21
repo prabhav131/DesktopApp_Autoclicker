@@ -24,6 +24,7 @@ import datetime
 from datetime import timedelta
 import webbrowser
 from payment_dialog import Ui_Dialog
+import hashlib
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
@@ -1160,6 +1161,9 @@ class UI(QMainWindow):
         username = self.username_signup.text()
         password = self.password_signup.text()
         unique_id = str(device_id.get_windows_uuid())
+
+        resultpwd = hashlib.sha256(password.encode())
+        pwdtostore = resultpwd.hexdigest()
         # unique_id = 'abcf33' # for sample
         whether_subscribed = 1
         # uic.loadUi("signup_screen.ui", self)
@@ -1187,6 +1191,7 @@ class UI(QMainWindow):
             if result_tuple_device_id is not None:
                 # device_id already exists
                 print(result_tuple_device_id)
+
                 self.message_2.setText("This device is already registered. Log in to continue!")
 
             elif result_tuple_username is not None:
@@ -1196,7 +1201,7 @@ class UI(QMainWindow):
             else:
                 conn = sqlite3.connect('autoclicker.db')
                 cur = conn.cursor()
-                user_info = [username, password, whether_subscribed, unique_id]
+                user_info = [username, pwdtostore, whether_subscribed, unique_id]
                 cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
 
                 conn.commit()
@@ -1230,7 +1235,12 @@ class UI(QMainWindow):
     def loginfunction(self):
 
         username = self.username_login.text()
-        password = self.password_login.text()
+        pwd = self.password_login.text()
+
+        resultpwd = hashlib.sha256(pwd.encode())
+        password = resultpwd.hexdigest()
+
+
         unique_id = str(device_id.get_windows_uuid())
 
         # app_id, app_key, username = self.getAppIdKey()
