@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, 
     QCheckBox, QDialog, QListWidget, QToolButton
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtCore import Qt, QSettings
+from PyQt5.QtCore import Qt
 import sys
 import os
 import threading
@@ -552,7 +552,6 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
-        self.settings = QSettings("GG", "autoclicker")
 
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
