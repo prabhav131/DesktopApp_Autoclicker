@@ -1,10 +1,8 @@
 import csv
-# import pandas as pd
-from device_id_file import device_id
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
-    QLineEdit, QSpinBox, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
-    QCheckBox, QDialog, QListWidget, QToolButton, QScrollBar, QSplashScreen
+    QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
+    QCheckBox, QDialog, QListWidget, QToolButton
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import Qt, QSettings
@@ -21,13 +19,11 @@ import ctypes
 from win10toast import ToastNotifier
 import pynput
 import datetime
-from datetime import timedelta
 import webbrowser
-from payment_dialog import Ui_Dialog
-import hashlib
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
+
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
@@ -156,6 +152,7 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
                         stop_home_event.clear()
                         break
     UIWindow.after_home_thread()
+
 
 # starts the clicking actions in current location set in home screen
 def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval):
@@ -555,17 +552,12 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
-        # self.login_signup_button.clicked.connect(self.gotologin_signup)
-        self.login_signup_button_3.clicked.connect(self.gotologin_signup)
-        # self.initial_user_screen = login_signup_screen()
         self.settings = QSettings("GG", "autoclicker")
 
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
         self.setFixedHeight(533)
-        self.buy_button.clicked.connect(self.open_payment_dialog)
-        self.buy_button_3.clicked.connect(self.open_payment_dialog)
         self.central_widget = self.findChild(QWidget, "central_widget")
         self.central_widget_2 = self.findChild(QFrame, "central_widget_2")
         self.integer = QIntValidator()
@@ -750,8 +742,6 @@ class UI(QMainWindow):
                                              'image: url(images/arrow1);'
                                              'width: 8px;'
                                              'height: 8px;}')
-        self.log_out_button = self.findChild(QPushButton, "log_out_button")
-        self.log_out_button.setIcon(QtGui.QIcon("images/LogOut"))
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
         self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
         self.navigate_button = self.findChild(QPushButton, "navigate_button")
@@ -889,7 +879,6 @@ class UI(QMainWindow):
         for widget in self.home_frame.findChildren(QLineEdit):
             widget.setValidator(self.integer)
         # --------------
-        self.log_out_button.clicked.connect(self.logout)
         self.record_button.clicked.connect(self.get_record_screen)
         self.home_button.clicked.connect(self.get_home_screen)
         self.view_settings_button.clicked.connect(self.get_view_screen)
@@ -1002,6 +991,27 @@ class UI(QMainWindow):
         self.hide_to_tray_checkbox2.clicked.connect(self.trigger_tray_checkbox)
         self.mouse_location_checkbox2.clicked.connect(self.trigger_live_mouse)
         self.show_after_complete_checkbox2.clicked.connect(self.trigger_show_tool)
+        if self.dark_theme_activated:
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.mouse_location_checkbox2.setStyleSheet("border: none;"
+                                                        "background-color: #10131b;")
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.show_after_complete_checkbox2.setStyleSheet("border: none;"
+                                                             "background-color: #10131b")
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
+                                                      "background-color: #10131b")
+        else:
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.mouse_location_checkbox2.setStyleSheet("border: none;"
+                                                        "background-color: rgb(239, 229, 220);")
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
+                                                      "background-color: rgb(239, 229, 220)")
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.show_after_complete_checkbox2.setStyleSheet("border: none;"
+                                                             "background-color: rgb(239, 229, 220)")
+
         self.check_live_mouse()
         if show_tool_after == 1:
             self.show_after_complete_checkbox2.click()
@@ -1091,236 +1101,6 @@ class UI(QMainWindow):
         faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
-
-        # checking if there is a valid user session on startup of app
-        initial_app_id, initial_app_key, initial_username = self.getAppIdKey()
-        initial_device_id = str(device_id.get_windows_uuid())
-
-        if initial_app_id == initial_device_id:
-            # print(initial_app_key + "$$$")
-            app_id_temp = initial_device_id
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-
-            query = 'SELECT * FROM session_details WHERE application_id =\''+app_id_temp+"\'"
-            cur.execute(query)
-
-            result_tuple = cur.fetchone()
-            conn.close()
-            if result_tuple is not None:
-                # print("hereeee")
-                # print(self.settings.value("LOGGED_IN"))
-                app_key_temp = result_tuple[2]
-                # print(app_key_temp + "---")
-                # print(initial_app_key)
-                if initial_app_key!= "" and app_key_temp == initial_app_key:
-                    print("kokos")
-                    is_key_valid = self.checkAppKey(app_key_temp)
-                    print(is_key_valid)
-                    if is_key_valid == 1:
-                        # redirect to home screen in logged in state
-                        self.top_frame_logged_out.hide()
-                        self.top_frame.show()
-                        self.settings.setValue("LOGGED_IN",1)
-                        print("key validated")
-                        self.name.setText(str(initial_username))
-                    else:
-                        print("no valid key")
-                        self.logout()
-                else:
-                    print("no valid key")
-                    self.logout()
-            else:
-                print("no valid key")
-                self.logout()
-
-    def open_payment_dialog(self):
-        self.dialog = QtWidgets.QDialog()
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self.dialog)
-        self.dialog.show()
-
-    def gotologin_signup(self):
-        # initial_screen = login_signup_screen()
-        # self.hide()
-        # self.initial_user_screen.show()
-        self.get_login_signup_screen()
-        self.login_Button.clicked.connect(self.gotologin)
-        self.signup_Button.clicked.connect(self.gotosignup)
-
-    def gotosignup(self):
-        self.get_signup_screen()
-        self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signup_Butt.clicked.connect(self.signupfunction)
-        self.message_2.setText("")
-        self.username_signup.setText("")
-        self.password_signup.setText("")
-
-    def signupfunction(self):
-
-        username = self.username_signup.text()
-        password = self.password_signup.text()
-        unique_id = str(device_id.get_windows_uuid())
-
-        resultpwd = hashlib.sha256(password.encode())
-        pwdtostore = resultpwd.hexdigest()
-        # unique_id = 'abcf33' # for sample
-        whether_subscribed = 1
-        # uic.loadUi("signup_screen.ui", self)
-        if len(username)==0 or len(password)==0:
-            self.message_2.setText("Please fill in all inputs.")
-
-        else:
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-
-            #check if username already exists
-            query_1 = 'SELECT * FROM user_info WHERE username =\''+username+"\'"
-            cur.execute(query_1)
-
-            result_tuple_username = cur.fetchone()
-            # conn.close()
-
-            #check if device_id already exists
-            query_2 = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
-            cur.execute(query_2)
-
-            result_tuple_device_id = cur.fetchone()
-            conn.close()
-
-            if result_tuple_device_id is not None:
-                # device_id already exists
-                print(result_tuple_device_id)
-
-                self.message_2.setText("This device is already registered. Log in to continue!")
-
-            elif result_tuple_username is not None:
-                # username already exists
-                self.message_2.setText("username already exists. Choose a different username!")
-
-            else:
-                conn = sqlite3.connect('autoclicker.db')
-                cur = conn.cursor()
-                user_info = [username, pwdtostore, whether_subscribed, unique_id]
-                cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
-
-                conn.commit()
-                conn.close()
-                # redirect to home screen in logged in state
-
-
-                self.message_2.setText("Account Created!")
-
-                self.top_frame_logged_out.hide()
-                self.top_frame.show()
-                self.settings.setValue("LOGGED_IN",1)
-                self.name.setText(str(username))
-                time.sleep(1)
-                self.get_home_screen()
-
-        # self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-        # self.signup_Butt.clicked.connect(self.signupfunction)
-
-    def whether_logged_in(self):
-        return self.settings.value("LOGGED_IN")
-
-    def gotologin(self):
-        self.get_login_screen()
-        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.login_Butt.clicked.connect(self.loginfunction)
-        self.message.setText("")
-        self.username_login.setText("")
-        self.password_login.setText("")
-
-    def loginfunction(self):
-
-        username = self.username_login.text()
-        pwd = self.password_login.text()
-
-        resultpwd = hashlib.sha256(pwd.encode())
-        password = resultpwd.hexdigest()
-
-
-        unique_id = str(device_id.get_windows_uuid())
-
-        # app_id, app_key, username = self.getAppIdKey()
-        # print(app_id)
-        # print("-------")
-        # print(app_key)
-        # print(".............")
-
-        if len(username)==0 or len(password)==0:
-            self.message.setText("Please input all fields.")
-
-        else:
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-            query = 'SELECT * FROM user_info WHERE unique_device_id =\''+unique_id+"\'"
-            cur.execute(query)
-
-            result_tuple = cur.fetchone()
-            conn.close()
-            # print(result_tuple)
-            if result_tuple is None:
-                self.message.setText("Device is not registered!")
-                username = self.username_login.setText("")
-                password = self.password_login.setText("")
-            else:
-                result_username = result_tuple[0]
-                result_pass = result_tuple[1]
-                result_whether_subscribed = result_tuple[2]
-                result_device_id = result_tuple[3]
-                if result_pass == password and result_device_id == unique_id and result_username == username:
-
-                    self.message.setText("Successfully logged in!")
-                    app_key_temp = functions.randomword(12)
-                    self.createNewAppKey(unique_id,app_key_temp,username) # creating new app id and app key.
-                    # redirect to home screen in logged in state
-                    time.sleep(1)
-                    self.get_home_screen()
-                    self.settings.setValue("LOGGED_IN",1)
-                    self.top_frame_logged_out.hide()
-                    self.top_frame.show()
-                    self.name.setText(str(username))
-
-                    current_datetime_temp = datetime.datetime.now()
-
-                    expiration_datetime = current_datetime_temp + timedelta(days=1) # calculating new expiry date for app session
-                    key_expiration = str(expiration_datetime) # converting from datetime object to string object to store in the database
-                    # updating session_details table with new expiration date for exisiting/new app id
-
-                    conn = sqlite3.connect('autoclicker.db')
-                    cursor = conn.cursor()
-                    delete_existing_session_if_exists = 'DELETE FROM session_details WHERE application_id = \'' + unique_id + "\'"
-                    cursor.execute(delete_existing_session_if_exists)
-                    print('deleted app_id row if already present in session_details')
-                    add_new_row = f'''INSERT INTO session_details VALUES (
-                            '{username}',
-                            '{unique_id}',
-                            '{app_key_temp}',
-                            '{key_expiration}'
-                            )'''
-                    cursor.execute(add_new_row)
-                    conn.commit()
-                    conn.close()
-                    print('added row in session_details')
-                elif result_username != username:
-                    self.message.setText("Invalid username for this device")
-                    time.sleep(2)
-                    self.message.setText("")
-                    username = self.username_login.setText("")
-                    password = self.password_login.setText("")
-                elif result_pass != password:
-                    self.message.setText("Invalid password!")
-                    time.sleep(2)
-                    self.message.setText("")
-                    password = self.password_login.setText("")
-
-
-
-        self.login_Butt.clicked.connect(self.loginfunction)
-        self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
@@ -1536,8 +1316,6 @@ class UI(QMainWindow):
         self.username_box.setStyleSheet("QLineEdit {background-color: #10131b;"
                                         "color: #bfcfb2;}"
                                         "QToolTip {background-color: #e0e0e0;}")
-        self.log_out_button.setStyleSheet("border: none;")
-        self.log_out_button.setIcon(QtGui.QIcon("images/LogOut_dark"))
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1845,8 +1623,6 @@ class UI(QMainWindow):
                                         "color: rgb(30, 30, 30);"
                                         "border: none;}"
                                         "QToolTip {background-color: #e0e0e0;}")
-        self.log_out_button.setStyleSheet("border: none;")
-        self.log_out_button.setIcon(QtGui.QIcon("images/LogOut"))
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1998,226 +1774,41 @@ class UI(QMainWindow):
     def get_home_screen(self):
         self.navigation_frame.lower()
         self.home_frame.show()
-        self.login_signup_frame.show()
+
         self.record_frame.hide()
         self.view_settings_frame.hide()
         self.hotkey_settings_frame.hide()
-        self.subscription_check_frame.hide()
-        self.access_denied_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
         self.foot_note_label.setText('')
 
-    def get_login_signup_screen(self):
-        self.login_signup_frame.show()
-        self.record_frame.hide()
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.subscription_check_frame.hide()
-        self.access_denied_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
-        self.foot_note_label.setText('')
-
-    def get_login_screen(self):
-        self.login_signup_frame.hide()
-        self.record_frame.hide()
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.subscription_check_frame.hide()
-        self.access_denied_frame.hide()
-        self.login_frame.show()
-        self.signup_frame.hide()
-        self.foot_note_label.setText('')
-
-    def get_signup_screen(self):
-        self.login_signup_frame.hide()
-        self.record_frame.hide()
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.subscription_check_frame.hide()
-        self.access_denied_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.show()
-        self.foot_note_label.setText('')
-
-    # gets subscription check screen in front (only if the user is not logged
-    # in, prompt user to login if they try to access a premium feature
-    # and havent logged in yet)
-
-    def get_subscription_check_screen(self):
-        self.subscription_check_frame.show()
-        self.login_signup_frame.hide()
-        self.record_frame.hide()
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.access_denied_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
-        self.foot_note_label.setText('')
-
-    # gets access denied screen in front (only if the user is logged
-    # in, prompt user to pay if they try to access a premium feature
-    # and havent subscribed to it yet)
-    def get_access_denied_screen(self):
-        self.access_denied_frame.show()
-        self.subscription_check_frame.hide()
-        self.login_signup_frame.hide()
-        self.record_frame.hide()
-        self.view_settings_frame.hide()
-        self.hotkey_settings_frame.hide()
-        self.home_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
-        self.foot_note_label.setText('')
-
-    # function to create new app key and id
-    def createNewAppKey(self, id, key, username):
-        self.settings.setValue('APPID', id)
-        self.settings.setValue("APPKEY", key)
-        self.settings.setValue("USERNAME", username)
-        self.settings.setValue("LOGGED_IN", 0)
-        print("^^^^^^")
-        print(self.settings.value("APPID"))
-        print(self.settings.value("APPKEY"))
-        print(self.settings.value("USERNAME"))
-        print(self.settings.value("LOGGED_IN"))
-        print("^^^^^^")
-
-    # function to get the current app id and key stored in Qsettings
-    def getAppIdKey(self):
-        # settings = QSettings()
-        id = self.settings.value("APPID")
-        key = self.settings.value("APPKEY")
-        username = self.settings.value("USERNAME")
-        return id, key, username
-
-    def logout(self):
-
-        conn = sqlite3.connect('autoclicker.db')
-        cur = conn.cursor()
-        query = 'UPDATE session_details SET application_key = \'\', key_expiration_date = \'\' WHERE application_id =\''+self.settings.value("APPID")+"\'"
-        cur.execute(query)
-        conn.close()
-        self.settings.setValue("APPKEY", "")
-        self.settings.setValue("LOGGED_IN", 0)
-        print("logging out!")
-        self.username_box.setText("")
-        self.top_frame.hide()
-        self.top_frame_logged_out.show()
-        self.get_home_screen()
-
-    # function to check if a given app_key is valid or expired
-    def checkAppKey(self, key):
-        conn = sqlite3.connect('autoclicker.db')
-        cur = conn.cursor()
-
-        query = 'SELECT * FROM session_details WHERE application_key =\''+key+"\'"
-        cur.execute(query)
-
-        result_tuple = cur.fetchone()
-        conn.close()
-        if result_tuple is not None:
-            app_key_expiration_time = result_tuple[3]
-            if app_key_expiration_time == '':
-                return 0 # the expiration date stored in database is an empty string. Hence it cant be valid.
-            current_time = datetime.datetime.now()
-            expiration_datetime_object = datetime.datetime.strptime(app_key_expiration_time, '%Y-%m-%d %H:%M:%S.%f')
-            # expiration_datetime_object = datetime.datetime(
-            #  app_key_expiration_time.date().year,
-            #  app_key_expiration_time.date().month,
-            #  app_key_expiration_time.date().day,
-            #  app_key_expiration_time.time().hour,
-            #  app_key_expiration_time.time().minute,
-            #  app_key_expiration_time.time().second)
-
-            if expiration_datetime_object > current_time:
-                # key hasnt expired yet
-                return 1
-
-        return 0 # 0 is returned if app_key is expired or if it doesnt exist in the database
-
-
-    # gets record screen in front
     def get_record_screen(self):
 
         self.navigation_frame.lower()
-        # settings = QSettings()
-        id = self.settings.value("APPID")
-        key = self.settings.value("APPKEY")
-        status = self.settings.value("LOGGED_IN")
-        # print(id + "-" + key + "-" + str(status))
-        if status == 0:
-            # logged out state
-            self.get_subscription_check_screen()
-            print("logged out state mein hu")
-        else:
-            print(status)
-            print("logged in mein hu")
-            # logged in state, check if the current App id is of a subscribed user or not
-            conn = sqlite3.connect('autoclicker.db')
-            cur = conn.cursor()
-            query = 'SELECT whether_subscribed FROM user_info WHERE unique_device_id =\''+id+"\'"
-            cur.execute(query)
-
-            result_tuple = cur.fetchone()
-            conn.close()
-            # print(result_tuple)
-            if result_tuple is None:
-                # the app_id doesnt exist in database, prompt the user to sign up.
-                self.get_subscription_check_screen()
-                print("heree")
-            else:
-
-                result_whether_subscribed = result_tuple[0]
-                if result_whether_subscribed == 1:
-                    # grant access to premium feature
-                    self.access_denied_frame.hide()
-                    self.subscription_check_frame.hide()
-                    self.login_signup_frame.hide()
-                    self.view_settings_frame.hide()
-                    self.hotkey_settings_frame.hide()
-                    self.home_frame.hide()
-                    self.login_frame.hide()
-                    self.signup_frame.hide()
-                    self.foot_note_label.setText('')
-                    self.record_frame.show()
-
-                else:
-                    # access denied page hows up and prompt the user to subscribe
-                    self.get_access_denied_screen()
+        self.view_settings_frame.hide()
+        self.hotkey_settings_frame.hide()
+        self.home_frame.hide()
+        self.foot_note_label.setText('')
+        self.record_frame.show()
 
 
     # gets view settings screen in front
     def get_view_screen(self):
         self.navigation_frame.lower()
-        self.access_denied_frame.hide()
-        self.subscription_check_frame.hide()
-        self.login_signup_frame.hide()
+
         self.record_frame.hide()
         self.view_settings_frame.show()
         self.hotkey_settings_frame.hide()
         self.home_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
         self.foot_note_label.setText('')
 
     # gets hotkey settings screen in front
     def get_hotkey_screen(self):
         self.navigation_frame.lower()
-        self.access_denied_frame.hide()
-        self.subscription_check_frame.hide()
-        self.login_signup_frame.hide()
+
         self.record_frame.hide()
         self.view_settings_frame.hide()
         self.hotkey_settings_frame.show()
         self.home_frame.hide()
-        self.login_frame.hide()
-        self.signup_frame.hide()
+
         self.foot_note_label.setText('')
 
     # changes hotkey of home -> start/stop button
@@ -4044,6 +3635,7 @@ class UI(QMainWindow):
             self.foot_note_label.setText('error: no actions available')
             return
         actions_data = []
+        print("here bro")
         for a in range(self.i - 1):
             csv_list = []
             row_elements = self.line_list[a][1].children()
@@ -4366,110 +3958,6 @@ class UI(QMainWindow):
         self.showNormal()
         self.record_play_button.setEnabled(True)
 
-# class login_signup_screen(QMainWindow):
-#     def __init__(self):
-#         super(login_signup_screen, self).__init__()
-#         uic.loadUi("login_signup.ui", self)
-#         self.login_Button.clicked.connect(self.gotologin)
-#         self.login_user_screen = login_screen()
-#
-#         self.signup_Button.clicked.connect(self.gotosignup)
-#         self.signup_user_screen = signup_screen()
-#         self.gotohome.clicked.connect(self.return_to_home)
-#
-#     def return_to_home(self):
-#         self.hide()
-#         UIWindow = UI()
-#         UIWindow.show()
-#
-#     def gotologin(self):
-#         self.hide()
-#         self.login_user_screen.show()
-#
-#     def gotosignup(self):
-#         self.hide()
-#         self.signup_user_screen.show()
-#
-# class login_screen(QMainWindow):
-#     def __init__(self):
-#         super(login_screen, self).__init__()
-#         uic.loadUi("login_screen.ui", self)
-#         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-#         self.login_Butt.clicked.connect(self.loginfunction)
-#         self.logingotohome.clicked.connect(self.return_to_home)
-#
-#     def return_to_home(self):
-#         self.hide()
-#         UIWindow = UI()
-#         UIWindow.show()
-#
-#     def loginfunction(self):
-#
-#         username = self.username_login.text()
-#         password = self.password_login.text()
-#         unique_id = str(device_id.get_windows_uuid())
-#         uic.loadUi("login_screen.ui", self)
-#         if len(username)==0 or len(password)==0:
-#             self.message.setText("Please input all fields.")
-#
-#         else:
-#             conn = sqlite3.connect('autoclicker.db')
-#             cur = conn.cursor()
-#             query = 'SELECT password, unique_device_id FROM user_info WHERE username =\''+username+"\'"
-#             cur.execute(query)
-#
-#             result_tuple = cur.fetchone()
-#             # print(result_tuple)
-#             if result_tuple is None:
-#                 self.message.setText("Invalid Username!")
-#             else:
-#                 result_pass = result_tuple[0]
-#                 result_device_id = result_tuple[1]
-#                 if result_pass == password and result_device_id == unique_id:
-#                     self.message.setText("Successfully logged in!")
-#                 else:
-#                     self.message.setText("Invalid credentials!")
-#             # conn.close()
-#         self.login_Butt.clicked.connect(self.loginfunction)
-#         self.logingotohome.clicked.connect(self.return_to_home)
-#         self.password_login.setEchoMode(QtWidgets.QLineEdit.Password)
-#
-# class signup_screen(QMainWindow):
-#     def __init__(self):
-#         super(signup_screen, self).__init__()
-#         uic.loadUi("signup_screen.ui", self)
-#         self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-#         self.signup_Butt.clicked.connect(self.signupfunction)
-#         self.signupgotohome.clicked.connect(self.return_to_home)
-#
-#     def return_to_home(self):
-#         self.hide()
-#         UIWindow = UI()
-#         UIWindow.show()
-#
-#
-#     def signupfunction(self):
-#
-#         username = self.username_signup.text()
-#         password = self.password_signup.text()
-#         unique_id = str(device_id.get_windows_uuid())
-#         whether_subscribed = 0
-#         uic.loadUi("signup_screen.ui", self)
-#         if len(username)==0 or len(password)==0:
-#             self.message.setText("Please fill in all inputs.")
-#
-#         else:
-#             conn = sqlite3.connect('autoclicker.db')
-#             cur = conn.cursor()
-#             user_info = [username, password, whether_subscribed,  unique_id]
-#             cur.execute('INSERT INTO user_info (username, password, whether_subscribed, unique_device_id) VALUES (?,?,?,?)', user_info)
-#
-#             conn.commit()
-#             conn.close()
-#             self.message.setText("Account Created!")
-#         self.password_signup.setEchoMode(QtWidgets.QLineEdit.Password)
-#         self.signup_Butt.clicked.connect(self.signupfunction)
-#         self.signupgotohome.clicked.connect(self.return_to_home)
 
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
