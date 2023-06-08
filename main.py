@@ -20,6 +20,7 @@ from win10toast import ToastNotifier
 import pynput
 import datetime
 import webbrowser
+import requests
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
@@ -707,23 +708,7 @@ class UI(QMainWindow):
         self.top_frame = self.findChild(QFrame, "top_frame")
         self.top_frame_logged_out = self.findChild(QFrame, "top_frame_logged_out")
         self.app_icon = self.findChild(QLabel, "app_icon")
-        self.complete_combobox = self.findChild(QComboBox, "complete_combobox")
-        self.complete_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
-                                             'border: 2px solid;'
-                                             'border-radius: 7px;'
-                                             'border-color: rgb(217, 217, 217);}'
-                                             'QComboBox QAbstractItemView {'
-                                             'background-color: rgb(249, 249, 245);'
-                                             'border: none;'
-                                             'color: black;}'
-                                             'QComboBox::drop-down {'
-                                             'border: 2px;'
-                                             'border-radius: 5px;'
-                                             'border-color: rgb(249, 249, 245);}'
-                                             'QComboBox::down-arrow {'
-                                             'image: url(images/arrow1);'
-                                             'width: 8px;'
-                                             'height: 8px;}')
+
         self.complete_combobox_3 = self.findChild(QComboBox, "complete_combobox_3")
         self.complete_combobox_3.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
                                              'border: 2px solid;'
@@ -743,12 +728,10 @@ class UI(QMainWindow):
                                              'height: 8px;}')
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
         self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
-        self.navigate_button = self.findChild(QPushButton, "navigate_button")
-        self.navigate_button.setIcon(QtGui.QIcon("images/Hambuger"))
+
         self.navigate_button_3 = self.findChild(QPushButton, "navigate_button_3")
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
-        self.profile_button = self.findChild(QPushButton, "profile_button")
-        self.profile_button.setIcon(QtGui.QIcon("images/liliajohn"))
+
         self.profile_button_3 = self.findChild(QPushButton, "profile_button_3")
         self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn"))
         self.record_add_button = self.findChild(QPushButton, "record_add_button")
@@ -813,9 +796,7 @@ class UI(QMainWindow):
         self.set_new_hotkey_button_2 = self.findChild(QPushButton, "set_new_hotkey_2")
         self.set_new_hotkey_button_3 = self.findChild(QPushButton, "set_new_hotkey_3")
         self.set_new_hotkey_button_4 = self.findChild(QPushButton, "set_new_hotkey_4")
-        self.on_click_complete_label = self.findChild(QLabel, "on_click_label")
         self.on_click_complete_label_3 = self.findChild(QLabel, "on_click_label_3")
-        self.username_box = self.findChild(QLabel, "name")
         self.label = self.findChild(QPushButton, "label")
         self.frame = self.findChild(QFrame, "frame")
         self.frame_2 = self.findChild(QFrame, "frame_2")
@@ -848,13 +829,6 @@ class UI(QMainWindow):
         self.delay_time_combobox.addItem("s")
         self.delay_time_combobox.addItem("min")
         self.delay_time_combobox.addItem("hr")
-        self.complete_combobox.addItem(" Idle")
-        self.complete_combobox.addItem(" Quit")
-        self.complete_combobox.addItem(" Lock")
-        self.complete_combobox.addItem(" Turn off")
-        self.complete_combobox.addItem(" Log off")
-        self.complete_combobox.addItem(" Standby")
-        self.complete_combobox.addItem(" Hibernate")
         self.complete_combobox_3.addItem(" Idle")
         self.complete_combobox_3.addItem(" Quit")
         self.complete_combobox_3.addItem(" Lock")
@@ -882,7 +856,6 @@ class UI(QMainWindow):
         self.home_button.clicked.connect(self.get_home_screen)
         self.view_settings_button.clicked.connect(self.get_view_screen)
         self.hotkey_settings_button.clicked.connect(self.get_hotkey_screen)
-        self.navigate_button.clicked.connect(self.open_menu)
         self.navigate_button_3.clicked.connect(self.open_menu)
         self.play_button.clicked.connect(self.home_start_process)
         self.reset_settings_button.clicked.connect(self.home_reset_settings)
@@ -894,7 +867,6 @@ class UI(QMainWindow):
         self.theme_button.clicked.connect(self.get_dark_theme)
         self.record_remove_all_button.clicked.connect(self.remove_all_lines)
         self.never_stop_combobox.currentIndexChanged.connect(self.check_repeat_style)
-        self.complete_combobox.activated.connect(lambda: self.on_click_complete_label.hide())
         self.complete_combobox_3.activated.connect(lambda: self.on_click_complete_label_3.hide())
         # --------------
         # below defines hotkey settings
@@ -962,13 +934,6 @@ class UI(QMainWindow):
                                             "color: black;}"
                                             "QFrame {color: rgb(30, 30, 30);"
                                             "background-color: rgb(239, 229, 220); }")
-        self.complete_combobox.setItemData(0, "No changes to PC", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(1, "Close the tool (PC keeps running)", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(2, "Sign out of PC with apps still running", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(3, "Shut down the PC", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(4, "Sign out of the PC with all the apps closed", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(5, "Put the PC to Standby mode", QtCore.Qt.ToolTipRole)
-        self.complete_combobox.setItemData(6, "Put the  PC to Hibernate mode", QtCore.Qt.ToolTipRole)
         self.complete_combobox_3.setItemData(0, "No changes to PC", QtCore.Qt.ToolTipRole)
         self.complete_combobox_3.setItemData(1, "Close the tool (PC keeps running)", QtCore.Qt.ToolTipRole)
         self.complete_combobox_3.setItemData(2, "Sign out of PC with apps still running", QtCore.Qt.ToolTipRole)
@@ -1020,7 +985,6 @@ class UI(QMainWindow):
             self.mouse_location_checkbox2.click()
         if dark_theme == 1:
             self.get_dark_theme()
-        # self.username_box.setText(str(new_username))
         self.home_start_stop_hotkey = home_start_hotkey
         self.record_start_stop_hotkey = record_start_hotkey
         self.record_recording_hotkey = record_recording_hotkey
@@ -1034,7 +998,6 @@ class UI(QMainWindow):
         self.record_start_stop_hotkey_label.setText(str(record_recording_hotkey))
         self.mouse_location_hotkey_label.setText(str(mouse_location_hotkey))
         # --------------------------
-        self.label_10 = self.findChild(QLabel, "label_10")
         self.label_2 = self.findChild(QLabel, "label_2")
         self.label_3 = self.findChild(QLabel, "label_3")
         self.label_4 = self.findChild(QLabel, "label_4")
@@ -1057,13 +1020,11 @@ class UI(QMainWindow):
         for item in self.findChildren(QToolButton):
             item.setFont(self.font)
         self.font.setPixelSize(11)
-        self.on_click_complete_label.setFont(self.font)
+
         self.on_click_complete_label_3.setFont(self.font)
         self.font.setPixelSize(10)
-        self.label_10.setFont(self.font)
         self.font.setPixelSize(11)
         self.font.setBold(False)
-        self.username_box.setFont(self.font)
         self.font.setBold(True)
         self.label_2.setFont(self.font)
         self.label_3.setFont(self.font)
@@ -1156,7 +1117,6 @@ class UI(QMainWindow):
             new_dark_theme = 1
         else:
             new_dark_theme = 0
-        # user_name = self.username_box.text()
         new_home_start_hotkey = self.home_start_stop_hotkey
         new_record_start_hotkey = self.record_start_stop_hotkey
         new_record_recording_hotkey = self.record_recording_hotkey
@@ -1287,20 +1247,12 @@ class UI(QMainWindow):
                                                 "QPushButton::hover {color:white;"
                                                 "background-color: #1ecd97;}")
         self.foot_note_label.setStyleSheet("border:none;")
-        self.navigate_button.setStyleSheet("border:none;")
-        self.navigate_button.setIcon(QtGui.QIcon("images/Menu_dark.png"))
         self.navigation_frame.setStyleSheet("QPushButton {background-color: #10131b;"
                                             "border: 1px solid #bfcfb2;"
                                             "color: #bfcfb2;}")
         self.navigate_button_3.setStyleSheet("border:none;")
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Menu_dark.png"))
 
-        self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
-                                                   "background-color: rgb(249, 249, 245);"
-                                                   "border: none;}"
-                                                   'QToolTip {'
-                                                   'background-color: #e0e0e0;'
-                                                   'border: none;}')
         self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
@@ -1308,13 +1260,8 @@ class UI(QMainWindow):
                                                    'background-color: #e0e0e0;'
                                                    'border: none;}')
         # self.set_new_hotkey_1.setStyleSheet
-        self.profile_button.setStyleSheet("border: none;")
-        self.profile_button.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
         self.profile_button_3.setStyleSheet("border: none;")
         self.profile_button_3.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
-        self.username_box.setStyleSheet("QLineEdit {background-color: #10131b;"
-                                        "color: #bfcfb2;}"
-                                        "QToolTip {background-color: #e0e0e0;}")
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1595,33 +1542,20 @@ class UI(QMainWindow):
                                                 "QPushButton::hover {color:white;"
                                                 "background-color: rgb(3, 199, 26);}")
         self.foot_note_label.setStyleSheet("border:none;")
-        self.navigate_button.setStyleSheet("border:none;")
-        self.navigate_button.setIcon(QtGui.QIcon("images/Hambuger"))
+
         self.navigate_button_3.setStyleSheet("border:none;")
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
         self.navigation_frame.setStyleSheet("QPushButton {background-color: rgb(242,242,242);"
                                             "border: 1px solid rgb(204, 204, 204);"
                                             "color: rgb(30, 30, 30);}")
-        self.on_click_complete_label.setStyleSheet("QLabel {color: black;"
-                                                   "background-color: rgb(249, 249, 245);"
-                                                   "border: none;}"
-                                                   'QToolTip {'
-                                                   'background-color: #e0e0e0;'
-                                                   'border: none;}')
         self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
                                                    "background-color: rgb(249, 249, 245);"
                                                    "border: none;}"
                                                    'QToolTip {'
                                                    'background-color: #e0e0e0;'
                                                    'border: none;}')
-        self.profile_button.setStyleSheet("border: none;")
-        self.profile_button.setIcon(QtGui.QIcon("images/liliajohn.png"))
         self.profile_button_3.setStyleSheet("border: none;")
         self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn.png"))
-        self.username_box.setStyleSheet("QLabel {background-color: rgb(239, 229, 220);"
-                                        "color: rgb(30, 30, 30);"
-                                        "border: none;}"
-                                        "QToolTip {background-color: #e0e0e0;}")
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1985,16 +1919,14 @@ class UI(QMainWindow):
     # opens the menu bar
     def open_menu(self):
         self.navigation_frame.raise_()
-        self.navigate_button.clicked.disconnect()
-        self.navigate_button.clicked.connect(self.close_menu)
+
         self.navigate_button_3.clicked.disconnect()
         self.navigate_button_3.clicked.connect(self.close_menu)
 
     # closes the menu bar
     def close_menu(self):
         self.navigation_frame.lower()
-        self.navigate_button.clicked.disconnect()
-        self.navigate_button.clicked.connect(self.open_menu)
+
         self.navigate_button_3.clicked.disconnect()
         self.navigate_button_3.clicked.connect(self.open_menu)
 
@@ -3496,6 +3428,14 @@ class UI(QMainWindow):
     # starts the process for home -> play button
     def home_start_process(self):
         self.get_home_screen()
+        # Making a GET request
+        r = requests.get('https://auth-provider.onrender.com/generate-token')
+        # check status code for response received
+        # success code - 200
+        print(r)
+
+        # print content of request
+        print(r.content)
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
         never_stop_boolean = self.never_stop_combobox.currentText()
@@ -3601,10 +3541,8 @@ class UI(QMainWindow):
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
 
-        if self.whether_logged_in() == 1:
-            computer_type = self.complete_combobox.currentText()
-        else:
-            computer_type = self.complete_combobox_3.currentText()
+
+        computer_type = self.complete_combobox_3.currentText()
 
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
@@ -3729,10 +3667,8 @@ class UI(QMainWindow):
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
 
-        if self.whether_logged_in() == 1:
-            computer_type = self.complete_combobox.currentText()
-        else:
-            computer_type = self.complete_combobox_3.currentText()
+
+        computer_type = self.complete_combobox_3.currentText()
 
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
@@ -3961,7 +3897,6 @@ class UI(QMainWindow):
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
     def __init__(self):
-
 
         super(CaptureScreen, self).__init__()
 
