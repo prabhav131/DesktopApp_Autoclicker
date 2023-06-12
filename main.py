@@ -1,4 +1,5 @@
 import csv
+import json
 import sqlite3
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
     QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
@@ -14,6 +15,8 @@ import time
 import mouse
 import keyboard
 import random
+
+from email_sent_dialog import Ui_email_sent_Dialog
 from functions_file import functions
 import ctypes
 from win10toast import ToastNotifier
@@ -21,6 +24,7 @@ import pynput
 import datetime
 import webbrowser
 import requests
+from email_dialog import Ui_Dialog
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
@@ -1061,6 +1065,19 @@ class UI(QMainWindow):
         faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
+
+    def open_email_dialog(self):
+        self.dialog = QtWidgets.QDialog()
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self.dialog)
+        self.dialog.show()
+
+    def open_email_sent_dialog(self, email):
+        self.dialog = QtWidgets.QDialog()
+        self.ui = Ui_email_sent_Dialog()
+        self.ui.setupUi(self.dialog, email)
+        self.dialog.show()
+
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
@@ -3428,14 +3445,92 @@ class UI(QMainWindow):
     # starts the process for home -> play button
     def home_start_process(self):
         self.get_home_screen()
-        # Making a GET request
-        r = requests.get('https://auth-provider.onrender.com/generate-token')
-        # check status code for response received
-        # success code - 200
-        print(r)
+        con = sqlite3.connect('autoclicker.db')
+        cursor = con.cursor()
+        sql = "SELECT * FROM local_table"
+        cursor.execute(sql)
+        fetched_data = cursor.fetchall()
+        print(fetched_data)
+        if len(fetched_data) == 0:
+            # Making a GET request
+            response = requests.get('https://auth-provider.onrender.com/generate-token')
 
-        # print content of request
-        print(r.content)
+            info = response.text
+            print(info)
+            print("--------")
+            json_info = json.loads(info)
+            print(json_info["accessToken"])
+            print("--------")
+            token = json_info["accessToken"]
+            print(type(token))
+            email = ""
+            cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)",(email,token,))
+
+            con.commit()
+
+            print("done")
+            con.close()
+        else:
+            email = fetched_data[0][0]
+            token = fetched_data[0][1]
+
+            print(token)
+            print(type(token))
+            # authenticate the obtained token
+            # Making a POST request
+            response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            print(response2.text)
+            json_message = json.loads(response2.text)
+            print(type(response2.text))
+            print("huhu")
+            content = json_message["message"]
+            if content != "success":
+                # the token has expired and user doesnt have a token with infinite validity
+                # either the user has not registered with mail or they have registered but not verified
+                if email is not None:
+                    # email has been registered and may or may not been verified
+                    # call api to send login email and check if email has been verified or not
+                    # Making a POST request
+                    response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
+                    print(response2.text)
+                    json_message = json.loads(response2.text)
+                    print(type(response2.text))
+                    print("hihi")
+                    try:
+                        content = json_message["message"]
+                        if content == "Email not found":
+                            # register email
+                            # Making a POST request
+                            response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+                            print(response2.text)
+                            json_message = json.loads(response2.text)
+                            print(type(response2.text))
+                            print("hehe")
+                        elif content == "Email not verified":
+                            # email is not verified, prompt the user to verify the email or if that has expired start
+                            # from scratch and register
+                            self.open_email_sent_dialog(email)
+                            print("lolo")
+                        return
+                    except:
+                        content = json_message["token"]
+                        # email has been verified and an infinite token is returned
+                        # update the database with this token now
+                        con = sqlite3.connect('autoclicker.db')
+                        cursor = con.cursor()
+                        sql = f"UPDATE local_table SET access_token = {content}, WHERE email = {email}; "
+                        cursor.execute(sql)
+                        fetched_data = cursor.fetchall()
+                        print(fetched_data)
+                        con.commit()
+                        print("done")
+                        con.close()
+
+                else:
+                    # email has not been registered
+                    self.open_email_dialog()
+                    return
+
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
         never_stop_boolean = self.never_stop_combobox.currentText()
