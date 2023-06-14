@@ -3442,9 +3442,8 @@ class UI(QMainWindow):
                 self.home_save_footnote.setText('error: cannot overwrite because it is being used')
                 return
 
-    # starts the process for home -> play button
-    def home_start_process(self):
-        self.get_home_screen()
+    # function to perform entire authentication, returns boolean value
+    def authentication_loop(self):
         con = sqlite3.connect('autoclicker.db')
         cursor = con.cursor()
         sql = "SELECT * FROM local_table"
@@ -3453,6 +3452,7 @@ class UI(QMainWindow):
         print(fetched_data)
         if len(fetched_data) == 0:
             # Making a GET request
+            print("no token found in local database")
             response = requests.get('https://auth-provider.onrender.com/generate-token')
 
             info = response.text
@@ -3464,30 +3464,38 @@ class UI(QMainWindow):
             token = json_info["accessToken"]
             print(type(token))
             email = ""
-            cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)",(email,token,))
+            cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
 
             con.commit()
 
             print("done")
             con.close()
+            return True
         else:
             email = fetched_data[0][0]
             token = fetched_data[0][1]
-
+            print(email == "")
+            print("---")
+            print(type(email))
             print(token)
             print(type(token))
             # authenticate the obtained token
+            print("token found in local database")
+            print("authenticating")
             # Making a POST request
             response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             print(response2.text)
             json_message = json.loads(response2.text)
             print(type(response2.text))
-            print("huhu")
+            # print("huhu")
+
             content = json_message["message"]
             if content != "success":
                 # the token has expired and user doesnt have a token with infinite validity
                 # either the user has not registered with mail or they have registered but not verified
-                if email is not None:
+                print("authentication failed")
+                if email != "":
+                    print("user has submitted email before, trying to check validity of email")
                     # email has been registered and may or may not been verified
                     # call api to send login email and check if email has been verified or not
                     # Making a POST request
@@ -3495,13 +3503,15 @@ class UI(QMainWindow):
                     print(response2.text)
                     json_message = json.loads(response2.text)
                     print(type(response2.text))
-                    print("hihi")
+                    # print("hihi")
                     try:
                         content = json_message["message"]
                         if content == "Email not found":
                             # register email
                             # Making a POST request
-                            response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+                            print("asking user to register their email as it is not found in our database")
+                            response2 = requests.post('https://auth-provider.onrender.com/register',
+                                                      data={"email": email})
                             print(response2.text)
                             json_message = json.loads(response2.text)
                             print(type(response2.text))
@@ -3509,27 +3519,42 @@ class UI(QMainWindow):
                         elif content == "Email not verified":
                             # email is not verified, prompt the user to verify the email or if that has expired start
                             # from scratch and register
+                            print("asking user to verify their email or resend verification link")
+                            print("before")
                             self.open_email_sent_dialog(email)
-                            print("lolo")
-                        return
+                            print("after")
+
+                        return False
                     except:
                         content = json_message["token"]
+                        print("user has now been granted access for lifetime")
+                        print(content)
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
                         con = sqlite3.connect('autoclicker.db')
                         cursor = con.cursor()
-                        sql = f"UPDATE local_table SET access_token = {content}, WHERE email = {email}; "
-                        cursor.execute(sql)
-                        fetched_data = cursor.fetchall()
-                        print(fetched_data)
+                        cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
                         con.commit()
                         print("done")
                         con.close()
+                        return True
 
                 else:
                     # email has not been registered
+                    print("email has not been registered, user has to submit an email")
                     self.open_email_dialog()
-                    return
+                    return False
+
+            else:
+                print("authentication success")
+                return True
+
+    # starts the process for home -> play button
+    def home_start_process(self):
+        self.get_home_screen()
+
+        if not self.authentication_loop():
+            return
 
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
@@ -3663,11 +3688,17 @@ class UI(QMainWindow):
     # starts the process for record -> play button
     def record_start_process(self):
         self.get_record_screen()
+
+        # running authentication
+        if not self.authentication_loop():
+            return
+
         if self.i == 1:
             self.foot_note_label.setText('error: no actions available')
             return
+
+        print("performing recorded autoclicking!!")
         actions_data = []
-        print("here bro")
         for a in range(self.i - 1):
             csv_list = []
             row_elements = self.line_list[a][1].children()

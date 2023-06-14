@@ -18,8 +18,8 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(442, 159)
+        self.Dialog = Dialog
         self.submit_key = QtWidgets.QPushButton(Dialog)
-        self.submit_key.clicked.connect(self.open_email_sent_dialog)
         self.submit_key.setGeometry(QtCore.QRect(340, 98, 75, 24))
         self.submit_key.setObjectName("submit_key")
         self.label_4 = QtWidgets.QLabel(Dialog)
@@ -32,6 +32,7 @@ class Ui_Dialog(object):
         self.name = QtWidgets.QLineEdit(Dialog)
         self.name.setGeometry(QtCore.QRect(80, 100, 221, 20))
         self.name.setObjectName("name")
+        self.submit_key.clicked.connect(self.open_email_sent_dialog)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -41,22 +42,22 @@ class Ui_Dialog(object):
         # add email to database
         con = sqlite3.connect('autoclicker.db')
         cursor = con.cursor()
-        sql = f"UPDATE local_table SET email = {email}, WHERE email = NULL; "
-        cursor.execute(sql)
-        fetched_data = cursor.fetchall()
-        print(fetched_data)
+        email_data = (email,)
+        cursor.execute("UPDATE local_table SET email = ?", email_data)
         con.commit()
-        print("done")
+        print("adding email to local database")
         con.close()
 
-        # call api to send register email
+        # call api to send verification email
         # Making a POST request
         response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
         print(response2.text)
-        json_message = json.loads(response2.text)
         print(type(response2.text))
-        print("hehe")
-        if json_message == "Email sent":
+        json_message = json.loads(response2.text)
+        print("verification mail sent")
+        if json_message["message"] == "Email sent":
+            print("here")
+            self.Dialog.hide()
             self.dialog = QtWidgets.QDialog()
             self.ui = Ui_email_sent_Dialog()
             self.ui.setupUi(self.dialog, email)
