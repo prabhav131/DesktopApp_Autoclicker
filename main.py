@@ -557,7 +557,7 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         uic.loadUi("version2.ui", self)
-
+        self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
         self.setFixedWidth(662)
@@ -3442,7 +3442,16 @@ class UI(QMainWindow):
                 self.home_save_footnote.setText('error: cannot overwrite because it is being used')
                 return
 
+    # starts a thread for authentication loop function
+    def thread_for_authentication(self):
+        result = []
+        new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
+        new_thread.start()
+        a = [new_thread, result]
+        return a
+
     # function to perform entire authentication, returns boolean value
+    # def authentication_loop(self, result):
     def authentication_loop(self):
         con = sqlite3.connect('autoclicker.db')
         cursor = con.cursor()
@@ -3470,6 +3479,7 @@ class UI(QMainWindow):
 
             print("done")
             con.close()
+            # result[0] = True
             return True
         else:
             email = fetched_data[0][0]
@@ -3523,7 +3533,7 @@ class UI(QMainWindow):
                             print("before")
                             self.open_email_sent_dialog(email)
                             print("after")
-
+                        # result[0] = False
                         return False
                     except:
                         content = json_message["token"]
@@ -3537,24 +3547,39 @@ class UI(QMainWindow):
                         con.commit()
                         print("done")
                         con.close()
+                        # result[0] = True
                         return True
 
                 else:
                     # email has not been registered
                     print("email has not been registered, user has to submit an email")
                     self.open_email_dialog()
+                    # result[0] = False
                     return False
 
             else:
                 print("authentication success")
+                # result[0] = True
                 return True
 
     # starts the process for home -> play button
     def home_start_process(self):
         self.get_home_screen()
 
+        # running authentication
+        # a = self.thread_for_authentication()
+        # the_thread = a[0]
+        # the_thread.join()
+        # if not a[1][0]:
+        #     return
         if not self.authentication_loop():
             return
+        # result = []
+        # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
+        # new_thread.start()
+        # new_thread.join()
+        # if not result:
+        #     return
 
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
@@ -3690,8 +3715,19 @@ class UI(QMainWindow):
         self.get_record_screen()
 
         # running authentication
+        # a = self.thread_for_authentication()
+        # the_thread = a[0]
+        # the_thread.join()
+        # if not a[1][0]:
+        #     return
         if not self.authentication_loop():
             return
+        # result = []
+        # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
+        # new_thread.start()
+        # new_thread.join()
+        # if not result:
+        #     return
 
         if self.i == 1:
             self.foot_note_label.setText('error: no actions available')
