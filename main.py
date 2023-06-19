@@ -709,7 +709,7 @@ class UI(QMainWindow):
         self.hotkey_settings_button = self.findChild(QToolButton, "hotkey_settings_button")
         self.hotkey_settings_button.setIcon(QtGui.QIcon("images/HotkeyBlack"))
         self.hotkey_settings_frame = self.findChild(QFrame, "hotkey_settings_frame")
-        self.top_frame = self.findChild(QFrame, "top_frame")
+        # self.top_frame = self.findChild(QFrame, "top_frame")
         self.top_frame_logged_out = self.findChild(QFrame, "top_frame_logged_out")
         self.app_icon = self.findChild(QLabel, "app_icon")
 
@@ -1216,15 +1216,15 @@ class UI(QMainWindow):
                                       "background-color: rgb(249, 249, 245);"
                                       "border: none}"
                                       "QRadioButton {color: #bfcfb2;}")
-        self.top_frame.setStyleSheet("QFrame {background-color: #10131b;"
-                                     "color: #bfcfb2;"
-                                     "border: none;}"
-                                     "QComboBox {color: black;"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: none}"
-                                     "QLineEdit {color: black;"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: none}")
+        # self.top_frame.setStyleSheet("QFrame {background-color: #10131b;"
+        #                              "color: #bfcfb2;"
+        #                              "border: none;}"
+        #                              "QComboBox {color: black;"
+        #                              "background-color: rgb(249, 249, 245);"
+        #                              "border: none}"
+        #                              "QLineEdit {color: black;"
+        #                              "background-color: rgb(249, 249, 245);"
+        #                              "border: none}")
         self.top_frame_logged_out.setStyleSheet("QFrame {background-color: #10131b;"
                                      "color: #bfcfb2;"
                                      "border: none;}"
@@ -1500,19 +1500,19 @@ class UI(QMainWindow):
                                       "border-radius: 3px solid;}"
                                       "QRadioButton {color: rgb(30, 30, 30);"
                                       "border: none;}")
-        self.top_frame.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
-                                     "color: rgb(30, 30, 30);"
-                                     "border: none;}"
-                                     "QComboBox {color: rgb(30, 30, 30);"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: 1px solid;"
-                                     "border-radius: 3px;}"
-                                     "QLineEdit {color: rgb(30, 30, 30);"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: 1px solid;"
-                                     "border-radius: 3px solid;}"
-                                     "QRadioButton {color: rgb(30, 30, 30);"
-                                     "border: none;}")
+        # self.top_frame.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
+        #                              "color: rgb(30, 30, 30);"
+        #                              "border: none;}"
+        #                              "QComboBox {color: rgb(30, 30, 30);"
+        #                              "background-color: rgb(249, 249, 245);"
+        #                              "border: 1px solid;"
+        #                              "border-radius: 3px;}"
+        #                              "QLineEdit {color: rgb(30, 30, 30);"
+        #                              "background-color: rgb(249, 249, 245);"
+        #                              "border: 1px solid;"
+        #                              "border-radius: 3px solid;}"
+        #                              "QRadioButton {color: rgb(30, 30, 30);"
+        #                              "border: none;}")
         self.top_frame_logged_out.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
                                      "color: rgb(30, 30, 30);"
                                      "border: none;}"
@@ -3453,6 +3453,11 @@ class UI(QMainWindow):
     # function to perform entire authentication, returns boolean value
     # def authentication_loop(self, result):
     def authentication_loop(self):
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+
         con = sqlite3.connect('autoclicker.db')
         cursor = con.cursor()
         sql = "SELECT * FROM local_table"
@@ -3462,6 +3467,7 @@ class UI(QMainWindow):
         if len(fetched_data) == 0:
             # Making a GET request
             print("no token found in local database")
+
             response = requests.get('https://auth-provider.onrender.com/generate-token')
 
             info = response.text
@@ -3713,7 +3719,7 @@ class UI(QMainWindow):
     # starts the process for record -> play button
     def record_start_process(self):
         self.get_record_screen()
-
+        print("trying to perform recorded autoclicking!!")
         # running authentication
         # a = self.thread_for_authentication()
         # the_thread = a[0]
@@ -3733,7 +3739,7 @@ class UI(QMainWindow):
             self.foot_note_label.setText('error: no actions available')
             return
 
-        print("performing recorded autoclicking!!")
+        print("now finally performing recorded autoclicking!!")
         actions_data = []
         for a in range(self.i - 1):
             csv_list = []
