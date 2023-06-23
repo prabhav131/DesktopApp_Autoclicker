@@ -421,7 +421,7 @@ border-radius: 10px;</string>
           <property name="geometry">
            <rect>
             <x>24</x>
-            <y>63</y>
+            <y>27</y>
             <width>78</width>
             <height>18</height>
            </rect>
@@ -442,7 +442,7 @@ border-radius: 10px;</string>
           <property name="geometry">
            <rect>
             <x>157</x>
-            <y>60</y>
+            <y>24</y>
             <width>80</width>
             <height>26</height>
            </rect>
@@ -470,8 +470,8 @@ border-color: rgb(218, 218, 218)
           <property name="geometry">
            <rect>
             <x>24</x>
-            <y>27</y>
-            <width>77</width>
+            <y>63</y>
+            <width>78</width>
             <height>18</height>
            </rect>
           </property>
@@ -491,7 +491,7 @@ border-color: rgb(218, 218, 218)
           <property name="geometry">
            <rect>
             <x>157</x>
-            <y>24</y>
+            <y>60</y>
             <width>80</width>
             <height>26</height>
            </rect>
@@ -829,7 +829,7 @@ border-radius: 10px;</string>
            <rect>
             <x>299</x>
             <y>23</y>
-            <width>96</width>
+            <width>111</width>
             <height>19</height>
            </rect>
           </property>
@@ -860,7 +860,7 @@ border-radius: 10px;</string>
            <string notr="true">border: none;</string>
           </property>
           <property name="text">
-           <string>Select Area</string>
+           <string>Choose Area</string>
           </property>
          </widget>
          <widget class="QLabel" name="y_left_label">
@@ -1046,9 +1046,9 @@ border-color: rgb(218, 218, 218)</string>
          <widget class="QPushButton" name="snipping_push_button">
           <property name="geometry">
            <rect>
-            <x>295</x>
-            <y>21</y>
-            <width>91</width>
+            <x>420</x>
+            <y>20</y>
+            <width>81</width>
             <height>21</height>
            </rect>
           </property>
@@ -1058,11 +1058,20 @@ border-color: rgb(218, 218, 218)</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background: transparent;
-border: none;</string>
+           <string notr="true">QPushButton{
+border-radius: 5px;
+border: 2px solid #3A5A40;
+color: #3A5A40;
+
+}
+
+QPushButton:hover {
+color: white;
+background-color: #3A5A40;
+}</string>
           </property>
           <property name="text">
-           <string/>
+           <string>Snip Area</string>
           </property>
          </widget>
         </widget>
@@ -1669,7 +1678,7 @@ border: none;</string>
          <property name="geometry">
           <rect>
            <x>62</x>
-           <y>127</y>
+           <y>129</y>
            <width>16</width>
            <height>16</height>
           </rect>
@@ -1733,7 +1742,7 @@ border: none;</string>
            <x>20</x>
            <y>40</y>
            <width>536</width>
-           <height>242</height>
+           <height>316</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -1793,7 +1802,7 @@ border-radius: 10px;</string>
           <property name="geometry">
            <rect>
             <x>27</x>
-            <y>94</y>
+            <y>95</y>
             <width>482</width>
             <height>50</height>
            </rect>
@@ -1873,6 +1882,48 @@ border-radius: 10px;</string>
            </property>
           </widget>
          </widget>
+         <widget class="QFrame" name="frame_15">
+          <property name="geometry">
+           <rect>
+            <x>27</x>
+            <y>239</y>
+            <width>482</width>
+            <height>50</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 2px solid rgb(196, 177, 174);
+
+border-radius: 10px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="label_18">
+           <property name="geometry">
+            <rect>
+             <x>36</x>
+             <y>16</y>
+             <width>321</width>
+             <height>18</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border: none;</string>
+           </property>
+           <property name="text">
+            <string>Disable small window on screen while autoclicking</string>
+           </property>
+          </widget>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_7">
          <property name="geometry">
@@ -1932,7 +1983,7 @@ border-radius: 10px;</string>
          <property name="geometry">
           <rect>
            <x>80</x>
-           <y>330</y>
+           <y>400</y>
            <width>81</width>
            <height>20</height>
           </rect>
@@ -1944,8 +1995,8 @@ border-radius: 10px;</string>
         <widget class="QCheckBox" name="hide_to_tray_checkbox">
          <property name="geometry">
           <rect>
-           <x>220</x>
-           <y>330</y>
+           <x>180</x>
+           <y>400</y>
            <width>81</width>
            <height>20</height>
           </rect>
@@ -1957,8 +2008,8 @@ border-radius: 10px;</string>
         <widget class="QCheckBox" name="mouse_location_checkbox">
          <property name="geometry">
           <rect>
-           <x>370</x>
-           <y>330</y>
+           <x>290</x>
+           <y>400</y>
            <width>81</width>
            <height>20</height>
           </rect>
@@ -1970,6 +2021,53 @@ border-radius: 10px;</string>
           <string>CheckBox</string>
          </property>
         </widget>
+        <widget class="QCheckBox" name="small_window_checkbox">
+         <property name="geometry">
+          <rect>
+           <x>400</x>
+           <y>400</y>
+           <width>81</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: none;</string>
+         </property>
+         <property name="text">
+          <string>CheckBox</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="small_window_checkbox2">
+         <property name="geometry">
+          <rect>
+           <x>62</x>
+           <y>273</y>
+           <width>16</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: none;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>../../.designer/backup/images/empty_checkbox.png</normaloff>../../.designer/backup/images/empty_checkbox.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
         <zorder>frame_6</zorder>
         <zorder>label_7</zorder>
         <zorder>hide_to_tray_checkbox2</zorder>
@@ -1978,6 +2076,8 @@ border-radius: 10px;</string>
         <zorder>mouse_location_checkbox</zorder>
         <zorder>mouse_location_checkbox2</zorder>
         <zorder>hide_while_click_checkbox2</zorder>
+        <zorder>small_window_checkbox</zorder>
+        <zorder>small_window_checkbox2</zorder>
        </widget>
        <widget class="QLabel" name="foot_note_label">
         <property name="geometry">
@@ -2864,8 +2964,8 @@ background-color: rgb(242,242,242);
        <zorder>foot_note_label</zorder>
        <zorder>live_mouse_label</zorder>
        <zorder>navigation_frame</zorder>
-       <zorder>hotkey_settings_frame</zorder>
        <zorder>record_frame</zorder>
+       <zorder>hotkey_settings_frame</zorder>
        <zorder>view_settings_frame</zorder>
        <zorder>home_frame</zorder>
       </widget>

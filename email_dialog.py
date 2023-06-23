@@ -11,6 +11,7 @@ import sqlite3
 
 import requests
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from email_sent_dialog import Ui_email_sent_Dialog
 
 

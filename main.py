@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, 
     QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
     QCheckBox, QDialog, QListWidget, QToolButton
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIntValidator, QIcon
+from PyQt5.QtCore import Qt, QSize
 import sys
 import os
 import threading
@@ -15,7 +15,7 @@ import time
 import mouse
 import keyboard
 import random
-
+from small_window import Ui_SmallWindow
 from email_sent_dialog import Ui_email_sent_Dialog
 from functions_file import functions
 import ctypes
@@ -32,6 +32,7 @@ Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
+    print("start execution of function: home_fixed_clicking()")
     stop_home_event.clear()
     if wait_interval[0] == wait_interval[1]:
         if wait_interval[0] > 2:
@@ -156,7 +157,10 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
                     if stop_home_event.is_set():
                         stop_home_event.clear()
                         break
+
+    print("done fixed clicking")
     UIWindow.after_home_thread()
+    print("completed execution of function: home_fixed_clicking()")
 
 
 # starts the clicking actions in current location set in home screen
@@ -277,6 +281,7 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     if stop_home_event.is_set():
                         stop_home_event.clear()
                         break
+    print("done current clicking")
     UIWindow.after_home_thread()
 
 # starts the dragging actions set in home screen
@@ -423,6 +428,7 @@ def home_random_clicking(mouse_type, click_type, click_repeat, location_x, locat
                     if stop_home_event.is_set():
                         stop_home_event.clear()
                         break
+    print("done random clicking")
     UIWindow.after_home_thread()
 
 # simulates clicking action for record screen
@@ -556,6 +562,8 @@ class UI(QMainWindow):
     # defines all variables and UI elements for the app
     def __init__(self):
         super(UI, self).__init__()
+        self.small_window_opened = None
+        self.small_window = None
         uic.loadUi("version2.ui", self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
@@ -572,7 +580,7 @@ class UI(QMainWindow):
         self.snipping_push_button.clicked.connect(self.screenCapture)
 
         # Dim Splashscreen object, also responsible for tracking mouse and capturing screenshot.
-        self.tmpDimScreen = CaptureScreen()
+        self.tmpDimScreen = CaptureScreen(self)
         self.snipping_radio_button = self.findChild(QRadioButton, "snipping_radio_button")
         self.fixed_location_radio_button = self.findChild(QRadioButton, "fixed_location_radio_button")
         self.current_location_radio_button = self.findChild(QRadioButton, "current_location_radio_button")
@@ -827,8 +835,8 @@ class UI(QMainWindow):
         self.mouse_button_combobox.addItem("Right")
         self.click_type_combobox.addItem("Single")
         self.click_type_combobox.addItem("Double")
-        self.never_stop_combobox.addItem("No")
         self.never_stop_combobox.addItem("Yes")
+        self.never_stop_combobox.addItem("No")
         self.delay_time_combobox.addItem("ms")
         self.delay_time_combobox.addItem("s")
         self.delay_time_combobox.addItem("min")
@@ -852,7 +860,7 @@ class UI(QMainWindow):
         self.current_location_radio_button.setChecked(True)
         self.record_remove_all_button.setEnabled(False)
         self.repeat_for_number.setText("1")
-        self.delay_time_entrybox.setText("100")
+        self.delay_time_entrybox.setText("1")
         for widget in self.home_frame.findChildren(QLineEdit):
             widget.setValidator(self.integer)
         # --------------
@@ -950,18 +958,26 @@ class UI(QMainWindow):
         self.hide_to_tray_checkbox2 = self.findChild(QPushButton, "hide_to_tray_checkbox2")
         self.show_after_complete_checkbox2 = self.findChild(QPushButton, "hide_while_click_checkbox2")
         self.mouse_location_checkbox2 = self.findChild(QPushButton, "mouse_location_checkbox2")
+        self.small_window_checkbox2 = self.findChild(QPushButton, "small_window_checkbox2")
         self.hide_to_tray_checkbox = self.findChild(QCheckBox, "hide_to_tray_checkbox")
         self.show_after_complete_checkbox = self.findChild(QCheckBox, "hide_while_click_checkbox")
         self.mouse_location_checkbox = self.findChild(QCheckBox, "mouse_location_checkbox")
+        self.small_window_checkbox = self.findChild(QCheckBox, "small_window_checkbox")
         self.hide_to_tray_checkbox.hide()
         self.show_after_complete_checkbox.hide()
         self.mouse_location_checkbox.hide()
+        self.small_window_checkbox.hide()
         self.hide_to_tray_checkbox2.clicked.connect(self.trigger_tray_checkbox)
         self.mouse_location_checkbox2.clicked.connect(self.trigger_live_mouse)
+        self.small_window_checkbox2.clicked.connect(self.trigger_small_window_checkbox)
+
         self.show_after_complete_checkbox2.clicked.connect(self.trigger_show_tool)
         if self.dark_theme_activated:
             self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
             self.mouse_location_checkbox2.setStyleSheet("border: none;"
+                                                        "background-color: #10131b;")
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.small_window_checkbox2.setStyleSheet("border: none;"
                                                         "background-color: #10131b;")
             self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
@@ -972,6 +988,9 @@ class UI(QMainWindow):
         else:
             self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
             self.mouse_location_checkbox2.setStyleSheet("border: none;"
+                                                        "background-color: rgb(239, 229, 220);")
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.small_window_checkbox2.setStyleSheet("border: none;"
                                                         "background-color: rgb(239, 229, 220);")
             self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
             self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
@@ -987,6 +1006,8 @@ class UI(QMainWindow):
             self.hide_to_tray_checkbox2.click()
         if disable_cursor_location == 1:
             self.mouse_location_checkbox2.click()
+        if disable_small_window == 1:
+            self.small_window_checkbox2.click()
         if dark_theme == 1:
             self.get_dark_theme()
         self.home_start_stop_hotkey = home_start_hotkey
@@ -995,6 +1016,7 @@ class UI(QMainWindow):
         self.mouse_location_hotkey = mouse_location_hotkey
         keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
         keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
+        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
         keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
         self.home_start_stop_hotkey_label.setText(str(home_start_hotkey))
@@ -1053,6 +1075,7 @@ class UI(QMainWindow):
         self.delay_time_combobox.setFont(self.font)
         self.delay_time_combobox_2.setFont(self.font)
         self.delay_time_combobox_record.setFont(self.font)
+        # self.open_small_window(run_mode="home")
         # ------------------------
         # menu bar buttons below
         about_us = self.findChild(QPushButton, "pushButton")
@@ -1078,9 +1101,30 @@ class UI(QMainWindow):
         self.ui.setupUi(self.dialog, email)
         self.dialog.show()
 
+    def open_small_window(self, run_mode):
+        # self.setVisible(False)
+        # self.smallwindow = QtWidgets.QMainWindow()
+        # self.ui = Ui_SmallWindow()
+        # self.ui.setupUi(self.smallwindow)
+        # self.smallwindow.show()
+        print("started function call to open small window")
+        if self.small_window_checkbox.isChecked():
+            return
+        stop_hotkey_text = ""
+        if run_mode == "home":
+            stop_hotkey_text = self.home_start_stop_hotkey_label.text()
+        elif run_mode == "record playback":
+            stop_hotkey_text = self.playback_start_stop_hotkey_label.text()
+
+        self.small_window = UI_SmallWindow(stop_hotkey_text, UIWindow)
+
+        self.small_window.show()
+        self.small_window_opened = self.small_window  # holds the current object of small window
+        print("completed function call to open small window")
 
     def screenCapture(self):
         """Show the dim Splashscreen"""
+        print("started function call to capture screen")
         self.hide()
 
         self.tmpDimScreen.show()
@@ -1092,6 +1136,7 @@ class UI(QMainWindow):
         self.snipping_height = abs(self.final_y - self.original_y)
         self.snip_x = min(self.final_x,self.original_x)
         self.snip_y = min(self.final_y,self.original_y)
+        print("completed function call to capture screen")
 
     # triggers show tool checkbox
     def trigger_show_tool(self):
@@ -1118,6 +1163,7 @@ class UI(QMainWindow):
 
     # exits app
     def exit_app(self):
+        print("starting function to exit app")
         if self.show_after_complete_checkbox.isChecked():
             new_show_tool_after = 1
         else:
@@ -1130,6 +1176,10 @@ class UI(QMainWindow):
             new_cursor_location = 1
         else:
             new_cursor_location = 0
+        if self.small_window_checkbox.isChecked():
+            new_small_window = 1
+        else:
+            new_small_window = 0
         if self.dark_theme_activated:
             new_dark_theme = 1
         else:
@@ -1141,11 +1191,13 @@ class UI(QMainWindow):
         conn = sqlite3.connect('autoclicker.db')
         cursor = conn.cursor()
         delete_row = '''DELETE FROM app_settings'''
+        print("yo--1")
         cursor.execute(delete_row)
         add_new_row = f'''INSERT INTO app_settings VALUES (
                 '{new_show_tool_after}',
                 '{new_hide_system_tray}',
                 '{new_cursor_location}',
+                '{new_small_window}',
                 '{new_dark_theme}',
                 '{new_home_start_hotkey}',
                 '{new_record_start_hotkey}',
@@ -1153,9 +1205,13 @@ class UI(QMainWindow):
                 '{new_mouse_location_hotkey}'
                 )'''
         cursor.execute(add_new_row)
+        print("yo--2")
         conn.commit()
         conn.close()
+        print("yo--3")
+        print("completed function to exit app")
         app.exit()
+        print("completed full function to exit app")
 
     # activates dark theme
     def get_dark_theme(self):
@@ -1438,6 +1494,12 @@ class UI(QMainWindow):
             self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
         self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                     "background-color: #10131b;")
+        if self.small_window_checkbox.isChecked():
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+        else:
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+        self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                    "background-color: #10131b;")
 
     # activates normal theme
     def get_normal_theme(self):
@@ -1719,6 +1781,12 @@ class UI(QMainWindow):
             self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
         self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                     "background-color: rgb(239, 229, 220);")
+        if self.small_window_checkbox.isChecked():
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+        else:
+            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+        self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                    "background-color: rgb(239, 229, 220);")
 
     # gets home screen in front
     def get_home_screen(self):
@@ -1738,7 +1806,6 @@ class UI(QMainWindow):
         self.home_frame.hide()
         self.foot_note_label.setText('')
         self.record_frame.show()
-
 
     # gets view settings screen in front
     def get_view_screen(self):
@@ -1917,21 +1984,41 @@ class UI(QMainWindow):
     def start_thread_hotkey_1(self):
         change_home_start_hotkey_thread = threading.Thread(target=self.change_home_start_hotkey)
         change_home_start_hotkey_thread.start()
+        print("starting thread for hotkey change of home start stop")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
 
     # starts thread for hotkey change of record -> start_stop button
     def start_thread_hotkey_2(self):
         change_record_start_hotkey_thread = threading.Thread(target=self.change_record_start_hotkey)
         change_record_start_hotkey_thread.start()
+        print("starting thread for record change of home start stop")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
 
     # starts thread for hotkey change of getting mouse location
     def start_thread_hotkey_3(self):
         change_mouse_location_hotkey_thread = threading.Thread(target=self.change_mouse_location_hotkey)
         change_mouse_location_hotkey_thread.start()
+        print("starting thread for getting mouse location")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
 
     # starts thread for hotkey change of record -> record button
     def start_thread_hotkey_4(self):
         change_recording_hotkey_thread = threading.Thread(target=self.change_recording_hotkey)
         change_recording_hotkey_thread.start()
+        print("starting thread for hotkey change of record button")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
 
     # opens the menu bar
     def open_menu(self):
@@ -2197,6 +2284,7 @@ class UI(QMainWindow):
         # triggered by record -> load button (pop-up window)
 
     def window_load(self):
+        print("started function to load pop up window")
         self.font.setBold(False)
         self.font.setPixelSize(11)
         self.load_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
@@ -2362,6 +2450,7 @@ class UI(QMainWindow):
         self.update_db_view()
         self.load_list.setCurrentRow(self.j - 1)
         self.load_window.show()
+        print("completed function to load pop up window")
 
     # updates the database view on load window
     def update_db_view(self):
@@ -2390,6 +2479,7 @@ class UI(QMainWindow):
 
     # function to read a CSV without using pandas
     def read_csv(self, csv_file):
+        print("started function to read csv")
         data = []
         with open(csv_file, 'r') as f:
 
@@ -2406,7 +2496,7 @@ class UI(QMainWindow):
 
                 # append to data-frame our new row-object with columns
                 data.append(row)
-
+        print("completed function to read csv")
         return data
 
     # loads selected action from pc (csv files)
@@ -3133,6 +3223,37 @@ class UI(QMainWindow):
             self.fixed_location_x.setText(str(x))
             self.fixed_location_y.setText(str(y))
 
+    # function to run when small_window_checkbox2 is clicked
+    def trigger_small_window_checkbox(self):
+        # toggles the state of the small_window_checkbox
+        if self.small_window_checkbox.isChecked():
+            self.small_window_checkbox.setChecked(False)
+            if self.dark_theme_activated:
+                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+                self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                            "background-color: #10131b;")
+            else:
+                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+                self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                            "background-color: rgb(239, 229, 220);")
+        else:
+            self.small_window_checkbox.setChecked(True)
+            if self.dark_theme_activated:
+                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+                self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                            "background-color: #10131b;")
+            else:
+                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+                self.small_window_checkbox2.setStyleSheet("border: none;"
+                                                            "background-color: rgb(239, 229, 220);")
+        # self.action_on_small_window()
+
+    # # does action on small window based on whether small_window_checkbox is checked or not
+    # def action_on_small_window(self):
+    #     # if self.small_window_checkbox.isChecked():
+    #     #     # disable the small window during home run and record run commands commands
+
+
     # triggers live mouse checkbox
     def trigger_live_mouse(self):
         if self.mouse_location_checkbox.isChecked():
@@ -3159,12 +3280,14 @@ class UI(QMainWindow):
 
     # starts the thread for writing live cursor position
     def check_live_mouse(self):
+        print("starting function call to start thread to write live mouse position to screen")
         live_mouse_thread = threading.Thread(target=self.get_live_mouse)
         live_mouse_thread.setDaemon(True)
         live_mouse_thread.start()
 
     # constantly writes the live cursor position to the screen
     def get_live_mouse(self):
+        print("starting function call to write live mouse position to screen")
         while 1:
             if self.mouse_location_checkbox.isChecked():
                 self.live_mouse_label.setText('')
@@ -3177,9 +3300,9 @@ class UI(QMainWindow):
     def home_reset_settings(self):
         self.mouse_button_combobox.setCurrentText('Left')
         self.click_type_combobox.setCurrentText('Single')
-        self.never_stop_combobox.setCurrentText('No')
+        self.never_stop_combobox.setCurrentText('Yes')
         self.repeat_for_number.setText('1')
-        self.delay_time_entrybox.setText('100')
+        self.delay_time_entrybox.setText('1')
         self.delay_time_combobox.setCurrentText('ms')
         self.repeat_radio_button.setChecked(True)
         self.current_location_radio_button.setChecked(True)
@@ -3357,7 +3480,7 @@ class UI(QMainWindow):
         except ValueError:
             self.home_save_footnote.setText('error: set delay time for your choice')
             return
-        saved_date = datetime.today().strftime('%Y-%m-%d %H:%M')
+        saved_date = datetime.datetime.today().strftime('%Y-%m-%d %H:%M')
         try:
             functions.add_run_home_db(save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed,
                                       location_x, location_y, wait_interval_min, wait_interval_max, delay_type,
@@ -3453,23 +3576,27 @@ class UI(QMainWindow):
     # function to perform entire authentication, returns boolean value
     # def authentication_loop(self, result):
     def authentication_loop(self):
+        print("started execution of function: authentication_loop()")
         print("*****************************")
         for thread in threading.enumerate():
             print(thread)
         print("*****************************")
-
+        print("connecting to database")
         con = sqlite3.connect('autoclicker.db')
+        print("connected to database")
         cursor = con.cursor()
         sql = "SELECT * FROM local_table"
+        print("executing sql query")
         cursor.execute(sql)
         fetched_data = cursor.fetchall()
+        print("completed sql query")
         print(fetched_data)
         if len(fetched_data) == 0:
             # Making a GET request
             print("no token found in local database")
-
+            print("started get call")
             response = requests.get('https://auth-provider.onrender.com/generate-token')
-
+            print("completed get call")
             info = response.text
             print(info)
             print("--------")
@@ -3486,6 +3613,7 @@ class UI(QMainWindow):
             print("done")
             con.close()
             # result[0] = True
+            print("completed execution of function: authentication_loop()")
             return True
         else:
             email = fetched_data[0][0]
@@ -3499,7 +3627,9 @@ class UI(QMainWindow):
             print("token found in local database")
             print("authenticating")
             # Making a POST request
+            print("started post call")
             response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            print("done post call")
             print(response2.text)
             json_message = json.loads(response2.text)
             print(type(response2.text))
@@ -3515,7 +3645,9 @@ class UI(QMainWindow):
                     # email has been registered and may or may not been verified
                     # call api to send login email and check if email has been verified or not
                     # Making a POST request
+                    print("started post call")
                     response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
+                    print("done post call")
                     print(response2.text)
                     json_message = json.loads(response2.text)
                     print(type(response2.text))
@@ -3526,8 +3658,10 @@ class UI(QMainWindow):
                             # register email
                             # Making a POST request
                             print("asking user to register their email as it is not found in our database")
+                            print("started post call")
                             response2 = requests.post('https://auth-provider.onrender.com/register',
                                                       data={"email": email})
+                            print("done post call")
                             print(response2.text)
                             json_message = json.loads(response2.text)
                             print(type(response2.text))
@@ -3536,10 +3670,11 @@ class UI(QMainWindow):
                             # email is not verified, prompt the user to verify the email or if that has expired start
                             # from scratch and register
                             print("asking user to verify their email or resend verification link")
-                            print("before")
+                            print("calling function to open email sent dialog")
                             self.open_email_sent_dialog(email)
-                            print("after")
+                            print("function call complete")
                         # result[0] = False
+                        print("completed execution of function: authentication_loop()")
                         return False
                     except:
                         content = json_message["token"]
@@ -3547,29 +3682,39 @@ class UI(QMainWindow):
                         print(content)
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
+                        print("connecting to db")
                         con = sqlite3.connect('autoclicker.db')
+                        print("connected to db")
                         cursor = con.cursor()
+                        print("start executing query")
                         cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
                         con.commit()
-                        print("done")
+                        print("finished executing")
                         con.close()
+                        print("database connection closed")
                         # result[0] = True
+                        print("completed execution of function: authentication_loop()")
                         return True
 
                 else:
                     # email has not been registered
                     print("email has not been registered, user has to submit an email")
+                    print("calling function to open email dialog")
                     self.open_email_dialog()
+                    print("function call complete")
                     # result[0] = False
+                    print("completed execution of function: authentication_loop()")
                     return False
 
             else:
                 print("authentication success")
                 # result[0] = True
+                print("completed execution of function: authentication_loop()")
                 return True
 
     # starts the process for home -> play button
     def home_start_process(self):
+        print("start execution of function: home_start_process()")
         self.get_home_screen()
 
         # running authentication
@@ -3661,9 +3806,11 @@ class UI(QMainWindow):
         else:
             radio_button = 3
         self.showMinimized()
+        self.open_small_window(run_mode="home")
         # ----------------------
         keyboard.remove_hotkey(self.home_start_stop_hotkey)
-        keyboard.add_hotkey(self.home_start_stop_hotkey, self.home_stop_process)
+        # keyboard.add_hotkey(self.home_start_stop_hotkey, self.home_stop_process)
+        keyboard.add_hotkey(self.home_start_stop_hotkey, self.multiple_hotkey_actions_home)
         self.foot_note_label.setText('')
         self.play_button.setEnabled(False)
         toaster.show_toast(title="Clicking started", msg=f'Press {self.home_start_stop_hotkey.upper()} to stop',
@@ -3681,20 +3828,43 @@ class UI(QMainWindow):
                                                                           location_x, location_y,
                                                                           wait_interval, area_width, area_height))
             thread.start()
+        print("completed execution of function: home_start_process()")
+
+    # function to encompass multiple actions after home start stop hotkey is pressed
+    def multiple_hotkey_actions_home(self):
+        print("started execution of function: multiple_hotkey_actions_home()")
+        self.home_stop_process()
+        # close the small window if its open. First check none condition
+        small_window_instance = self.small_window_opened
+        print("--1----")
+        print(small_window_instance)
+        print("--2----")
+        if small_window_instance is not None:
+            small_window_instance.close()
+            self.showNormal()
+        print("completed execution of function: multiple_hotkey_actions_home()")
 
     # starts after the process for home -> play button is finished
     def after_home_thread(self):
+        print("started execution of function: after_home_thread()")
         self.play_button.setEnabled(True)
+        print("heree")
         keyboard.remove_hotkey(self.home_start_stop_hotkey)
         keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
+        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
         if self.show_after_complete_checkbox.isChecked():
+            print("completed brooo")
+            # self.showMinimized()
+            # print("min")
             self.showNormal()
+            # print("norm")
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
 
 
-        computer_type = self.complete_combobox_3.currentText()
 
+        computer_type = self.complete_combobox_3.currentText()
+        print("done heree")
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
         elif computer_type == " Log off":
@@ -3707,6 +3877,19 @@ class UI(QMainWindow):
             app.exit()
         elif computer_type == "Standby":
             os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+        print("done heree2")
+
+        small_window_instance = self.small_window_opened
+        print("--3----")
+        print(small_window_instance)
+        print("--4----")
+        if small_window_instance is not None:
+            print("--yo1----")
+            # small_window_instance.close()
+            print("--yo2----")
+            self.show()
+            print("--yo----")
+        print("completed execution of function: after_home_thread()")
 
     # stops the actions set in home screen (intervenes the thread)
     def home_stop_process(self):
@@ -3811,6 +3994,7 @@ class UI(QMainWindow):
                 delay_time = int(self.delay_2.text()) * 1440
         self.foot_note_label.setText('')
         self.showMinimized()
+        self.open_small_window(run_mode="record playback")
         # -------------------------
         keyboard.remove_hotkey(self.record_start_stop_hotkey)
         keyboard.add_hotkey(self.record_start_stop_hotkey, self.record_stop_process)
@@ -3823,6 +4007,7 @@ class UI(QMainWindow):
 
     # starts after the process for record -> play button is finished
     def after_record_thread(self, a):
+        print("heree record")
         if wrong_key_event.is_set():
             self.foot_note_label.setText(f'error: wrong key input at line {a + 1}')
             wrong_key_event.clear()
@@ -4062,12 +4247,61 @@ class UI(QMainWindow):
         self.record_play_button.setEnabled(True)
 
 
+class UI_SmallWindow(QMainWindow):
+    # defines all variables and UI elements for the app
+    def __init__(self, stop_hotkey, MainWindow):
+        print("started initialisation of small window UI")
+        super(UI_SmallWindow, self).__init__()
+        uic.loadUi("small_window.ui", self)
+        self.MainWindow = self.findChild(QMainWindow, "MainWindow")
+        self.setObjectName("SmallWindow")
+        # self.resize(140, 41)
+        sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
+        # print(" Screen size : " + str(sizeObject.height()) + "x" + str(sizeObject.width()))
+        self.setGeometry(sizeObject.width() - 141, 1, 140, 41)
+        # self.setWindowFlag(Qt.FramelessWindowHint)
+        flags = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(flags)
+        # self.centralwidget = QtWidgets.QWidget(MainWindow)
+        # self.centralwidget.setObjectName("centralwidget")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(88, 0, 52, 41))
+        self.pushButton.setText("")
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setStyleSheet("border :1px solid black")
+        self.pushButton.setIcon(QIcon("images/red-circle"))
+        self.pushButton.clicked.connect(lambda: self.button_action(MainWindow))
+        size = QSize(25, 25)
+        self.pushButton.setIconSize(size)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 89, 41))
+        self.label.setFrameShape(QtWidgets.QFrame.Box)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.label.setText("")
+        self.label.setText(stop_hotkey)
+        self.setCentralWidget(self.centralwidget)
+        print("completed initialisation of small window UI")
+        # self.retranslateUi(stop_hotkey)
+        # QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def button_action(self, MainWindow):
+        # master_window = UI()
+        # call stop function from this object
+
+        MainWindow.showNormal()
+        self.close()
+        # MainWindow.after_home_thread()
+        print("calling function home_stop_process()")
+        MainWindow.home_stop_process()
+
+
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
-    def __init__(self):
+    def __init__(self, MainWindow):
 
         super(CaptureScreen, self).__init__()
-
+        self.master = MainWindow
         # Points on screen marking the origin and end of regtangle area.
         self.origin = QtCore.QPoint(0,0)
         self.end = QtCore.QPoint(0,0)
@@ -4080,7 +4314,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
 
     def createDimScreenEffect(self):
         """Fill splashScreen with black color and reduce the widget opacity to create dim screen effect"""
-
+        print("started function createdimscreeneffect")
         # Get the screen geometry of the main desktop screen for size ref
         primScreenGeo = QtGui.QGuiApplication.primaryScreen().geometry()
 
@@ -4091,6 +4325,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
 
         self.setWindowState(QtCore.Qt.WindowFullScreen)
         self.setWindowOpacity(0.4)
+        print("completed function createdimscreeneffect")
 
     def mousePressEvent(self, event):
         """Show rectangle at mouse position when left-clicked"""
@@ -4119,6 +4354,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
 
     def mouseReleaseEvent(self, event):
         """Upon mouse released, ask the main desktop's QScreen to capture screen on defined area."""
+        print("started function mouse release event")
         if event.button() == QtCore.Qt.LeftButton:
             self.end = event.pos()
             print("end_x: " + str(self.end.x()))
@@ -4129,7 +4365,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             primaryScreen = QtGui.QGuiApplication.primaryScreen()
             grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
             # grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
-            UIWindow = UI()
+            # UIWindow = UI()
 
             self.original_x = self.getOriginal_x()
             self.original_y = self.getOriginal_y()
@@ -4139,12 +4375,19 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.snipping_height = abs(self.final_y - self.original_y)
             self.snip_x = min(self.final_x,self.original_x)
             self.snip_y = min(self.final_y,self.original_y)
-            UIWindow.select_area_x.setText(str(self.snip_x))
-            UIWindow.select_area_y.setText(str(self.snip_y))
-            UIWindow.select_area_width.setText(str(self.snipping_width))
-            UIWindow.select_area_height.setText(str(self.snipping_height))
-            UIWindow.select_area_radio_button.setChecked(True)
-            UIWindow.show()
+            # UIWindow.select_area_x.setText(str(self.snip_x))
+            # UIWindow.select_area_y.setText(str(self.snip_y))
+            # UIWindow.select_area_width.setText(str(self.snipping_width))
+            # UIWindow.select_area_height.setText(str(self.snipping_height))
+            # UIWindow.select_area_radio_button.setChecked(True)
+            # UIWindow.show()
+            self.master.select_area_x.setText(str(self.snip_x))
+            self.master.select_area_y.setText(str(self.snip_y))
+            self.master.select_area_width.setText(str(self.snipping_width))
+            self.master.select_area_height.setText(str(self.snipping_height))
+            self.master.select_area_radio_button.setChecked(True)
+            self.master.show()
+            print("completed function mouse release event")
 
 
 # below 7 lines gets the latest preferences of the user from the database
@@ -4154,7 +4397,7 @@ sql = '''SELECT * FROM app_settings LIMIT 1'''
 cursor.execute(sql)
 app_settings = cursor.fetchone()
 conn.close()
-show_tool_after, hide_system_tray, disable_cursor_location, dark_theme, home_start_hotkey, record_start_hotkey, \
+show_tool_after, hide_system_tray, disable_cursor_location, disable_small_window, dark_theme, home_start_hotkey, record_start_hotkey, \
 record_recording_hotkey, mouse_location_hotkey = app_settings
 toaster = ToastNotifier()
 # fetch the hardware UUID
