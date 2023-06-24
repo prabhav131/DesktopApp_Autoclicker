@@ -562,6 +562,7 @@ class UI(QMainWindow):
     # defines all variables and UI elements for the app
     def __init__(self):
         super(UI, self).__init__()
+        self.responses = []
         self.small_window_opened = None
         self.small_window = None
         uic.loadUi("version2.ui", self)
@@ -999,7 +1000,7 @@ class UI(QMainWindow):
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                              "background-color: rgb(239, 229, 220)")
 
-        self.check_live_mouse()
+        # self.check_live_mouse()
         if show_tool_after == 1:
             self.show_after_complete_checkbox2.click()
         if hide_system_tray == 1:
@@ -3276,14 +3277,21 @@ class UI(QMainWindow):
                 self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: rgb(239, 229, 220);")
-        self.check_live_mouse()
+        # self.check_live_mouse()
 
     # starts the thread for writing live cursor position
-    def check_live_mouse(self):
-        print("starting function call to start thread to write live mouse position to screen")
-        live_mouse_thread = threading.Thread(target=self.get_live_mouse)
-        live_mouse_thread.setDaemon(True)
-        live_mouse_thread.start()
+    # def check_live_mouse(self):
+    #     print("starting function call to start thread to write live mouse position to screen")
+    #     live_mouse_thread = threading.Thread(target=self.get_live_mouse)
+    #     live_mouse_thread.setDaemon(True)
+    #     print("created new thread for get live mouse function")
+    #     live_mouse_thread.start()
+    #     print("started the new thread for get live mouse function")
+    #     print("1*****************************")
+    #     for thread in threading.enumerate():
+    #         print(thread)
+    #     print("*****************************")
+    #     print("completed function call to start thread to write live mouse position to screen")
 
     # constantly writes the live cursor position to the screen
     def get_live_mouse(self):
@@ -3570,8 +3578,46 @@ class UI(QMainWindow):
         result = []
         new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
         new_thread.start()
+        print("started the new thread for authentication")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         a = [new_thread, result]
         return a
+
+    def get_generate(self):
+        try:
+            self.responses = []
+            r = requests.get('https://auth-provider.onrender.com/generate-token')
+            requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            self.responses.append(r)
+            return
+        except KeyboardInterrupt:
+            return
+
+    def post_authenticate(self, token):
+        try:
+            print("starting the post_authenticate function")
+            self.responses = []
+            r = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            self.responses.append(r)
+            print("got a post response")
+            print(self.responses)
+            print("ending the post_authenticate function")
+            return
+        except KeyboardInterrupt:
+            return
+
+    def post_login(self):
+        pass
+
+    def post_register(self):
+        pass
+
+    def database_action(self):
+        # connecting to database + performing query execution
+        pass
 
     # function to perform entire authentication, returns boolean value
     # def authentication_loop(self, result):
@@ -3590,21 +3636,31 @@ class UI(QMainWindow):
         cursor.execute(sql)
         fetched_data = cursor.fetchall()
         print("completed sql query")
-        print(fetched_data)
+        # print(fetched_data)
         if len(fetched_data) == 0:
             # Making a GET request
             print("no token found in local database")
             print("started get call")
-            response = requests.get('https://auth-provider.onrender.com/generate-token')
+            generate_token_thread = threading.Thread(target=self.get_generate)
+            # live_mouse_thread.setDaemon(True)
+            print("created new thread for generating token server call")
+            generate_token_thread.start()
+            print("started the new thread for generating token server call")
+            print("*****************************")
+            for thread in threading.enumerate():
+                print(thread)
+            print("*****************************")
+            # response = requests.get('https://auth-provider.onrender.com/generate-token')
             print("completed get call")
+            response = self.responses[0]
             info = response.text
-            print(info)
-            print("--------")
+            # print(info)
+            # print("--------")
             json_info = json.loads(info)
-            print(json_info["accessToken"])
-            print("--------")
+            # print(json_info["accessToken"])
+            # print("--------")
             token = json_info["accessToken"]
-            print(type(token))
+            # print(type(token))
             email = ""
             cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
 
@@ -3618,21 +3674,36 @@ class UI(QMainWindow):
         else:
             email = fetched_data[0][0]
             token = fetched_data[0][1]
-            print(email == "")
-            print("---")
-            print(type(email))
-            print(token)
-            print(type(token))
+            # print(email == "")
+            # print("---")
+            # print(type(email))
+            # print(token)
+            # print(type(token))
             # authenticate the obtained token
             print("token found in local database")
             print("authenticating")
             # Making a POST request
             print("started post call")
-            response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
+            # live_mouse_thread.setDaemon(True)
+            print("created new thread for authenticate token server call")
+            authenticate_token_thread.start()
+            print("started the new thread for authenticate token server call")
+            print("*****************************")
+            for thread in threading.enumerate():
+                print(thread)
+            print("*****************************")
+            authenticate_token_thread.join()
+            print("completed post call")
+            # authenticate_token_thread.join()
+            print("self.responses is: " + str(self.responses))
+            # return True
+            response2 = self.responses[0]
+            # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             print("done post call")
             print(response2.text)
             json_message = json.loads(response2.text)
-            print(type(response2.text))
+            # print(type(response2.text))
             # print("huhu")
 
             content = json_message["message"]
@@ -3650,7 +3721,7 @@ class UI(QMainWindow):
                     print("done post call")
                     print(response2.text)
                     json_message = json.loads(response2.text)
-                    print(type(response2.text))
+                    # print(type(response2.text))
                     # print("hihi")
                     try:
                         content = json_message["message"]
@@ -3664,8 +3735,8 @@ class UI(QMainWindow):
                             print("done post call")
                             print(response2.text)
                             json_message = json.loads(response2.text)
-                            print(type(response2.text))
-                            print("hehe")
+                            # print(type(response2.text))
+                            # print("hehe")
                         elif content == "Email not verified":
                             # email is not verified, prompt the user to verify the email or if that has expired start
                             # from scratch and register
@@ -3679,7 +3750,7 @@ class UI(QMainWindow):
                     except:
                         content = json_message["token"]
                         print("user has now been granted access for lifetime")
-                        print(content)
+                        # print(content)
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
                         print("connecting to db")
@@ -4144,6 +4215,11 @@ class UI(QMainWindow):
         new_thread = threading.Thread(target=self.live_record_process)
         new_thread.setDaemon(True)
         new_thread.start()
+        print("created and started new thread for live record process function")
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
 
     # handles live recording process
     def live_record_process(self):
