@@ -17,6 +17,7 @@ from email_sent_dialog import Ui_email_sent_Dialog
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+        print("yoyoyo")
         Dialog.setObjectName("Dialog")
         Dialog.resize(442, 159)
         self.Dialog = Dialog
@@ -37,6 +38,7 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        print("lololo")
 
     def open_email_sent_dialog(self):
         email = self.name.text()

@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>107</y>
+     <y>120</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -64,11 +64,12 @@
      <x>30</x>
      <y>50</y>
      <width>371</width>
-     <height>31</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Please click on the link received on email to finish verification. 
+Wait for a few moments if you haven't received the mail yet.
 Click on resend button below if the verification link has expired.</string>
    </property>
    <property name="openExternalLinks">

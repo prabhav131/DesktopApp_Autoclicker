@@ -15,8 +15,8 @@ import time
 import mouse
 import keyboard
 import random
-from small_window import Ui_SmallWindow
-from email_sent_dialog import Ui_email_sent_Dialog
+# from small_window import Ui_SmallWindow
+# from email_sent_dialog import Ui_email_sent_Dialog
 from functions_file import functions
 import ctypes
 from win10toast import ToastNotifier
@@ -24,11 +24,11 @@ import pynput
 import datetime
 import webbrowser
 import requests
-from email_dialog import Ui_Dialog
+# from email_dialog import Ui_Dialog
 
 form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
-
+responses = []
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
@@ -162,6 +162,32 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
     UIWindow.after_home_thread()
     print("completed execution of function: home_fixed_clicking()")
 
+def database_action(query, query_params):
+    # connecting to database + performing query execution
+    print("starting database_action function")
+    con = sqlite3.connect('autoclicker.db')
+    print("connected to database")
+    cursor = con.cursor()
+    cursor.execute(query, query_params)
+
+    con.commit()
+
+    print("updated database")
+    con.close()
+    print("ending database_action function")
+
+def post_register(email):
+        try:
+            print("starting the post_register function")
+            responses = []
+            r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+            responses.append(r)
+            print("got a post response")
+            print(responses)
+            print("ending the post_register function")
+            return
+        except KeyboardInterrupt:
+            return
 
 # starts the clicking actions in current location set in home screen
 def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval):
@@ -563,6 +589,10 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         self.responses = []
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         self.small_window_opened = None
         self.small_window = None
         uic.loadUi("version2.ui", self)
@@ -576,6 +606,10 @@ class UI(QMainWindow):
         self.integer = QIntValidator()
         self.main_frame = self.findChild(QFrame, "main_frame")
         self.home_frame = self.findChild(QFrame, "home_frame")
+        self.authentication_result = 0
+        self.activate_button = self.findChild(QPushButton, "activate_button")
+        # self.activate_button.clicked.connect(self.thread_for_authentication)
+        self.activate_button.clicked.connect(self.authentication_loop2)
 
         self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
         self.snipping_push_button.clicked.connect(self.screenCapture)
@@ -1091,16 +1125,25 @@ class UI(QMainWindow):
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
     def open_email_dialog(self):
-        self.dialog = QtWidgets.QDialog()
-        self.ui = Ui_Dialog()
-        self.ui.setupUi(self.dialog)
-        self.dialog.show()
+        print("starting open email dialog function")
+        # self.dialog = QtWidgets.QDialog()
+        # self.ui = UI_Dialog()
+        print("dp")
+        # self.ui.setupUi(self.dialog)
+        print("yo")
+        self.email_dialog = UI_Dialog()
+        # show_dialog_thread = threading.Thread(target=self.email_dialog.show)
+        # show_dialog_thread.start()
+
+        self.email_dialog.show()
+        print("ending open email dialog function")
 
     def open_email_sent_dialog(self, email):
-        self.dialog = QtWidgets.QDialog()
-        self.ui = Ui_email_sent_Dialog()
-        self.ui.setupUi(self.dialog, email)
-        self.dialog.show()
+        # self.dialog = QtWidgets.QDialog()
+        # self.ui = UI_email_sent_Dialog()
+        self.email_sent_dialog = UI_email_sent_Dialog(email)
+        # self.ui.setupUi(self.dialog, email)
+        self.email_sent_dialog.show()
 
     def open_small_window(self, run_mode):
         # self.setVisible(False)
@@ -1189,10 +1232,18 @@ class UI(QMainWindow):
         new_record_start_hotkey = self.record_start_stop_hotkey
         new_record_recording_hotkey = self.record_recording_hotkey
         new_mouse_location_hotkey = self.mouse_location_hotkey
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+        # self.query_thread.join()
         conn = sqlite3.connect('autoclicker.db')
         cursor = conn.cursor()
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         delete_row = '''DELETE FROM app_settings'''
-        print("yo--1")
         cursor.execute(delete_row)
         add_new_row = f'''INSERT INTO app_settings VALUES (
                 '{new_show_tool_after}',
@@ -1205,14 +1256,21 @@ class UI(QMainWindow):
                 '{new_record_recording_hotkey}',
                 '{new_mouse_location_hotkey}'
                 )'''
+
+        # add_new_row2 = "INSERT INTO app_settings (show_tool_after, hide_system_tray, disable_cursor_location, " \
+        #                "disable_small_window, dark_theme, home_start_hotkey, record_start_hotkey, " \
+        #                "record_recording_hotkey, mouse_location_hotkey) VALUES(?,?,?,?,?,?,?,?)"
+        # params = (new_show_tool_after, new_hide_system_tray, new_disable_cursor_location, new_disable_small_window,
+        #           new_dark_theme, new_home_start_hotkey, new_record_start_hotkey, new_record_recording_hotkey, new_mouse_location_hotkey,)
+        # query_thread = threading.Thread(target=self.database_query_execution(conn,cursor,add_new_row2, params))
+        # print("starting query_thread")
+        # query_thread.start()
         cursor.execute(add_new_row)
-        print("yo--2")
         conn.commit()
         conn.close()
-        print("yo--3")
-        print("completed function to exit app")
+
+        print("exiting app")
         app.exit()
-        print("completed full function to exit app")
 
     # activates dark theme
     def get_dark_theme(self):
@@ -3575,23 +3633,25 @@ class UI(QMainWindow):
 
     # starts a thread for authentication loop function
     def thread_for_authentication(self):
-        result = []
-        new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
+
+        # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
+        new_thread = threading.Thread(target=self.authentication_loop2)
         new_thread.start()
         print("started the new thread for authentication")
-        print("*****************************")
+        print("1*****************************")
         for thread in threading.enumerate():
             print(thread)
         print("*****************************")
-        a = [new_thread, result]
-        return a
 
     def get_generate(self):
         try:
+            print("starting the get_generate function")
             self.responses = []
             r = requests.get('https://auth-provider.onrender.com/generate-token')
-            requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            # requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             self.responses.append(r)
+            time.sleep(20)
+            print("ending the get_generate function")
             return
         except KeyboardInterrupt:
             return
@@ -3612,17 +3672,219 @@ class UI(QMainWindow):
     def post_login(self):
         pass
 
-    def post_register(self):
-        pass
+    # def post_register(self):
+    #     try:
+    #         print("starting the post_register function")
+    #         self.responses = []
+    #         r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+    #         self.responses.append(r)
+    #         print("got a post response")
+    #         print(self.responses)
+    #         print("ending the post_register function")
+    #         return
+    #     except KeyboardInterrupt:
+    #         return
 
-    def database_action(self):
-        # connecting to database + performing query execution
-        pass
+    def database_query_execution(self, connection, cursor, query, query_params):
+        # performing query execution
+        print("starting database_query_execution function")
+        cursor.execute(query, query_params)
+
+        connection.commit()
+
+        print("updated database")
+        con.close()
+
+        print("ending database_query_execution function")
+
+    # def database_action(self, query, query_params):
+    #     # connecting to database + performing query execution
+    #     print("starting database_action function")
+    #     con = sqlite3.connect('autoclicker.db')
+    #     print("connected to database")
+    #     cursor = con.cursor()
+    #     cursor.execute(query, query_params)
+    #
+    #     con.commit()
+    #
+    #     print("updated database")
+    #     con.close()
+    #     print("ending database_action function")
 
     # function to perform entire authentication, returns boolean value
     # def authentication_loop(self, result):
-    def authentication_loop(self):
-        print("started execution of function: authentication_loop()")
+    # def authentication_loop(self):
+    #     print("started execution of function: authentication_loop()")
+    #     print("*****************************")
+    #     for thread in threading.enumerate():
+    #         print(thread)
+    #     print("*****************************")
+    #     print("connecting to database")
+    #     con = sqlite3.connect('autoclicker.db')
+    #     print("connected to database")
+    #     cursor = con.cursor()
+    #     sql = "SELECT * FROM local_table"
+    #     print("executing sql query")
+    #     cursor.execute(sql)
+    #     fetched_data = cursor.fetchall()
+    #     print("completed sql query")
+    #     # print(fetched_data)
+    #     if len(fetched_data) == 0:
+    #         # Making a GET request
+    #         print("no token found in local database")
+    #         print("started get call")
+    #         generate_token_thread = threading.Thread(target=self.get_generate)
+    #         # live_mouse_thread.setDaemon(True)
+    #         print("created new thread for generating token server call")
+    #         generate_token_thread.start()
+    #         print("started the new thread for generating token server call")
+    #         print("*****************************")
+    #         for thread in threading.enumerate():
+    #             print(thread)
+    #         print("*****************************")
+    #         generate_token_thread.join() # if i am joining just after starting, threading ka koi point hi nhi hua
+    #         # print("self.responses is: " + str(self.responses))
+    #         #
+    #         # response = requests.get('https://auth-provider.onrender.com/generate-token')
+    #         print("completed get call")
+    #         response = self.responses[0]
+    #         info = response.text
+    #         # print(info)
+    #         # print("--------")
+    #         json_info = json.loads(info)
+    #         # print(json_info["accessToken"])
+    #         # print("--------")
+    #         token = json_info["accessToken"]
+    #         # token = "abc"
+    #         # print(type(token))
+    #         email = ""
+    #         cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
+    #
+    #         con.commit()
+    #
+    #         print("done")
+    #         con.close()
+    #         # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
+    #         # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
+    #         #
+    #         # print("starting query_thread")
+    #         # query_thread.start()
+    #         print("completed execution of function: authentication_loop()")
+    #         return True
+    #     else:
+    #         email = fetched_data[0][0]
+    #         token = fetched_data[0][1]
+    #         # print(email == "")
+    #         # print("---")
+    #         # print(type(email))
+    #         # print(token)
+    #         # print(type(token))
+    #         # authenticate the obtained token
+    #         print("token found in local database")
+    #         print("authenticating")
+    #         # Making a POST request
+    #         print("started post call")
+    #         authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
+    #         # live_mouse_thread.setDaemon(True)
+    #         print("created new thread for authenticate token server call")
+    #         authenticate_token_thread.start()
+    #         print("started the new thread for authenticate token server call")
+    #         print("*****************************")
+    #         for thread in threading.enumerate():
+    #             print(thread)
+    #         print("*****************************")
+    #         authenticate_token_thread.join()
+    #         print("completed post call")
+    #         # authenticate_token_thread.join()
+    #         print("self.responses is: " + str(self.responses))
+    #         # return True
+    #         response2 = self.responses[0]
+    #         # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+    #         print("done post call")
+    #         print(response2.text)
+    #         json_message = json.loads(response2.text)
+    #         # print(type(response2.text))
+    #         # print("huhu")
+    #
+    #         content = json_message["message"]
+    #         if content != "success":
+    #             # the token has expired and user doesnt have a token with infinite validity
+    #             # either the user has not registered with mail or they have registered but not verified
+    #             print("authentication failed")
+    #             if email != "":
+    #                 print("user has submitted email before, trying to check validity of email")
+    #                 # email has been registered and may or may not been verified
+    #                 # call api to send login email and check if email has been verified or not
+    #                 # Making a POST request
+    #                 print("started post call")
+    #                 response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
+    #                 print("done post call")
+    #                 print(response2.text)
+    #                 json_message = json.loads(response2.text)
+    #                 # print(type(response2.text))
+    #                 # print("hihi")
+    #                 try:
+    #                     content = json_message["message"]
+    #                     if content == "Email not found":
+    #                         # register email
+    #                         # Making a POST request
+    #                         print("asking user to register their email as it is not found in our database")
+    #                         print("started post call")
+    #                         response2 = requests.post('https://auth-provider.onrender.com/register',
+    #                                                   data={"email": email})
+    #                         print("done post call")
+    #                         print(response2.text)
+    #                         json_message = json.loads(response2.text)
+    #                         # print(type(response2.text))
+    #                         # print("hehe")
+    #                     elif content == "Email not verified":
+    #                         # email is not verified, prompt the user to verify the email or if that has expired start
+    #                         # from scratch and register
+    #                         print("asking user to verify their email or resend verification link")
+    #                         print("calling function to open email sent dialog")
+    #                         self.open_email_sent_dialog(email)
+    #                         print("function call complete")
+    #                     # result[0] = False
+    #                     print("completed execution of function: authentication_loop()")
+    #                     return False
+    #                 except:
+    #                     content = json_message["token"]
+    #                     print("user has now been granted access for lifetime")
+    #                     # print(content)
+    #                     # email has been verified and an infinite token is returned
+    #                     # update the database with this token now
+    #                     print("connecting to db")
+    #                     con = sqlite3.connect('autoclicker.db')
+    #                     print("connected to db")
+    #                     cursor = con.cursor()
+    #                     print("start executing query")
+    #                     cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
+    #                     con.commit()
+    #                     print("finished executing")
+    #                     con.close()
+    #                     print("database connection closed")
+    #                     # result[0] = True
+    #                     print("completed execution of function: authentication_loop()")
+    #                     return True
+    #
+    #             else:
+    #                 # email has not been registered
+    #                 print("email has not been registered, user has to submit an email")
+    #                 print("calling function to open email dialog")
+    #                 self.open_email_dialog()
+    #                 print("function call complete")
+    #                 # result[0] = False
+    #                 print("completed execution of function: authentication_loop()")
+    #                 return False
+    #
+    #         else:
+    #             print("authentication success")
+    #             # result[0] = True
+    #             print("completed execution of function: authentication_loop()")
+    #             return True
+
+    def authentication_loop2(self):
+        print("started execution of function: authentication_loop2()")
         print("*****************************")
         for thread in threading.enumerate():
             print(thread)
@@ -3641,18 +3903,21 @@ class UI(QMainWindow):
             # Making a GET request
             print("no token found in local database")
             print("started get call")
-            generate_token_thread = threading.Thread(target=self.get_generate)
-            # live_mouse_thread.setDaemon(True)
-            print("created new thread for generating token server call")
-            generate_token_thread.start()
-            print("started the new thread for generating token server call")
-            print("*****************************")
-            for thread in threading.enumerate():
-                print(thread)
-            print("*****************************")
-            # response = requests.get('https://auth-provider.onrender.com/generate-token')
+            # generate_token_thread = threading.Thread(target=self.get_generate)
+            # # live_mouse_thread.setDaemon(True)
+            # print("created new thread for generating token server call")
+            # generate_token_thread.start()
+            # print("started the new thread for generating token server call")
+            # print("*****************************")
+            # for thread in threading.enumerate():
+            #     print(thread)
+            # print("*****************************")
+            # generate_token_thread.join() # if i am joining just after starting, threading ka koi point hi nhi hua
+            # print("self.responses is: " + str(self.responses))
+            #
+            response = requests.get('https://auth-provider.onrender.com/generate-token')
             print("completed get call")
-            response = self.responses[0]
+            # response = self.responses[0]
             info = response.text
             # print(info)
             # print("--------")
@@ -3660,6 +3925,7 @@ class UI(QMainWindow):
             # print(json_info["accessToken"])
             # print("--------")
             token = json_info["accessToken"]
+            # token = "abc"
             # print(type(token))
             email = ""
             cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
@@ -3668,9 +3934,14 @@ class UI(QMainWindow):
 
             print("done")
             con.close()
-            # result[0] = True
-            print("completed execution of function: authentication_loop()")
-            return True
+            # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
+            # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
+            #
+            # print("starting query_thread")
+            # query_thread.start()
+            print("completed execution of function: authentication_loop2()")
+            # return True
+            self.authentication_result = 1
         else:
             email = fetched_data[0][0]
             token = fetched_data[0][1]
@@ -3684,22 +3955,22 @@ class UI(QMainWindow):
             print("authenticating")
             # Making a POST request
             print("started post call")
-            authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
-            # live_mouse_thread.setDaemon(True)
-            print("created new thread for authenticate token server call")
-            authenticate_token_thread.start()
-            print("started the new thread for authenticate token server call")
-            print("*****************************")
-            for thread in threading.enumerate():
-                print(thread)
-            print("*****************************")
-            authenticate_token_thread.join()
-            print("completed post call")
+            # authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
+            # # live_mouse_thread.setDaemon(True)
+            # print("created new thread for authenticate token server call")
+            # authenticate_token_thread.start()
+            # print("started the new thread for authenticate token server call")
+            # print("*****************************")
+            # for thread in threading.enumerate():
+            #     print(thread)
+            # print("*****************************")
             # authenticate_token_thread.join()
-            print("self.responses is: " + str(self.responses))
-            # return True
-            response2 = self.responses[0]
-            # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            # print("completed post call")
+            # # authenticate_token_thread.join()
+            # print("self.responses is: " + str(self.responses))
+            # # return True
+            # response2 = self.responses[0]
+            response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             print("done post call")
             print(response2.text)
             json_message = json.loads(response2.text)
@@ -3742,46 +4013,64 @@ class UI(QMainWindow):
                             # from scratch and register
                             print("asking user to verify their email or resend verification link")
                             print("calling function to open email sent dialog")
+                            # self.open_email_sent_dialog(email)
+                            # email_sent_dialog_thread = threading.Thread(target=self.open_email_sent_dialog, args=(email,))
+                            # print("starting email sent dialog thread")
+                            # email_sent_dialog_thread.setDaemon(True)
                             self.open_email_sent_dialog(email)
-                            print("function call complete")
+                            # email_sent_dialog_thread.start()
+                            # print("function call complete")
                         # result[0] = False
-                        print("completed execution of function: authentication_loop()")
-                        return False
+                        print("completed execution of function: authentication_loop2()")
+                        # return False
+                        self.authentication_result = -1
                     except:
                         content = json_message["token"]
                         print("user has now been granted access for lifetime")
+                        self.activate_button.setVisible(False)
                         # print(content)
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
                         print("connecting to db")
-                        con = sqlite3.connect('autoclicker.db')
-                        print("connected to db")
-                        cursor = con.cursor()
-                        print("start executing query")
-                        cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
-                        con.commit()
-                        print("finished executing")
-                        con.close()
-                        print("database connection closed")
-                        # result[0] = True
-                        print("completed execution of function: authentication_loop()")
-                        return True
+                        query = "UPDATE local_table SET access_token = ? WHERE email = ?"
+                        self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
 
+                        print("starting query_thread")
+                        self.query_thread.start()
+                        # con = sqlite3.connect('autoclicker.db')
+                        # print("connected to db")
+                        # cursor = con.cursor()
+                        # print("start executing query")
+                        # cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
+                        # con.commit()
+                        # print("finished executing")
+                        # con.close()
+                        # print("database connection closed")
+                        # result[0] = True
+                        print("completed execution of function: authentication_loop2()")
+                        # return True
+                        self.authentication_result = 1
                 else:
                     # email has not been registered
                     print("email has not been registered, user has to submit an email")
                     print("calling function to open email dialog")
+                    # self.open_email_dialog()
+                    # email_dialog_thread = threading.Thread(target=self.open_email_dialog)
+                    # print("starting email dialog thread")
+                    # email_dialog_thread.setDaemon(True)
+                    # email_dialog_thread.start()
                     self.open_email_dialog()
-                    print("function call complete")
+                    # print("function call complete")
                     # result[0] = False
-                    print("completed execution of function: authentication_loop()")
-                    return False
-
+                    print("completed execution of function: authentication_loop2()")
+                    # return False
+                    self.authentication_result = -1
             else:
                 print("authentication success")
                 # result[0] = True
-                print("completed execution of function: authentication_loop()")
-                return True
+                print("completed execution of function: authentication_loop2()")
+                # return True
+                self.authentication_result = 1
 
     # starts the process for home -> play button
     def home_start_process(self):
@@ -3794,8 +4083,19 @@ class UI(QMainWindow):
         # the_thread.join()
         # if not a[1][0]:
         #     return
-        if not self.authentication_loop():
+
+
+        # if not self.authentication_loop():
+        #     return
+        if self.authentication_result == 0:
+            print("please activate your account") # ToDo: should add a user popup dialog box over here
             return
+        if self.authentication_result == -1:
+            print("you cant access run functionality")
+            return
+        # if self.authentication_result == -2:
+        #     print("register your email")
+        #     self.open_email_dialog()
         # result = []
         # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
         # new_thread.start()
@@ -3980,7 +4280,14 @@ class UI(QMainWindow):
         # the_thread.join()
         # if not a[1][0]:
         #     return
-        if not self.authentication_loop():
+        # if not self.authentication_loop():
+        #     return
+
+        if self.authentication_result == 0:
+            print("please activate your account") # ToDo: should add a user popup dialog box over here
+            return
+        if self.authentication_result == -1:
+            print("you cant access run functionality")
             return
         # result = []
         # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
@@ -4371,6 +4678,149 @@ class UI_SmallWindow(QMainWindow):
         print("calling function home_stop_process()")
         MainWindow.home_stop_process()
 
+class UI_Dialog(QDialog):
+
+    def __init__(self):
+        print("started initialisation of email dialog UI")
+        super(UI_Dialog, self).__init__()
+        uic.loadUi("email_dialog.ui", self)
+        print("yoyoyo")
+        self.setObjectName("Email Registration")
+        self.resize(442, 159)
+        # self.Dialog = Dialog
+        self.submit_key = QtWidgets.QPushButton(self)
+        self.submit_key.setGeometry(QtCore.QRect(340, 98, 75, 24))
+        self.submit_key.setObjectName("submit_key")
+        self.submit_key.setText("Submit")
+        self.label_4 = QtWidgets.QLabel(self)
+        self.label_4.setGeometry(QtCore.QRect(30, 10, 311, 61))
+        self.label_4.setOpenExternalLinks(True)
+        self.label_4.setObjectName("label_4")
+        self.label_3 = QtWidgets.QLabel(self)
+        self.label_3.setGeometry(QtCore.QRect(30, 103, 47, 13))
+        self.label_3.setObjectName("label_3")
+        self.name = QtWidgets.QLineEdit(self)
+        self.name.setGeometry(QtCore.QRect(80, 100, 221, 20))
+        self.name.setObjectName("name")
+        self.submit_key.clicked.connect(self.open_email_sent_dialog)
+
+        # self.retranslateUi(Dialog)
+        # QtCore.QMetaObject.connectSlotsByName(Dialog)
+        print("lololo")
+        print("completed initialisation of email dialog UI")
+
+    def open_email_sent_dialog(self):
+        email = self.name.text()
+        # add email to database
+        # con = sqlite3.connect('autoclicker.db')
+        # cursor = con.cursor()
+        # email_data = (email,)
+        # cursor.execute("UPDATE local_table SET email = ?", email_data)
+        # con.commit()
+        # print("adding email to local database")
+        # con.close()
+
+        print("connecting to database in open email sent")
+        query = "UPDATE local_table SET email = ?"
+        self.query_thread = threading.Thread(target=database_action, args=(query, (email,)))
+        self.query_thread.start()
+        # con = sqlite3.connect('autoclicker.db')
+        # cursor = con.cursor()
+        # email_data = (email,)
+        # cursor.execute("UPDATE local_table SET email = ?", email_data)
+        # con.commit()
+        # con.close()
+        print("adding email to local database")
+
+        # call api to send verification email
+        # Making a POST request
+        print("create new thread for sending verification mail)")
+        email_thread = threading.Thread(target=post_register, args=(email,))
+        email_thread.start()
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+
+        # response2 = responses[0]
+
+        # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        # print(response2.text)
+        # print(type(response2.text))
+        # json_message = json.loads(response2.text)
+        print("Sending verification mail")
+        # if json_message["message"] == "Email sent":
+        # print("here")
+        self.hide()
+        # self.dialog = QtWidgets.QDialog()
+        self.email_sent_dialog = UI_email_sent_Dialog(email)
+        # self.ui.setupUi(self.dialog, email)
+        self.email_sent_dialog.show()
+
+
+        # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        # print(response2.text)
+        # print(type(response2.text))
+        # json_message = json.loads(response2.text)
+        # print("verification mail sent")
+        # if json_message["message"] == "Email sent":
+        #     print("here")
+        #     self.hide()
+        #     # self.dialog = QtWidgets.QDialog()
+        #     self.email_sent_dialog  = UI_email_sent_Dialog(email)
+        #     # self.ui.setupUi(self.dialog, email)
+        #     self.email_sent_dialog.show()
+
+class UI_email_sent_Dialog(QDialog):
+
+    def __init__(self, email):
+        print("started initialisation of email sent dialog UI")
+        super(UI_email_sent_Dialog, self).__init__()
+        uic.loadUi("email_sent_dialog.ui", self)
+        self.setObjectName("Email Verification")
+        print("----")
+        print(email)
+        print("-----")
+        self.resize(442, 159)
+        # self.enter_key = QtWidgets.QPushButton(self)
+        # self.enter_key.setGeometry(QtCore.QRect(180, 107, 75, 23))
+        self.enter_key.clicked.connect(lambda: self.resend_verification_link(email))
+        # self.enter_key.setObjectName("enter_key")
+        # self.enter_key.setText("Resend")
+        self.label = QtWidgets.QLabel(self)
+        self.label.setGeometry(QtCore.QRect(30, 10, 151, 31))
+        self.label.setOpenExternalLinks(True)
+        self.label.setObjectName("label")
+        self.label_4 = QtWidgets.QLabel(self)
+        self.label_4.setGeometry(QtCore.QRect(180, 10, 231, 31))
+        self.label_4.setText(email)
+        self.label_4.setOpenExternalLinks(True)
+        self.label_4.setObjectName("label_4")
+        self.label_2 = QtWidgets.QLabel(self)
+        self.label_2.setGeometry(QtCore.QRect(30, 50, 371, 31))
+        self.label_2.setOpenExternalLinks(True)
+        self.label_2.setObjectName("label_2")
+        print("completed initialisation of email sent dialog UI")
+
+    def resend_verification_link(self, email):
+        # call api to send verification email
+        # Making a POST request
+        print("resending verification mail")
+        print("create new thread for resending verification mail)")
+        resend_email_thread = threading.Thread(target=post_register, args=(email,))
+        resend_email_thread.start()
+        print("*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+
+        # response2 = responses[0]
+
+        # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        # print(response2.text)
+        # json_message = json.loads(response2.text)
+        # print(type(response2.text))
+        print("Resending verification mail")
 
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
