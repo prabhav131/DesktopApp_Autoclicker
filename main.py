@@ -180,7 +180,8 @@ def post_register(email):
         try:
             print("starting the post_register function")
             responses = []
-            r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+            r = requests.post('http://146.190.166.207/register', data={"email": email})
+            # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
             responses.append(r)
             print("got a post response")
             print(responses)
@@ -615,7 +616,7 @@ class UI(QMainWindow):
         self.snipping_push_button.clicked.connect(self.screenCapture)
 
         # Dim Splashscreen object, also responsible for tracking mouse and capturing screenshot.
-        self.tmpDimScreen = CaptureScreen(self)
+        # self.tmpDimScreen = CaptureScreen(self)
         self.snipping_radio_button = self.findChild(QRadioButton, "snipping_radio_button")
         self.fixed_location_radio_button = self.findChild(QRadioButton, "fixed_location_radio_button")
         self.current_location_radio_button = self.findChild(QRadioButton, "current_location_radio_button")
@@ -925,6 +926,7 @@ class UI(QMainWindow):
         self.label_22.hide()
         self.label_23.hide()
         self.label_24.hide()
+
         self.set_new_hotkey_button_1.clicked.connect(self.start_thread_hotkey_1)
         self.set_new_hotkey_button_2.clicked.connect(self.start_thread_hotkey_4)
         self.set_new_hotkey_button_3.clicked.connect(self.start_thread_hotkey_3)
@@ -1034,7 +1036,7 @@ class UI(QMainWindow):
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                              "background-color: rgb(239, 229, 220)")
 
-        # self.check_live_mouse()
+        self.check_live_mouse()
         if show_tool_after == 1:
             self.show_after_complete_checkbox2.click()
         if hide_system_tray == 1:
@@ -1049,15 +1051,40 @@ class UI(QMainWindow):
         self.record_start_stop_hotkey = record_start_hotkey
         self.record_recording_hotkey = record_recording_hotkey
         self.mouse_location_hotkey = mouse_location_hotkey
+        print("bbbb*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+        print("1*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
-        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
+        print("2*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
+        print("3*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
+        print("4*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
+
         self.home_start_stop_hotkey_label.setText(str(home_start_hotkey))
         self.playback_start_stop_hotkey_label.setText(str(record_start_hotkey))
         self.record_start_stop_hotkey_label.setText(str(record_recording_hotkey))
         self.mouse_location_hotkey_label.setText(str(mouse_location_hotkey))
+        print("cccc*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
         # --------------------------
         self.label_2 = self.findChild(QLabel, "label_2")
         self.label_3 = self.findChild(QLabel, "label_3")
@@ -1124,6 +1151,8 @@ class UI(QMainWindow):
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
 
+
+
     def open_email_dialog(self):
         print("starting open email dialog function")
         # self.dialog = QtWidgets.QDialog()
@@ -1170,7 +1199,7 @@ class UI(QMainWindow):
         """Show the dim Splashscreen"""
         print("started function call to capture screen")
         self.hide()
-
+        self.tmpDimScreen = CaptureScreen(self)
         self.tmpDimScreen.show()
         self.original_x = self.tmpDimScreen.getOriginal_x()
         self.original_y = self.tmpDimScreen.getOriginal_y()
@@ -3335,21 +3364,21 @@ class UI(QMainWindow):
                 self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: rgb(239, 229, 220);")
-        # self.check_live_mouse()
+        self.check_live_mouse()
 
     # starts the thread for writing live cursor position
-    # def check_live_mouse(self):
-    #     print("starting function call to start thread to write live mouse position to screen")
-    #     live_mouse_thread = threading.Thread(target=self.get_live_mouse)
-    #     live_mouse_thread.setDaemon(True)
-    #     print("created new thread for get live mouse function")
-    #     live_mouse_thread.start()
-    #     print("started the new thread for get live mouse function")
-    #     print("1*****************************")
-    #     for thread in threading.enumerate():
-    #         print(thread)
-    #     print("*****************************")
-    #     print("completed function call to start thread to write live mouse position to screen")
+    def check_live_mouse(self):
+        print("starting function call to start thread to write live mouse position to screen")
+        live_mouse_thread = threading.Thread(target=self.get_live_mouse)
+        live_mouse_thread.setDaemon(True)
+        print("created new thread for get live mouse function")
+        live_mouse_thread.start()
+        print("started the new thread for get live mouse function")
+        print("MOUSE-*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+        print("completed function call to start thread to write live mouse position to screen")
 
     # constantly writes the live cursor position to the screen
     def get_live_mouse(self):
@@ -3632,23 +3661,23 @@ class UI(QMainWindow):
                 return
 
     # starts a thread for authentication loop function
-    def thread_for_authentication(self):
-
-        # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
-        new_thread = threading.Thread(target=self.authentication_loop2)
-        new_thread.start()
-        print("started the new thread for authentication")
-        print("1*****************************")
-        for thread in threading.enumerate():
-            print(thread)
-        print("*****************************")
+    # def thread_for_authentication(self):
+    #
+    #     # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
+    #     new_thread = threading.Thread(target=self.authentication_loop2)
+    #     new_thread.start()
+    #     print("started the new thread for authentication")
+    #     print("1*****************************")
+    #     for thread in threading.enumerate():
+    #         print(thread)
+    #     print("*****************************")
 
     def get_generate(self):
         try:
             print("starting the get_generate function")
             self.responses = []
-            r = requests.get('https://auth-provider.onrender.com/generate-token')
-            # requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            r = requests.get('http://146.190.166.207/generate-token')
+            # r = requests.get('https://auth-provider.onrender.com/generate-token')
             self.responses.append(r)
             time.sleep(20)
             print("ending the get_generate function")
@@ -3660,7 +3689,8 @@ class UI(QMainWindow):
         try:
             print("starting the post_authenticate function")
             self.responses = []
-            r = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            # r = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            r = requests.post('http://146.190.166.207/authenticate', data={"token": token})
             self.responses.append(r)
             print("got a post response")
             print(self.responses)
@@ -3915,7 +3945,8 @@ class UI(QMainWindow):
             # generate_token_thread.join() # if i am joining just after starting, threading ka koi point hi nhi hua
             # print("self.responses is: " + str(self.responses))
             #
-            response = requests.get('https://auth-provider.onrender.com/generate-token')
+            # response = requests.get('https://auth-provider.onrender.com/generate-token')
+            response = requests.get('http://146.190.166.207/generate-token')
             print("completed get call")
             # response = self.responses[0]
             info = response.text
@@ -3943,6 +3974,12 @@ class UI(QMainWindow):
             # return True
             self.authentication_result = 1
         else:
+
+            print("aa*****************************")
+            for thread in threading.enumerate():
+                print(thread)
+            print("aa*****************************")
+
             email = fetched_data[0][0]
             token = fetched_data[0][1]
             # print(email == "")
@@ -3970,7 +4007,8 @@ class UI(QMainWindow):
             # print("self.responses is: " + str(self.responses))
             # # return True
             # response2 = self.responses[0]
-            response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
+            response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
             print("done post call")
             print(response2.text)
             json_message = json.loads(response2.text)
@@ -3988,7 +4026,8 @@ class UI(QMainWindow):
                     # call api to send login email and check if email has been verified or not
                     # Making a POST request
                     print("started post call")
-                    response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
+                    # response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
+                    response2 = requests.post('http://146.190.166.207/login', data={"email": email})
                     print("done post call")
                     print(response2.text)
                     json_message = json.loads(response2.text)
@@ -4001,8 +4040,8 @@ class UI(QMainWindow):
                             # Making a POST request
                             print("asking user to register their email as it is not found in our database")
                             print("started post call")
-                            response2 = requests.post('https://auth-provider.onrender.com/register',
-                                                      data={"email": email})
+                            # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+                            response2 = requests.post('http://146.190.166.207/register', data={"email": email})
                             print("done post call")
                             print(response2.text)
                             json_message = json.loads(response2.text)
