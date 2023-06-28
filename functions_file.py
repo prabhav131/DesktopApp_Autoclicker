@@ -23,6 +23,7 @@ class functions:
             )'''
         cursor.execute(sql)
         conn.commit()
+        print("saved")
         conn.close()
 
     @staticmethod

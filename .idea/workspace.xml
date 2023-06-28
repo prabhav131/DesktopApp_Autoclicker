@@ -7,7 +7,15 @@
     <list default="true" id="03ad31e2-3fe3-4bfa-8222-3d1a7e369a08" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/autoclicker.db" beforeDir="false" afterPath="$PROJECT_DIR$/autoclicker.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions_file.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyi-archive_viewer.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyi-bindepend.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyi-grab_version.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyi-makespec.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyi-set_version.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gg_venv/Scripts/pyinstaller.exe" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/main/autoclicker.db" beforeDir="false" afterPath="$PROJECT_DIR$/output/main/autoclicker.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

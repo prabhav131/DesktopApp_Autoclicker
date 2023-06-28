@@ -1,8 +1,8 @@
 import csv
 import json
 import sqlite3
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox,\
-    QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem,\
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox, \
+    QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem, \
     QCheckBox, QDialog, QListWidget, QToolButton
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator, QIcon
@@ -24,17 +24,46 @@ import pynput
 import datetime
 import webbrowser
 import requests
+
+
 # from email_dialog import Ui_Dialog
 
+
+def resource_path2(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+        running_mode = 'Frozen/executable'
+    else:
+        try:
+            app_full_path = os.path.realpath(__file__)
+            application_path = os.path.dirname(app_full_path)
+            running_mode = "Non-interactive (e.g. 'python myapp.py')"
+        except NameError:
+            application_path = os.getcwd()
+            running_mode = 'Interactive'
+
+    file_full_path = os.path.join(application_path, relative_path)
+
+    print('Running mode:', running_mode)
+    print('  Application path  :', application_path)
+    print('  File full path :', file_full_path)
+
+    return file_full_path
+
+
 form = functions.resource_path("version2.ui")
+# form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
 responses = []
+
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
     print("start execution of function: home_fixed_clicking()")
     stop_home_event.clear()
     if wait_interval[0] == wait_interval[1]:
+        print(wait_interval)
         if wait_interval[0] > 2:
             repeat = int(wait_interval[0] / 2)
             last = float(wait_interval[0] - (repeat * 2))
@@ -45,17 +74,27 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
             delay = wait_interval[0]
         if click_repeat > 0:
             if click_type == 'Single':
+                print("--***************--")
+                print(click_repeat)
+                print(repeat)
+                print(last)
+                print(delay)
                 for i in range(click_repeat):
+                    # print("iiiii")
                     mouse.move(location_x, location_y)
                     mouse.click(button=mouse_type)
                     for j in range(repeat):
                         sleep(delay)
+                        # break
                         if stop_home_event.is_set():
+                            print("stopped..")
                             break
                     sleep(last)
                     if stop_home_event.is_set():
+                        print("stopped")
                         stop_home_event.clear()
                         break
+                print("complete hogaya")
             else:
                 for i in range(click_repeat):
                     mouse.move(location_x, location_y)
@@ -97,6 +136,12 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
                         break
     else:
         wait_time = round(random.uniform(wait_interval[0], wait_interval[1]), 1)
+        print("--******$$$$******--")
+        print(click_repeat)
+
+        print(wait_interval)
+        print(wait_time)
+
         if wait_time > 2:
             repeat = int(wait_time / 2)
             last = float(wait_time - (repeat * 2))
@@ -105,12 +150,18 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
             repeat = 1
             last = 0
             delay = wait_time
+
+        print(repeat)
+        print(last)
+        print(delay)
         if click_repeat > 0:
             if click_type == 'Single':
                 for i in range(click_repeat):
                     mouse.move(location_x, location_y)
                     mouse.click(button=mouse_type)
+                    print(str(i) + "ooooooooooo")
                     for j in range(repeat):
+                        print(str(j) + "ppppppppppp")
                         sleep(delay)
                         if stop_home_event.is_set():
                             break
@@ -118,6 +169,8 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
                     if stop_home_event.is_set():
                         stop_home_event.clear()
                         break
+
+                print("complete hogaya")
             else:
                 for i in range(click_repeat):
                     mouse.move(location_x, location_y)
@@ -162,6 +215,7 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
     UIWindow.after_home_thread()
     print("completed execution of function: home_fixed_clicking()")
 
+
 def database_action(query, query_params):
     # connecting to database + performing query execution
     print("starting database_action function")
@@ -176,23 +230,26 @@ def database_action(query, query_params):
     con.close()
     print("ending database_action function")
 
+
 def post_register(email):
-        try:
-            print("starting the post_register function")
-            responses = []
-            r = requests.post('http://146.190.166.207/register', data={"email": email})
-            # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
-            responses.append(r)
-            print("got a post response")
-            print(responses)
-            print("ending the post_register function")
-            return
-        except KeyboardInterrupt:
-            return
+    try:
+        print("starting the post_register function")
+        responses = []
+        r = requests.post('http://146.190.166.207/register', data={"email": email})
+        # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        responses.append(r)
+        print("got a post response")
+        print(responses)
+        print("ending the post_register function")
+        return
+    except KeyboardInterrupt:
+        return
+
 
 # starts the clicking actions in current location set in home screen
 def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval):
     stop_home_event.clear()
+    print("current clicking")
     if waiting_interval[0] == waiting_interval[1]:
         if waiting_interval[0] > 2:
             repeat = int(waiting_interval[0] / 2)
@@ -311,8 +368,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
     print("done current clicking")
     UIWindow.after_home_thread()
 
+
 # starts the dragging actions set in home screen
-def home_random_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval, area_width, area_height):
+def home_random_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval, area_width,
+                         area_height):
     stop_home_event.clear()
     end_x = location_x + area_width
     end_y = location_y + area_height
@@ -458,6 +517,7 @@ def home_random_clicking(mouse_type, click_type, click_repeat, location_x, locat
     print("done random clicking")
     UIWindow.after_home_thread()
 
+
 # simulates clicking action for record screen
 def click_for_record(location_x, location_y, mouse_type, action_type, wait_interval):
     delay = wait_interval / 1000
@@ -472,6 +532,7 @@ def click_for_record(location_x, location_y, mouse_type, action_type, wait_inter
         if not current == (location_x, location_y):
             mouse.move(location_x, location_y, duration=0.10)
         mouse.release(button=mouse_type)
+
 
 # simulates scrolling action for record screen
 def scroll_for_record(location_x, location_y, scroll_type, click_repeat, waiting_interval):
@@ -493,6 +554,7 @@ def scroll_for_record(location_x, location_y, scroll_type, click_repeat, waiting
             mouse.wheel(-1)
             if stop_record_event.is_set():
                 return
+
 
 # simulates keyboard typing for record screen
 def type_for_record(key, key_type, action_type, waiting_interval):
@@ -532,6 +594,7 @@ def type_for_record(key, key_type, action_type, waiting_interval):
                 controller.release(key[i])
             if stop_record_event.is_set():
                 return
+
 
 # starts recording actions
 def start_record_actions(actions_data, repeat_all, delay_time, i):
@@ -596,7 +659,7 @@ class UI(QMainWindow):
         print("*****************************")
         self.small_window_opened = None
         self.small_window = None
-        uic.loadUi("version2.ui", self)
+        uic.loadUi(functions.resource_path("version2.ui"), self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
@@ -611,6 +674,7 @@ class UI(QMainWindow):
         self.activate_button = self.findChild(QPushButton, "activate_button")
         # self.activate_button.clicked.connect(self.thread_for_authentication)
         self.activate_button.clicked.connect(self.authentication_loop2)
+        self.activate_button.setVisible(False)
 
         self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
         self.snipping_push_button.clicked.connect(self.screenCapture)
@@ -660,8 +724,8 @@ class UI(QMainWindow):
                                                  'border-radius: 3px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox QAbstractItemView {'
-                                                   'background-color: rgb(249, 249, 245);'
-                                                   'border: none;'
+                                                 'background-color: rgb(249, 249, 245);'
+                                                 'border: none;'
                                                  'color: black;}'
                                                  'QComboBox::drop-down {'
                                                  'border: 1px;'
@@ -679,8 +743,8 @@ class UI(QMainWindow):
                                                'border-radius: 3px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox QAbstractItemView {'
-                                             'background-color: rgb(249, 249, 245);'
-                                             'border: none;'
+                                               'background-color: rgb(249, 249, 245);'
+                                               'border: none;'
                                                'color: black;}'
                                                'QComboBox::drop-down {'
                                                'border: 1px;'
@@ -693,6 +757,11 @@ class UI(QMainWindow):
         self.never_stop_label = self.findChild(QLabel, "never_stop_label")
         self.repeat_for_label = self.findChild(QLabel, "repeat_for_label")
         self.repeat_for_number = self.findChild(QLineEdit, "repeat_for_number")
+        self.repeat_for_number.setDisabled(True)
+        self.repeat_for_number.setStyleSheet('background-color: rgb(225, 225, 225);'
+                                             'border: 1px solid;'
+                                             'border-color: rgb(218, 218, 218);'
+                                             'border-radius: 3px;')
         self.delay_groupbox = self.findChild(QGroupBox, "delay_groupbox")
         self.delay_time_combobox = self.findChild(QComboBox, "delay_time_combobox")
         self.delay_time_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
@@ -700,8 +769,8 @@ class UI(QMainWindow):
                                                'border-radius: 3px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox QAbstractItemView {'
-                                             'background-color: rgb(249, 249, 245);'
-                                             'border: none;'
+                                               'background-color: rgb(249, 249, 245);'
+                                               'border: none;'
                                                'color: black;}'
                                                'QComboBox::drop-down {'
                                                'border: 1px;'
@@ -717,8 +786,8 @@ class UI(QMainWindow):
                                                  'border-radius: 3px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox QAbstractItemView {'
-                                             'background-color: rgb(249, 249, 245);'
-                                             'border: none;'
+                                                 'background-color: rgb(249, 249, 245);'
+                                                 'border: none;'
                                                  'color: black;}'
                                                  'QComboBox::drop-down {'
                                                  'border: 1px;'
@@ -759,23 +828,37 @@ class UI(QMainWindow):
 
         self.complete_combobox_3 = self.findChild(QComboBox, "complete_combobox_3")
         self.complete_combobox_3.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
-                                             'border: 2px solid;'
-                                             'border-radius: 7px;'
-                                             'border-color: rgb(217, 217, 217);}'
-                                             'QComboBox QAbstractItemView {'
-                                             'background-color: rgb(249, 249, 245);'
-                                             'border: none;'
-                                             'color: black;}'
-                                             'QComboBox::drop-down {'
-                                             'border: 2px;'
-                                             'border-radius: 5px;'
-                                             'border-color: rgb(249, 249, 245);}'
-                                             'QComboBox::down-arrow {'
-                                             'image: url(images/arrow1);'
-                                             'width: 8px;'
-                                             'height: 8px;}')
+                                               'border: 2px solid;'
+                                               'border-radius: 7px;'
+                                               'border-color: rgb(217, 217, 217);}'
+                                               'QComboBox QAbstractItemView {'
+                                               'background-color: rgb(249, 249, 245);'
+                                               'border: none;'
+                                               'color: black;}'
+                                               'QComboBox::drop-down {'
+                                               'border: 2px;'
+                                               'border-radius: 5px;'
+                                               'border-color: rgb(249, 249, 245);}'
+                                               'QComboBox::down-arrow {'
+                                               'image: url(images/arrow1);'
+                                               'width: 8px;'
+                                               'height: 8px;}')
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
         self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
+
+        # for i in range(100):
+        #
+        #     print(str(i) + "ooooooooooo")
+        #     for j in range(2):
+        #         print(str(j) + "ppppppppppp")
+        #         sleep(0.2)
+        #         if stop_home_event.is_set():
+        #             break
+        #     sleep(0.3)
+        #     if stop_home_event.is_set():
+        #         stop_home_event.clear()
+        #         break
+
 
         self.navigate_button_3 = self.findChild(QPushButton, "navigate_button_3")
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
@@ -809,8 +892,8 @@ class UI(QMainWindow):
                                                       'border-radius: 3px;'
                                                       'border-color: rgb(249, 249, 245);}'
                                                       'QComboBox QAbstractItemView {'
-                                                     'background-color: rgb(249, 249, 245);'
-                                                     'border: none;'
+                                                      'background-color: rgb(249, 249, 245);'
+                                                      'border: none;'
                                                       'color: black;}'
                                                       'QComboBox::drop-down {'
                                                       'border: 1px;'
@@ -905,12 +988,14 @@ class UI(QMainWindow):
         self.view_settings_button.clicked.connect(self.get_view_screen)
         self.hotkey_settings_button.clicked.connect(self.get_hotkey_screen)
         self.navigate_button_3.clicked.connect(self.open_menu)
+        # self.play_button.clicked.connect(self.thread_for_home_start_process)
         self.play_button.clicked.connect(self.home_start_process)
         self.reset_settings_button.clicked.connect(self.home_reset_settings)
         self.record_add_button.clicked.connect(self.add_new_line)
         self.record_load_button.clicked.connect(self.window_load)
         self.record_save_button.clicked.connect(self.window_record_save)
-        self.save_settings_button.clicked.connect(self.window_home_save)
+        self.save_settings_button.clicked.connect(self.save_home_settings)
+        # self.save_settings_button.clicked.connect(self.window_home_save)
         self.record_play_button.clicked.connect(self.record_start_process)
         self.theme_button.clicked.connect(self.get_dark_theme)
         self.record_remove_all_button.clicked.connect(self.remove_all_lines)
@@ -1015,7 +1100,7 @@ class UI(QMainWindow):
                                                         "background-color: #10131b;")
             self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
             self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                        "background-color: #10131b;")
+                                                      "background-color: #10131b;")
             self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                              "background-color: #10131b")
@@ -1028,7 +1113,7 @@ class UI(QMainWindow):
                                                         "background-color: rgb(239, 229, 220);")
             self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
             self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                        "background-color: rgb(239, 229, 220);")
+                                                      "background-color: rgb(239, 229, 220);")
             self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
             self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                       "background-color: rgb(239, 229, 220)")
@@ -1150,8 +1235,8 @@ class UI(QMainWindow):
         faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
         privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
-
-
+        self.save_home_params = 0
+        self.load_home_settings()
 
     def open_email_dialog(self):
         print("starting open email dialog function")
@@ -1207,8 +1292,8 @@ class UI(QMainWindow):
         self.final_y = self.tmpDimScreen.getFinal_y()
         self.snipping_width = abs(self.final_x - self.original_x)
         self.snipping_height = abs(self.final_y - self.original_y)
-        self.snip_x = min(self.final_x,self.original_x)
-        self.snip_y = min(self.final_y,self.original_y)
+        self.snip_x = min(self.final_x, self.original_x)
+        self.snip_y = min(self.final_y, self.original_y)
         print("completed function call to capture screen")
 
     # triggers show tool checkbox
@@ -1285,7 +1370,8 @@ class UI(QMainWindow):
                 '{new_record_recording_hotkey}',
                 '{new_mouse_location_hotkey}'
                 )'''
-
+        cursor.execute(add_new_row)
+        conn.commit()
         # add_new_row2 = "INSERT INTO app_settings (show_tool_after, hide_system_tray, disable_cursor_location, " \
         #                "disable_small_window, dark_theme, home_start_hotkey, record_start_hotkey, " \
         #                "record_recording_hotkey, mouse_location_hotkey) VALUES(?,?,?,?,?,?,?,?)"
@@ -1294,8 +1380,14 @@ class UI(QMainWindow):
         # query_thread = threading.Thread(target=self.database_query_execution(conn,cursor,add_new_row2, params))
         # print("starting query_thread")
         # query_thread.start()
-        cursor.execute(add_new_row)
-        conn.commit()
+
+        if self.save_home_params == 0:
+            delete_home_row = '''DELETE FROM home_run_settings'''
+            cursor.execute(delete_home_row)
+
+            print("deleting any stored home settings")
+            conn.commit()
+
         conn.close()
 
         print("exiting app")
@@ -1304,9 +1396,9 @@ class UI(QMainWindow):
     # activates dark theme
     def get_dark_theme(self):
         self.setStyleSheet("QComboBox {color: black;"
-                            "background-color: rgb(249, 249, 245);"
-                            "border: none}"
-                            'QComboBox::drop-down {'
+                           "background-color: rgb(249, 249, 245);"
+                           "border: none}"
+                           'QComboBox::drop-down {'
                            'background-color: rgb(249, 249, 245);'
                            'border-color: rgb(249, 249, 245);}'
                            'QToolTip {'
@@ -1370,14 +1462,14 @@ class UI(QMainWindow):
         #                              "background-color: rgb(249, 249, 245);"
         #                              "border: none}")
         self.top_frame_logged_out.setStyleSheet("QFrame {background-color: #10131b;"
-                                     "color: #bfcfb2;"
-                                     "border: none;}"
-                                     "QComboBox {color: black;"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: none}"
-                                     "QLineEdit {color: black;"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: none}")
+                                                "color: #bfcfb2;"
+                                                "border: none;}"
+                                                "QComboBox {color: black;"
+                                                "background-color: rgb(249, 249, 245);"
+                                                "border: none}"
+                                                "QLineEdit {color: black;"
+                                                "background-color: rgb(249, 249, 245);"
+                                                "border: none}")
         self.home_frame.setStyleSheet("QFrame {background-color: #10131b;"
                                       "color: #bfcfb2;"
                                       "border: none;}"
@@ -1415,11 +1507,11 @@ class UI(QMainWindow):
         self.navigate_button_3.setIcon(QtGui.QIcon("images/Menu_dark.png"))
 
         self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
-                                                   "background-color: rgb(249, 249, 245);"
-                                                   "border: none;}"
-                                                   'QToolTip {'
-                                                   'background-color: #e0e0e0;'
-                                                   'border: none;}')
+                                                     "background-color: rgb(249, 249, 245);"
+                                                     "border: none;}"
+                                                     'QToolTip {'
+                                                     'background-color: #e0e0e0;'
+                                                     'border: none;}')
         # self.set_new_hotkey_1.setStyleSheet
         self.profile_button_3.setStyleSheet("border: none;")
         self.profile_button_3.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
@@ -1587,7 +1679,7 @@ class UI(QMainWindow):
         else:
             self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
         self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                    "background-color: #10131b;")
+                                                  "background-color: #10131b;")
 
     # activates normal theme
     def get_normal_theme(self):
@@ -1664,18 +1756,18 @@ class UI(QMainWindow):
         #                              "QRadioButton {color: rgb(30, 30, 30);"
         #                              "border: none;}")
         self.top_frame_logged_out.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
-                                     "color: rgb(30, 30, 30);"
-                                     "border: none;}"
-                                     "QComboBox {color: rgb(30, 30, 30);"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: 1px solid;"
-                                     "border-radius: 3px;}"
-                                     "QLineEdit {color: rgb(30, 30, 30);"
-                                     "background-color: rgb(249, 249, 245);"
-                                     "border: 1px solid;"
-                                     "border-radius: 3px solid;}"
-                                     "QRadioButton {color: rgb(30, 30, 30);"
-                                     "border: none;}")
+                                                "color: rgb(30, 30, 30);"
+                                                "border: none;}"
+                                                "QComboBox {color: rgb(30, 30, 30);"
+                                                "background-color: rgb(249, 249, 245);"
+                                                "border: 1px solid;"
+                                                "border-radius: 3px;}"
+                                                "QLineEdit {color: rgb(30, 30, 30);"
+                                                "background-color: rgb(249, 249, 245);"
+                                                "border: 1px solid;"
+                                                "border-radius: 3px solid;}"
+                                                "QRadioButton {color: rgb(30, 30, 30);"
+                                                "border: none;}")
         self.home_frame.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
                                       "color: rgb(30, 30, 30);"
                                       "border: none;}"
@@ -1716,11 +1808,11 @@ class UI(QMainWindow):
                                             "border: 1px solid rgb(204, 204, 204);"
                                             "color: rgb(30, 30, 30);}")
         self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
-                                                   "background-color: rgb(249, 249, 245);"
-                                                   "border: none;}"
-                                                   'QToolTip {'
-                                                   'background-color: #e0e0e0;'
-                                                   'border: none;}')
+                                                     "background-color: rgb(249, 249, 245);"
+                                                     "border: none;}"
+                                                     'QToolTip {'
+                                                     'background-color: #e0e0e0;'
+                                                     'border: none;}')
         self.profile_button_3.setStyleSheet("border: none;")
         self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn.png"))
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
@@ -1874,7 +1966,7 @@ class UI(QMainWindow):
         else:
             self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
         self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                    "background-color: rgb(239, 229, 220);")
+                                                  "background-color: rgb(239, 229, 220);")
 
     # gets home screen in front
     def get_home_screen(self):
@@ -2570,15 +2662,13 @@ class UI(QMainWindow):
         print("started function to read csv")
         data = []
         with open(csv_file, 'r') as f:
-
             # create a list of rows in the CSV file
             rows = f.readlines()
 
             # strip white-space and newlines
-            rows = list(map(lambda x:x.strip(), rows))
+            rows = list(map(lambda x: x.strip(), rows))
 
             for row in rows:
-
                 # further split each row into columns assuming delimiter is comma
                 row = row.split(',')
 
@@ -2602,7 +2692,7 @@ class UI(QMainWindow):
         try:
             for i in range(12):
                 # fetched_data_home.append(f[i][0])
-                fetched_data_home.append(f[0][i]) # taking the first row of csv file
+                fetched_data_home.append(f[0][i])  # taking the first row of csv file
             # print(fetched_data_home)
             # print(",,,,,,,,,,,,,,,,,,")
             self.load_window.close()
@@ -2713,6 +2803,71 @@ class UI(QMainWindow):
             conn.close()
             self.load_list.clear()
             self.update_db_view()
+
+    def load_home_settings(self):
+        sql = "SELECT * FROM home_run_settings"
+        print("yoooooo")
+        conn = sqlite3.connect('autoclicker.db')
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        print("--")
+        if len(data) == 0:
+            print("--")
+            conn.close()
+            return
+        fetched_data = data[0]
+        print(fetched_data)
+        conn.close()
+        self.get_home_screen()
+        delay_type = fetched_data[10]
+        self.mouse_button_combobox.setCurrentText(fetched_data[1])
+        self.click_type_combobox.setCurrentText(fetched_data[2])
+        if fetched_data[3] == 'range':
+            self.range_radio_button.setChecked(True)
+            self.delay_time_combobox_2.setCurrentText(str(delay_type))
+            range_min = fetched_data[8]
+            range_max = fetched_data[9]
+            self.range_min.setText(str(range_min))
+            self.range_max.setText(str(range_max))
+            self.delay_time_entrybox.setText('')
+        else:
+            self.repeat_radio_button.setChecked(True)
+            self.delay_time_combobox.setCurrentText(str(delay_type))
+            self.delay_time_entrybox.setText(str(fetched_data[8]))
+            self.range_min.setText('')
+            self.range_max.setText('')
+        if fetched_data[4] == -1:
+            self.never_stop_combobox.setCurrentText('Yes')
+            self.repeat_for_number.setText('')
+        else:
+            self.never_stop_combobox.setCurrentText('No')
+            self.repeat_for_number.setText(str(fetched_data[4]))
+        if fetched_data[5] == 'fixed':
+            self.fixed_location_radio_button.setChecked(True)
+            self.fixed_location_x.setText(str(fetched_data[6]))
+            self.fixed_location_y.setText(str(fetched_data[7]))
+            self.select_area_x.setText('')
+            self.select_area_y.setText('')
+            self.select_area_width.setText('')
+            self.select_area_height.setText('')
+        elif fetched_data[5] == 'current':
+            self.current_location_radio_button.setChecked(True)
+            self.fixed_location_x.setText('')
+            self.fixed_location_y.setText('')
+            self.select_area_x.setText('')
+            self.select_area_y.setText('')
+            self.select_area_width.setText('')
+            self.select_area_height.setText('')
+        else:
+            self.select_area_radio_button.setChecked(True)
+            self.select_area_x.setText(str(fetched_data[6]))
+            self.select_area_y.setText(str(fetched_data[7]))
+            self.select_area_width.setText(str(fetched_data[11]))
+            self.select_area_height.setText(str(fetched_data[12]))
+            self.fixed_location_x.setText('')
+            self.fixed_location_y.setText('')
+        print("loaded bhai")
 
     # loads selected action from database
     def load_selected_from_db(self):
@@ -3046,9 +3201,9 @@ class UI(QMainWindow):
         column_9.setValidator(self.integer)
         column_9.setFixedSize(45, 20)
         column_9.setStyleSheet('background-color: rgb(249, 249, 245);'
-                                'border: 1px solid;'
-                                'border-radius: 3px;'
-                                'border-color: rgb(218, 218, 218)')
+                               'border: 1px solid;'
+                               'border-radius: 3px;'
+                               'border-color: rgb(218, 218, 218)')
         column_10 = QPushButton(record_line_frame)
         column_10.setIcon(QtGui.QIcon("images/Red-Minus-PNG-File"))
         column_10.setFixedSize(25, 20)
@@ -3319,28 +3474,27 @@ class UI(QMainWindow):
             if self.dark_theme_activated:
                 self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                            "background-color: #10131b;")
+                                                          "background-color: #10131b;")
             else:
                 self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                            "background-color: rgb(239, 229, 220);")
+                                                          "background-color: rgb(239, 229, 220);")
         else:
             self.small_window_checkbox.setChecked(True)
             if self.dark_theme_activated:
                 self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                            "background-color: #10131b;")
+                                                          "background-color: #10131b;")
             else:
                 self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
-                                                            "background-color: rgb(239, 229, 220);")
+                                                          "background-color: rgb(239, 229, 220);")
         # self.action_on_small_window()
 
     # # does action on small window based on whether small_window_checkbox is checked or not
     # def action_on_small_window(self):
     #     # if self.small_window_checkbox.isChecked():
     #     #     # disable the small window during home run and record run commands commands
-
 
     # triggers live mouse checkbox
     def trigger_live_mouse(self):
@@ -3382,7 +3536,7 @@ class UI(QMainWindow):
 
     # constantly writes the live cursor position to the screen
     def get_live_mouse(self):
-        print("starting function call to write live mouse position to screen")
+        # print("starting function call to write live mouse position to screen")
         while 1:
             if self.mouse_location_checkbox.isChecked():
                 self.live_mouse_label.setText('')
@@ -3409,6 +3563,10 @@ class UI(QMainWindow):
         self.select_area_height.setText('')
         self.fixed_location_x.setText('')
         self.fixed_location_y.setText('')
+
+    def save_home_settings(self):
+        self.save_home_params = 1
+        self.home_save_settings_new()
 
     # triggered by home -> save button (pop-up window)
     def window_home_save(self):
@@ -3517,6 +3675,111 @@ class UI(QMainWindow):
             self.home_save_footnote.setStyleSheet("color: red;")
         self.home_save_footnote.setFont(self.font)
         self.home_save_window.show()
+
+    # saves the actions from home screen into app, only 1 row
+    def home_save_settings_new(self):
+        save_name = "GG"
+        self.location_x = 0
+        self.location_y = 0
+        self.area_width = 0
+        self.area_height = 0
+        self.delay_time = 1
+        self.delay_type = "ms"
+        self.click_repeat = 1
+        # if save_name == '':
+        #     self.home_save_footnote.setText('error: name is needed')
+        #     return
+        mouse_type = str(self.mouse_button_combobox.currentText())
+        click_type = str(self.click_type_combobox.currentText())
+        if self.repeat_radio_button.isChecked():
+            repeat_or_range = 'repeat'
+        else:
+            repeat_or_range = 'range'
+        if str(self.never_stop_combobox.currentText()) == 'Yes':
+            self.click_repeat = -1
+        else:
+            try:
+                self.click_repeat = int(self.repeat_for_number.text())
+            except ValueError:
+                # self.home_save_footnote.setText('error: number of repeat is needed to save')
+                # click_repeat = 1
+                print("saving default settings since user didnt enter")
+                return
+        if self.select_area_radio_button.isChecked():
+            select_or_fixed = 'select'
+        elif self.current_location_radio_button.isChecked():
+            select_or_fixed = 'current'
+        else:
+            select_or_fixed = 'fixed'
+        try:
+
+            if self.select_area_radio_button.isChecked():
+                self.location_x = int(self.select_area_x.text())
+                self.location_y = int(self.select_area_y.text())
+                self.area_width = int(self.select_area_width.text())
+                self.area_height = int(self.select_area_height.text())
+            elif self.current_location_radio_button.isChecked():
+                self.location_x = 0
+                self.location_y = 0
+                self.area_width = 0
+                self.area_height = 0
+            else:
+                self.location_x = int(self.fixed_location_x.text())
+                self.location_y = int(self.fixed_location_y.text())
+                self.area_width = 0
+                self.area_height = 0
+        except ValueError:
+            # self.home_save_footnote.setText('error: mouse location (and area width/height) is needed')
+            print("saving default settings since user didnt enter")
+            return
+        try:
+            if self.repeat_radio_button.isChecked():
+                self.delay_type = str(self.delay_time_combobox.currentText())
+                self.delay_time = int(self.delay_time_entrybox.text())
+                wait_interval_min, wait_interval_max = self.delay_time, self.delay_time
+            else:
+                self.delay_type = str(self.delay_time_combobox_2.currentText())
+                wait_interval_min = int(self.range_min.text())
+                wait_interval_max = int(self.range_max.text())
+        except ValueError:
+            # self.home_save_footnote.setText('error: set delay time for your choice')
+            print("saving default settings since user didnt enter")
+            return
+        saved_date = datetime.datetime.today().strftime('%Y-%m-%d %H:%M')
+        # try:
+        print("savingggg")
+
+        #delete existing rows from database, it should store only 1 value
+
+
+        conn = sqlite3.connect('autoclicker.db')
+        cursor = conn.cursor()
+
+        delete_home_row = '''DELETE FROM home_run_settings'''
+        cursor.execute(delete_home_row)
+
+        print("deleting any stored home settings")
+
+        sql = f'''INSERT INTO home_run_settings
+                    (save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x,
+                    location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height, saved_date)
+                    VALUES (
+                    '{save_name}', '{mouse_type}', '{click_type}', '{repeat_or_range}', '{self.click_repeat}', '{select_or_fixed}',
+                    '{self.location_x}', '{self.location_y}', '{wait_interval_min}', '{wait_interval_max}', '{self.delay_type}',
+                    '{self.area_width}', '{self.area_height}', '{saved_date}'
+                    )'''
+        cursor.execute(sql)
+        conn.commit()
+        print("saved")
+        conn.close()
+
+        # functions.add_run_home_db(save_name, mouse_type, click_type, repeat_or_range, self.click_repeat, select_or_fixed,
+        #                           self.location_x, self.location_y, wait_interval_min, wait_interval_max, self.delay_type,
+        #                           self.area_width, self.area_height, saved_date)
+            # self.home_save_window.close()
+        # except sqlite3.IntegrityError:
+        #     self.home_save_footnote.setText('error: this name exists')
+        #     return
 
     # saves the actions from home screen into app
     def home_save_settings(self):
@@ -4111,6 +4374,18 @@ class UI(QMainWindow):
                 # return True
                 self.authentication_result = 1
 
+    # starts a thread for home_start_process
+    def thread_for_home_start_process(self):
+
+        # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
+        new_thread = threading.Thread(target=self.home_start_process)
+        new_thread.start()
+        print("started the new thread for home run button")
+        print("1*****************************")
+        for thread in threading.enumerate():
+            print(thread)
+        print("*****************************")
+
     # starts the process for home -> play button
     def home_start_process(self):
         print("start execution of function: home_start_process()")
@@ -4123,11 +4398,11 @@ class UI(QMainWindow):
         # if not a[1][0]:
         #     return
 
-
         # if not self.authentication_loop():
         #     return
+        self.authentication_loop2()
         if self.authentication_result == 0:
-            print("please activate your account") # ToDo: should add a user popup dialog box over here
+            print("please activate your account")  # ToDo: should add a user popup dialog box over here
             return
         if self.authentication_result == -1:
             print("you cant access run functionality")
@@ -4141,7 +4416,7 @@ class UI(QMainWindow):
         # new_thread.join()
         # if not result:
         #     return
-
+        print("yoooo")
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
         never_stop_boolean = self.never_stop_combobox.currentText()
@@ -4186,6 +4461,7 @@ class UI(QMainWindow):
         except ValueError:
             self.foot_note_label.setText('error: value is missing for your repeat or range choice')
             return
+        print("yoooo")
         if not self.current_location_radio_button.isChecked():
             try:
                 if self.select_area_radio_button.isChecked():
@@ -4218,6 +4494,7 @@ class UI(QMainWindow):
         self.showMinimized()
         self.open_small_window(run_mode="home")
         # ----------------------
+
         keyboard.remove_hotkey(self.home_start_stop_hotkey)
         # keyboard.add_hotkey(self.home_start_stop_hotkey, self.home_stop_process)
         keyboard.add_hotkey(self.home_start_stop_hotkey, self.multiple_hotkey_actions_home)
@@ -4245,12 +4522,14 @@ class UI(QMainWindow):
         print("started execution of function: multiple_hotkey_actions_home()")
         self.home_stop_process()
         # close the small window if its open. First check none condition
-        small_window_instance = self.small_window_opened
+        # small_window_instance = self.small_window_opened
         print("--1----")
-        print(small_window_instance)
+        print(self.small_window_opened)
         print("--2----")
-        if small_window_instance is not None:
-            small_window_instance.close()
+        if self.small_window_opened is not None:
+            # self.small_window_opened.button_action(self)
+            print("small window is opened")
+            self.small_window_opened.close()
             self.showNormal()
         print("completed execution of function: multiple_hotkey_actions_home()")
 
@@ -4268,10 +4547,18 @@ class UI(QMainWindow):
             # print("min")
             self.showNormal()
             # print("norm")
+            # if self.small_window_opened is not None:
+            # if not self.small_window_checkbox.isChecked():
+            # self.small_window_opened.button_action(self)
+            print("small window is opened")
+            # closing_thread = threading.Thread(target=self.small_window_opened.close)
+            # closing_thread.start()
+            # self.small_window_opened.close()
+            # TO DO: hanging a lot in the above line
+            # self.showNormal()
+
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
-
-
 
         computer_type = self.complete_combobox_3.currentText()
         print("done heree")
@@ -4323,10 +4610,10 @@ class UI(QMainWindow):
         #     return
 
         if self.authentication_result == 0:
-            print("please activate your account") # ToDo: should add a user popup dialog box over here
+            print("please activate your account")  # ToDo: should add a user popup dialog box over here
             return
         if self.authentication_result == -1:
-            print("you cant access run functionality")
+            print("you cant access run functionality, please activate")
             return
         # result = []
         # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
@@ -4432,11 +4719,11 @@ class UI(QMainWindow):
         keyboard.remove_hotkey(self.record_start_stop_hotkey)
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
         if self.show_after_complete_checkbox.isChecked():
+            print("ioioio")
             self.showNormal()
         toaster.show_toast(title="Playback completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
                            icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
-
 
         computer_type = self.complete_combobox_3.currentText()
 
@@ -4501,10 +4788,10 @@ class UI(QMainWindow):
                 if str(events[a][2]) == '-1':
                     children[7].setCurrentText('Down')
                     for scrolls in range(1, total_row - a):
-                        if len(events[a+scrolls]) == 4:
-                            if str(events[a+scrolls][2]) == '-1':
+                        if len(events[a + scrolls]) == 4:
+                            if str(events[a + scrolls][2]) == '-1':
                                 scroll_count += 1
-                                delay += int(events[a+scrolls][3] * 1000)
+                                delay += int(events[a + scrolls][3] * 1000)
                             else:
                                 break
                         else:
@@ -4513,10 +4800,10 @@ class UI(QMainWindow):
                 else:
                     children[7].setCurrentText('Up')
                     for scrolls in range(1, total_row - a):
-                        if len(events[a+scrolls]) == 4:
-                            if str(events[a+scrolls][2]) == '1':
+                        if len(events[a + scrolls]) == 4:
+                            if str(events[a + scrolls][2]) == '1':
                                 scroll_count += 1
-                                delay += int(events[a+scrolls][3] * 1000)
+                                delay += int(events[a + scrolls][3] * 1000)
                             else:
                                 break
                         else:
@@ -4534,10 +4821,10 @@ class UI(QMainWindow):
                 if events[a][1] == 'char':
                     children[5].setCurrentText('Char')
                     for char in range(1, total_row - a):
-                        if len(events[a+char]) == 3:
-                            if str(events[a+char][1]) == 'char':
-                                char_group += events[a+char][0]
-                                delay += int(events[a+char][2] * 1000)
+                        if len(events[a + char]) == 3:
+                            if str(events[a + char][1]) == 'char':
+                                char_group += events[a + char][0]
+                                delay += int(events[a + char][2] * 1000)
                                 char_count += 1
                             else:
                                 break
@@ -4674,7 +4961,7 @@ class UI_SmallWindow(QMainWindow):
     def __init__(self, stop_hotkey, MainWindow):
         print("started initialisation of small window UI")
         super(UI_SmallWindow, self).__init__()
-        uic.loadUi("small_window.ui", self)
+        uic.loadUi(functions.resource_path("small_window.ui"), self)
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setObjectName("SmallWindow")
         # self.resize(140, 41)
@@ -4717,12 +5004,13 @@ class UI_SmallWindow(QMainWindow):
         print("calling function home_stop_process()")
         MainWindow.home_stop_process()
 
+
 class UI_Dialog(QDialog):
 
     def __init__(self):
         print("started initialisation of email dialog UI")
         super(UI_Dialog, self).__init__()
-        uic.loadUi("email_dialog.ui", self)
+        uic.loadUi(functions.resource_path("email_dialog.ui"), self)
         print("yoyoyo")
         self.setObjectName("Email Registration")
         self.resize(442, 159)
@@ -4796,7 +5084,6 @@ class UI_Dialog(QDialog):
         # self.ui.setupUi(self.dialog, email)
         self.email_sent_dialog.show()
 
-
         # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
         # print(response2.text)
         # print(type(response2.text))
@@ -4810,12 +5097,13 @@ class UI_Dialog(QDialog):
         #     # self.ui.setupUi(self.dialog, email)
         #     self.email_sent_dialog.show()
 
+
 class UI_email_sent_Dialog(QDialog):
 
     def __init__(self, email):
         print("started initialisation of email sent dialog UI")
         super(UI_email_sent_Dialog, self).__init__()
-        uic.loadUi("email_sent_dialog.ui", self)
+        uic.loadUi(functions.resource_path("email_sent_dialog.ui"), self)
         self.setObjectName("Email Verification")
         print("----")
         print(email)
@@ -4861,15 +5149,17 @@ class UI_email_sent_Dialog(QDialog):
         # print(type(response2.text))
         print("Resending verification mail")
 
+
 class CaptureScreen(QtWidgets.QSplashScreen):
     """QSplashScreen, that track mouse event for capturing screenshot."""
+
     def __init__(self, MainWindow):
 
         super(CaptureScreen, self).__init__()
         self.master = MainWindow
         # Points on screen marking the origin and end of regtangle area.
-        self.origin = QtCore.QPoint(0,0)
-        self.end = QtCore.QPoint(0,0)
+        self.origin = QtCore.QPoint(0, 0)
+        self.end = QtCore.QPoint(0, 0)
         self.signal = 0
 
         # A drawing widget for representing bounding area
@@ -4884,7 +5174,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
         primScreenGeo = QtGui.QGuiApplication.primaryScreen().geometry()
 
         screenPixMap = QtGui.QPixmap(primScreenGeo.width(), primScreenGeo.height())
-        screenPixMap.fill(QtGui.QColor(0,0,0))
+        screenPixMap.fill(QtGui.QColor(0, 0, 0))
 
         self.setPixmap(screenPixMap)
 
@@ -4903,10 +5193,13 @@ class CaptureScreen(QtWidgets.QSplashScreen):
 
     def getOriginal_x(self):
         return self.origin.x()
+
     def getOriginal_y(self):
         return self.origin.y()
+
     def getFinal_x(self):
         return self.end.x()
+
     def getFinal_y(self):
         return self.end.y()
 
@@ -4928,7 +5221,8 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.hide()
             self.signal = 1
             primaryScreen = QtGui.QGuiApplication.primaryScreen()
-            grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(), self.end.x()-self.origin.x(), self.end.y()-self.origin.y())
+            grabbedPixMap = primaryScreen.grabWindow(0, self.origin.x(), self.origin.y(),
+                                                     self.end.x() - self.origin.x(), self.end.y() - self.origin.y())
             # grabbedPixMap.save('screenshot_windowed.jpg', 'jpg')
             # UIWindow = UI()
 
@@ -4938,8 +5232,8 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.final_y = self.getFinal_y()
             self.snipping_width = abs(self.final_x - self.original_x)
             self.snipping_height = abs(self.final_y - self.original_y)
-            self.snip_x = min(self.final_x,self.original_x)
-            self.snip_y = min(self.final_y,self.original_y)
+            self.snip_x = min(self.final_x, self.original_x)
+            self.snip_y = min(self.final_y, self.original_y)
             # UIWindow.select_area_x.setText(str(self.snip_x))
             # UIWindow.select_area_y.setText(str(self.snip_y))
             # UIWindow.select_area_width.setText(str(self.snipping_width))
@@ -4961,9 +5255,18 @@ cursor = conn.cursor()
 sql = '''SELECT * FROM app_settings LIMIT 1'''
 cursor.execute(sql)
 app_settings = cursor.fetchone()
+
+sql = '''SELECT * FROM home_run_settings LIMIT 1'''
+cursor.execute(sql)
+home_settings = cursor.fetchone()
 conn.close()
 show_tool_after, hide_system_tray, disable_cursor_location, disable_small_window, dark_theme, home_start_hotkey, record_start_hotkey, \
 record_recording_hotkey, mouse_location_hotkey = app_settings
+
+if home_settings is not None:
+    save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x, location_y, \
+    wait_interval_min, wait_interval_max, wait_type, area_width, area_height, saved_date = home_settings
+
 toaster = ToastNotifier()
 # fetch the hardware UUID
 # print(device_id.get_windows_uuid())
