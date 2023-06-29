@@ -25,6 +25,10 @@ import requests
 from email_validator import validate_email, EmailNotValidError
 
 
+def prompt_internet_issue():
+    dialog = UI_connectivity()
+    dialog.show()
+
 def check(email):
     try:
       # validate and get info
@@ -242,13 +246,20 @@ def post_register(email):
     try:
         print("starting the post_register function")
         responses = []
-        r = requests.post('http://146.190.166.207/register', data={"email": email})
-        # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        try:
+            r = requests.post('http://146.190.166.207/register', data={"email": email})
+            # r.raise_for_status()
+            # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
+            return
         responses.append(r)
         print("got a post response")
         print(responses)
         print("ending the post_register function")
         return
+
     except KeyboardInterrupt:
         return
 
@@ -1233,15 +1244,35 @@ class UI(QMainWindow):
         # ------------------------
         # menu bar buttons below
         about_us = self.findChild(QPushButton, "pushButton")
-        about_us.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/"))
+        try:
+            about_us.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/"))
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
         how_to_use = self.findChild(QPushButton, "pushButton_2")
-        how_to_use.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/windows"))
+        try:
+            how_to_use.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/windows"))
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
         email_us = self.findChild(QPushButton, "pushButton_3")
-        email_us.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/contact"))
+        try:
+            email_us.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/contact"))
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
         faqs = self.findChild(QPushButton, "pushButton_4")
-        faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
+        try:
+            faqs.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/FAQs"))
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
         privacy_policy = self.findChild(QPushButton, "pushButton_5")
-        privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
+        try:
+            privacy_policy.clicked.connect(lambda: webbrowser.open("https://autoclicker.gg/privacy-policy/"))
+        except requests.exceptions.ConnectionError as conerr:
+            prompt_internet_issue()
+            print("Connection error")
         self.save_home_params = 0
         self.load_home_settings()
 
@@ -3946,10 +3977,15 @@ class UI(QMainWindow):
         try:
             print("starting the get_generate function")
             self.responses = []
-            r = requests.get('http://146.190.166.207/generate-token')
+            try:
+                r = requests.get('http://146.190.166.207/generate-token')
+                # r.raise_for_status()
             # r = requests.get('https://auth-provider.onrender.com/generate-token')
+            except requests.exceptions.ConnectionError as conerr:
+                prompt_internet_issue()
+                print("Connection error")
+                return
             self.responses.append(r)
-            time.sleep(20)
             print("ending the get_generate function")
             return
         except KeyboardInterrupt:
@@ -3960,7 +3996,13 @@ class UI(QMainWindow):
             print("starting the post_authenticate function")
             self.responses = []
             # r = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
-            r = requests.post('http://146.190.166.207/authenticate', data={"token": token})
+            try:
+                r = requests.post('http://146.190.166.207/authenticate', data={"token": token})
+                # r.raise_for_status()
+            except requests.exceptions.ConnectionError as conerr:
+                prompt_internet_issue()
+                print("Connection error")
+                return
             self.responses.append(r)
             print("got a post response")
             print(self.responses)
@@ -4216,7 +4258,14 @@ class UI(QMainWindow):
             # print("self.responses is: " + str(self.responses))
             #
             # response = requests.get('https://auth-provider.onrender.com/generate-token')
-            response = requests.get('http://146.190.166.207/generate-token')
+            try:
+                response = requests.get('http://146.190.166.207/generate-token')
+                # response.raise_for_status()
+            except requests.exceptions.ConnectionError as conerr:
+                prompt_internet_issue()
+                self.authentication_result = -1
+                print("Connection error")
+                return
             print("completed get call")
             # response = self.responses[0]
             info = response.text
@@ -4235,14 +4284,15 @@ class UI(QMainWindow):
 
             print("done")
             con.close()
+
+            print("completed execution of function: authentication_loop2()")
+            # return True
+            self.authentication_result = 1
             # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
             # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
             #
             # print("starting query_thread")
             # query_thread.start()
-            print("completed execution of function: authentication_loop2()")
-            # return True
-            self.authentication_result = 1
         else:
 
             print("aa*****************************")
@@ -4278,8 +4328,16 @@ class UI(QMainWindow):
             # # return True
             # response2 = self.responses[0]
             # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
-            response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
-            print("done post call")
+            try:
+                response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
+                # response2.raise_for_status()
+                print("done post call")
+            # except requests.exceptions.ConnectionError as conerr:
+            except requests.exceptions.ConnectionError as conerr:
+                prompt_internet_issue()
+                self.authentication_result = -1
+                print("Connection error")
+                return
             print(response2.text)
             json_message = json.loads(response2.text)
             # print(type(response2.text))
@@ -5011,30 +5069,49 @@ class UI_SmallWindow(QMainWindow):
         print("calling function home_stop_process()")
         MainWindow.home_stop_process()
 
+class UI_connectivity(QDialog):
+
+    def __init__(self):
+        print("started initialisation of connectivity ui")
+        super(UI_Dialog, self).__init__()
+        uic.loadUi("connectivity_issue.ui", self)
+        print("completed initialisation of connectivity ui")
+        self.setObjectName("User seems offline")
+        self.resize(327, 205)
+        self.label = QtWidgets.QLabel(self)
+        self.label.setGeometry(QtCore.QRect(70, 20, 211, 151))
+        self.label.setWordWrap(True)
+        self.label.setObjectName("label")
 
 class UI_Dialog(QDialog):
 
     def __init__(self):
         print("started initialisation of email dialog UI")
         super(UI_Dialog, self).__init__()
-        uic.loadUi(functions.resource_path("email_dialog.ui"), self)
+        # uic.loadUi(functions.resource_path("email_dialog.ui"), self)
+        uic.loadUi("email_dialog.ui", self)
         print("yoyoyo")
         self.setObjectName("Email Registration")
         self.resize(442, 159)
         # self.Dialog = Dialog
         self.submit_key = QtWidgets.QPushButton(self)
-        self.submit_key.setGeometry(QtCore.QRect(340, 98, 75, 24))
+        self.submit_key.setGeometry(QtCore.QRect(340, 80, 75, 24))
         self.submit_key.setObjectName("submit_key")
         self.submit_key.setText("Submit")
         self.label_4 = QtWidgets.QLabel(self)
         self.label_4.setGeometry(QtCore.QRect(30, 10, 311, 61))
         self.label_4.setOpenExternalLinks(True)
+        self.error_label = QtWidgets.QLabel(self)
+        self.error_label.setGeometry(QtCore.QRect(40, 119, 331, 31))
+        self.error_label.setObjectName("error_label")
+        self.error_label.setStyleSheet('color: rgb(141, 34, 8);')
+        self.error_label.setWordWrap(True)
         self.label_4.setObjectName("label_4")
         self.label_3 = QtWidgets.QLabel(self)
-        self.label_3.setGeometry(QtCore.QRect(30, 103, 47, 13))
+        self.label_3.setGeometry(QtCore.QRect(30, 85, 47, 13))
         self.label_3.setObjectName("label_3")
         self.name = QtWidgets.QLineEdit(self)
-        self.name.setGeometry(QtCore.QRect(80, 100, 221, 20))
+        self.name.setGeometry(QtCore.QRect(80, 82, 221, 20))
         self.name.setObjectName("name")
         self.submit_key.clicked.connect(self.open_email_sent_dialog)
 
@@ -5053,10 +5130,10 @@ class UI_Dialog(QDialog):
         # con.commit()
         # print("adding email to local database")
         # con.close()
-        # is_valid = check(email)
-        # if is_valid != "Yes":
-        #     self.error_label.setText(is_valid)
-        #     return
+        is_valid = check(email)
+        if is_valid != "Yes":
+            self.error_label.setText(is_valid)
+            return
 
         print("connecting to database in open email sent")
         query = "UPDATE local_table SET email = ?"
@@ -5118,11 +5195,24 @@ class UI_email_sent_Dialog(QDialog):
         self.setObjectName("Email Verification")
         print("----")
         print(email)
+        self.em = email
+        self.uii = UI_Dialog()
         print("-----")
         self.resize(442, 159)
         # self.enter_key = QtWidgets.QPushButton(self)
         # self.enter_key.setGeometry(QtCore.QRect(180, 107, 75, 23))
+        self.enter_key = QtWidgets.QPushButton(self)
+        self.enter_key.setGeometry(QtCore.QRect(140, 120, 75, 23))
+        self.enter_key.setObjectName("enter_key")
+        self.enter_key.setText("Resend")
+
         self.enter_key.clicked.connect(lambda: self.resend_verification_link(email))
+        self.re_enter_email = QtWidgets.QPushButton(self)
+        self.re_enter_email.setGeometry(QtCore.QRect(220, 120, 101, 23))
+        self.re_enter_email.setObjectName("re_enter_email")
+        self.re_enter_email.setText("Re_enter_email")
+
+        self.re_enter_email.clicked.connect(lambda: self.enter_email())
         # self.enter_key.setObjectName("enter_key")
         # self.enter_key.setText("Resend")
         self.label = QtWidgets.QLabel(self)
@@ -5130,15 +5220,21 @@ class UI_email_sent_Dialog(QDialog):
         self.label.setOpenExternalLinks(True)
         self.label.setObjectName("label")
         self.label_4 = QtWidgets.QLabel(self)
-        self.label_4.setGeometry(QtCore.QRect(180, 10, 231, 31))
+        self.label_4.setWordWrap(True)
         self.label_4.setText(email)
         self.label_4.setOpenExternalLinks(True)
         self.label_4.setObjectName("label_4")
+        self.label_4.setGeometry(QtCore.QRect(180, 10, 231, 31))
         self.label_2 = QtWidgets.QLabel(self)
         self.label_2.setGeometry(QtCore.QRect(30, 50, 371, 31))
         self.label_2.setOpenExternalLinks(True)
         self.label_2.setObjectName("label_2")
         print("completed initialisation of email sent dialog UI")
+
+    def enter_email(self):
+
+        self.uii.show()
+        self.close()
 
     def resend_verification_link(self, email):
         # call api to send verification email

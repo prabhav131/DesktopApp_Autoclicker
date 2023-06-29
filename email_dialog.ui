@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>98</y>
+     <y>80</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -48,7 +48,7 @@ click on it to continue using the app unobstructed.</string>
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>103</y>
+     <y>85</y>
      <width>47</width>
      <height>13</height>
     </rect>
@@ -61,23 +61,30 @@ click on it to continue using the app unobstructed.</string>
    <property name="geometry">
     <rect>
      <x>80</x>
-     <y>100</y>
+     <y>82</y>
      <width>221</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="error_label">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>130</y>
-     <width>331</width>
-     <height>20</height>
+     <x>30</x>
+     <y>119</y>
+     <width>401</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(141, 34, 8);
+</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>

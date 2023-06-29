@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="enter_key">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>140</x>
      <y>120</y>
      <width>75</width>
      <height>23</height>
@@ -74,6 +74,19 @@ Click on resend button below if the verification link has expired.</string>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="re_enter_email">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>120</y>
+     <width>101</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Re-enter email</string>
    </property>
   </widget>
  </widget>
