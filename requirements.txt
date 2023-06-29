@@ -2,3 +2,4 @@ mouse
 keyboard
 win10toast
 pynput
+email_validator

@@ -5053,6 +5053,10 @@ class UI_Dialog(QDialog):
         # con.commit()
         # print("adding email to local database")
         # con.close()
+        # is_valid = check(email)
+        # if is_valid != "Yes":
+        #     self.error_label.setText(is_valid)
+        #     return
 
         print("connecting to database in open email sent")
         query = "UPDATE local_table SET email = ?"
