@@ -15,8 +15,6 @@ import time
 import mouse
 import keyboard
 import random
-# from small_window import Ui_SmallWindow
-# from email_sent_dialog import Ui_email_sent_Dialog
 from functions_file import functions
 import ctypes
 from win10toast import ToastNotifier
@@ -24,10 +22,19 @@ import pynput
 import datetime
 import webbrowser
 import requests
+from email_validator import validate_email, EmailNotValidError
 
 
-# from email_dialog import Ui_Dialog
-
+def check(email):
+    try:
+      # validate and get info
+        v = validate_email(email)
+        # replace with normalized form
+        email = v["email"]
+        return "Yes"
+    except EmailNotValidError as e:
+        # email is not valid, exception message is human-readable
+        return str(e)
 
 def resource_path2(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -4608,7 +4615,7 @@ class UI(QMainWindow):
         #     return
         # if not self.authentication_loop():
         #     return
-
+        self.authentication_loop2()
         if self.authentication_result == 0:
             print("please activate your account")  # ToDo: should add a user popup dialog box over here
             return
