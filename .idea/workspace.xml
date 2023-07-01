@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="03ad31e2-3fe3-4bfa-8222-3d1a7e369a08" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BUGS.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GG Test cases.xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/autoclicker.db" beforeDir="false" afterPath="$PROJECT_DIR$/autoclicker.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email_dialog.ui" beforeDir="false" afterPath="$PROJECT_DIR$/email_dialog.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email_sent_dialog.ui" beforeDir="false" afterPath="$PROJECT_DIR$/email_sent_dialog.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions_file.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/version2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/version2.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$BUGS.docx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +68,9 @@
       <updated>1685847977310</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

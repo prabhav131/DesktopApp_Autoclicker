@@ -2148,7 +2148,7 @@ border-radius: 10px;</string>
            <x>20</x>
            <y>40</y>
            <width>536</width>
-           <height>181</height>
+           <height>281</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -2682,6 +2682,136 @@ border: none;
            <string> Pick Mouse Location </string>
           </property>
          </widget>
+         <widget class="QFrame" name="frame_16">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>190</y>
+            <width>229</width>
+            <height>53</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border: 2px solid rgb(196, 177, 174);
+
+border-radius: 10px;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QLabel" name="add_record_line_hotkey">
+           <property name="geometry">
+            <rect>
+             <x>102</x>
+             <y>14</y>
+             <width>75</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 5px;
+border: 1px solid;
+border-color: rgb(239, 229, 220);
+background-color: rgb(252, 252, 252)</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="set_new_hotkey_6">
+           <property name="geometry">
+            <rect>
+             <x>187</x>
+             <y>14</y>
+             <width>31</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>7</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+background-color: rgb(158, 27 ,163);
+border: none;
+
+}
+
+
+
+
+
+</string>
+           </property>
+           <property name="text">
+            <string>change</string>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../.designer/backup/images/icon_1.png</normaloff>../../.designer/backup/images/icon_1.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>25</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+          <widget class="QLabel" name="home_start_stop_6">
+           <property name="geometry">
+            <rect>
+             <x>17</x>
+             <y>15</y>
+             <width>84</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border: none;</string>
+           </property>
+           <property name="text">
+            <string>add line  :</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_19">
+          <property name="geometry">
+           <rect>
+            <x>176</x>
+            <y>182</y>
+            <width>101</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">Border: none;</string>
+          </property>
+          <property name="text">
+           <string>Add record line</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QLabel" name="label_9">
          <property name="geometry">
@@ -2783,6 +2913,30 @@ background-color: #e0e0e0;</string>
           <rect>
            <x>246</x>
            <y>184</y>
+           <width>222</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: 2px;
+border-color: e0e0e0;
+background-color: #e0e0e0;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="text">
+          <string>  Choose your hotkey and press enter</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_25">
+         <property name="geometry">
+          <rect>
+           <x>183</x>
+           <y>274</y>
            <width>222</width>
            <height>24</height>
           </rect>
@@ -2964,9 +3118,9 @@ background-color: rgb(242,242,242);
        <zorder>foot_note_label</zorder>
        <zorder>live_mouse_label</zorder>
        <zorder>navigation_frame</zorder>
-       <zorder>record_frame</zorder>
-       <zorder>hotkey_settings_frame</zorder>
        <zorder>view_settings_frame</zorder>
+       <zorder>hotkey_settings_frame</zorder>
+       <zorder>record_frame</zorder>
        <zorder>home_frame</zorder>
       </widget>
       <widget class="QFrame" name="left_frame">

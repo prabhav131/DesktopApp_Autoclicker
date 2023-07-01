@@ -3,7 +3,37 @@ import sys
 import os
 import random, string
 import pynput
+import logging
 from PyQt5.QtCore import Qt, QSettings
+
+
+def resource_path2(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+        running_mode = 'Frozen/executable'
+    else:
+        try:
+            app_full_path = os.path.realpath(__file__)
+            application_path = os.path.dirname(app_full_path)
+            running_mode = "Non-interactive (e.g. 'python myapp.py')"
+        except NameError:
+            logger.error("Exception occurred", exc_info=True)
+            application_path = os.getcwd()
+            running_mode = 'Interactive'
+
+    file_full_path = os.path.join(application_path, relative_path)
+
+    # print('Running mode:', running_mode)
+    # print('  Application path  :', application_path)
+    # print('  File full path :', file_full_path)
+
+    return file_full_path
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, filename=resource_path2('app.log'), filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
 
 class functions:
 
@@ -11,6 +41,7 @@ class functions:
     def add_run_home_db(save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed,
                         location_x, location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height,
                         saved_date):
+        logger.info("adding home run configuration in database")
         conn = sqlite3.connect('autoclicker.db')
         cursor = conn.cursor()
         sql = f'''INSERT INTO home_run_settings
@@ -23,11 +54,12 @@ class functions:
             )'''
         cursor.execute(sql)
         conn.commit()
-        print("saved")
+        logger.info("info saved in database")
         conn.close()
 
     @staticmethod
     def add_run_record_db(save_name, csv_text, saved_date, repeat_all, delay_time, delay_type):
+        logger.info("save vonfiguration in record run settings")
         conn = sqlite3.connect('autoclicker.db')
         cursor = conn.cursor()
         sql = f'''INSERT INTO record_run_settings
@@ -37,18 +69,20 @@ class functions:
             )'''
         cursor.execute(sql)
         conn.commit()
+        logger.info("info saved in database")
         conn.close()
 
-    @staticmethod
-    def resource_path(relative_path):
-        """ Get absolute path to resource, works for dev and for PyInstaller """
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-
-        return os.path.join(base_path, relative_path)
+    # @staticmethod
+    # def resource_path(relative_path):
+    #     """ Get absolute path to resource, works for dev and for PyInstaller """
+    #     try:
+    #         # PyInstaller creates a temp folder and stores path in _MEIPASS
+    #         base_path = sys._MEIPASS
+    #     except Exception:
+    #         logger.error("Exception occurred", exc_info=True)
+    #         base_path = os.path.abspath(".")
+    #
+    #     return os.path.join(base_path, relative_path)
 
     @staticmethod
     def key_converter(key):
@@ -248,5 +282,6 @@ class functions:
 
     @staticmethod
     def randomword(length):
-       letters = string.ascii_lowercase
-       return ''.join(random.choice(letters) for i in range(length))
+        logger.info(f"creating a random word of length {length}")
+        letters = string.ascii_lowercase
+        return ''.join(random.choice(letters) for i in range(length))
