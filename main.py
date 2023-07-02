@@ -30,35 +30,35 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, filename='/app.log', filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
-def resource_path2(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    logger.info(f"Get absolute path to - {relative_path}")
-    if getattr(sys, 'frozen', False):
-        application_path = os.path.dirname(sys.executable)
-        running_mode = 'Frozen/executable'
-        logger.info(f"running mode is - {running_mode}")
-    else:
-        try:
-            app_full_path = os.path.realpath(__file__)
-            application_path = os.path.dirname(app_full_path)
-            running_mode = "Non-interactive (e.g. 'python myapp.py')"
-            logger.info(f"running mode is - {running_mode}")
-        except NameError:
-            logger.error("Exception occurred", exc_info=True)
-            application_path = os.getcwd()
-            running_mode = 'Interactive'
-            logger.info(f"running mode is - {running_mode}")
+# def resource_path2(relative_path):
+#     """ Get absolute path to resource, works for dev and for PyInstaller """
+#     logger.info(f"Get absolute path to - {relative_path}")
+#     if getattr(sys, 'frozen', False):
+#         application_path = os.path.dirname(sys.executable)
+#         running_mode = 'Frozen/executable'
+#         logger.info(f"running mode is - {running_mode}")
+#     else:
+#         try:
+#             app_full_path = os.path.realpath(__file__)
+#             application_path = os.path.dirname(app_full_path)
+#             running_mode = "Non-interactive (e.g. 'python myapp.py')"
+#             logger.info(f"running mode is - {running_mode}")
+#         except NameError:
+#             logger.error("Exception occurred", exc_info=True)
+#             application_path = os.getcwd()
+#             running_mode = 'Interactive'
+#             logger.info(f"running mode is - {running_mode}")
+# 
+#     file_full_path = os.path.join(application_path, relative_path)
+# 
+#     # print('Running mode:', running_mode)
+#     # print('  Application path  :', application_path)
+#     # print('  File full path :', file_full_path)
+#     logger.info(f"the final absolute path - {file_full_path}")
+#     return file_full_path
+# 
 
-    file_full_path = os.path.join(application_path, relative_path)
-
-    # print('Running mode:', running_mode)
-    # print('  Application path  :', application_path)
-    # print('  File full path :', file_full_path)
-    logger.info(f"the final absolute path - {file_full_path}")
-    return file_full_path
-
-
-form = resource_path2("version2.ui")
+form = functions.resource_path("version2.ui")
 # form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
 responses = []
@@ -698,7 +698,7 @@ class UI(QMainWindow):
         logger.info("list complete")
         self.small_window_opened = None
         self.small_window = None
-        uic.loadUi(resource_path2("version2.ui"), self)
+        uic.loadUi(functions.resource_path("version2.ui"), self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
@@ -5205,7 +5205,7 @@ class UI_SmallWindow(QMainWindow):
     def __init__(self, stop_hotkey, MainWindow):
         logger.info("started initialisation of small window UI")
         super(UI_SmallWindow, self).__init__()
-        uic.loadUi(resource_path2("small_window.ui"), self)
+        uic.loadUi(functions.resource_path("small_window.ui"), self)
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setObjectName("SmallWindow")
         # self.resize(140, 41)
@@ -5394,7 +5394,7 @@ class UI_email_sent_Dialog(QDialog):
     def __init__(self, email):
         logger.info("started initialisation of email sent dialog UI")
         super(UI_email_sent_Dialog, self).__init__()
-        uic.loadUi(resource_path2("email_sent_dialog.ui"), self)
+        uic.loadUi(functions.resource_path("email_sent_dialog.ui"), self)
         self.setObjectName("Email Verification")
         # logger.info("----")
         # print(email)

@@ -72,17 +72,18 @@ class functions:
         logger.info("info saved in database")
         conn.close()
 
-    # @staticmethod
-    # def resource_path(relative_path):
-    #     """ Get absolute path to resource, works for dev and for PyInstaller """
-    #     try:
-    #         # PyInstaller creates a temp folder and stores path in _MEIPASS
-    #         base_path = sys._MEIPASS
-    #     except Exception:
-    #         logger.error("Exception occurred", exc_info=True)
-    #         base_path = os.path.abspath(".")
-    #
-    #     return os.path.join(base_path, relative_path)
+    @staticmethod
+    def resource_path(relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            # base_path = sys._MEIPASS
+            base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        except Exception:
+            logger.error("Exception occurred", exc_info=True)
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
 
     @staticmethod
     def key_converter(key):
