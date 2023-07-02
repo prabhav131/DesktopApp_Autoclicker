@@ -701,7 +701,7 @@ class UI(QMainWindow):
         uic.loadUi(functions.resource_path("version2.ui"), self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
-        self.setWindowIcon(QtGui.QIcon("images/app_logo.png"))
+        self.setWindowIcon(QtGui.QIcon(functions.resource_path("images/app_logo.png")))
         self.setFixedWidth(662)
         self.setFixedHeight(533)
         self.central_widget = self.findChild(QWidget, "central_widget")
@@ -753,7 +753,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(functions.resource_path(images/arrow1.png));'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.click_type_label = self.findChild(QLabel, "click_type_label")
@@ -771,7 +771,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(images/arrow1.png);'
+                                                 'image: url(functions.resource_path(images/arrow1.png));'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.mouse_button_label = self.findChild(QLabel, "mouse_button_label")
@@ -790,7 +790,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(functions.resource_path(images/arrow1.png));'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.never_stop_label = self.findChild(QLabel, "never_stop_label")
@@ -816,7 +816,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(functions.resource_path(images/arrow1.png));'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.delay_time_combobox_2 = self.findChild(QComboBox, "delay_time_combobox_2")
@@ -833,7 +833,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(images/arrow1.png);'
+                                                 'image: url(functions.resource_path(images/arrow1.png));'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.delay_time_entrybox = self.findChild(QLineEdit, "delay_time_entrybox")
@@ -848,18 +848,18 @@ class UI(QMainWindow):
         self.hotkey_settings_frame = self.findChild(QFrame, "hotkey_settings_frame")
         self.left_frame = self.findChild(QFrame, "left_frame")
         self.home_button = self.findChild(QToolButton, "home_button")
-        self.home_button.setIcon(QtGui.QIcon("images/home"))
+        self.home_button.setIcon(QtGui.QIcon(functions.resource_path("images/home")))
         self.record_button = self.findChild(QToolButton, "record_button")
-        self.record_button.setIcon(QtGui.QIcon("images/Record"))
+        self.record_button.setIcon(QtGui.QIcon(functions.resource_path("images/Record")))
         self.theme_button = self.findChild(QToolButton, "theme_button")
-        self.theme_button.setIcon(QtGui.QIcon("images/Mode"))
+        self.theme_button.setIcon(QtGui.QIcon(functions.resource_path("images/Mode")))
         self.view_settings_button = self.findChild(QToolButton, "view_settings_button")
-        self.view_settings_button.setIcon(QtGui.QIcon("images/Settings"))
+        self.view_settings_button.setIcon(QtGui.QIcon(functions.resource_path("images/Settings")))
         self.navigation_frame = self.findChild(QFrame, "navigation_frame")
         self.record_frame = self.findChild(QFrame, "record_frame")
         self.view_settings_frame = self.findChild(QFrame, "view_settings_frame")
         self.hotkey_settings_button = self.findChild(QToolButton, "hotkey_settings_button")
-        self.hotkey_settings_button.setIcon(QtGui.QIcon("images/HotkeyBlack"))
+        self.hotkey_settings_button.setIcon(QtGui.QIcon(functions.resource_path("images/HotkeyBlack")))
         self.hotkey_settings_frame = self.findChild(QFrame, "hotkey_settings_frame")
         # self.top_frame = self.findChild(QFrame, "top_frame")
         self.top_frame_logged_out = self.findChild(QFrame, "top_frame_logged_out")
@@ -879,26 +879,26 @@ class UI(QMainWindow):
                                                'border-radius: 5px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1);'
+                                               'image: url(functions.resource_path(images/arrow1.png));'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
-        self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
+        self.GG_icon.setIcon(QtGui.QIcon(functions.resource_path('images/GGicon')))
 
         self.navigate_button_3 = self.findChild(QPushButton, "navigate_button_3")
-        self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
+        self.navigate_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/Hambuger")))
 
         self.profile_button_3 = self.findChild(QPushButton, "profile_button_3")
-        self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn"))
+        self.profile_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/liliajohn")))
         self.record_add_button = self.findChild(QPushButton, "record_add_button")
-        self.record_add_button.setIcon(QtGui.QIcon("images/icons8-ui-64"))
+        self.record_add_button.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-ui-64")))
         self.record_add_items = self.findChild(QComboBox, "record_add_items")
         self.record_load_button = self.findChild(QPushButton, "record_load_button")
-        self.record_load_button.setIcon(QtGui.QIcon("images/icons8-upload-96"))
+        self.record_load_button.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-upload-96")))
         self.record_play_button = self.findChild(QPushButton, "record_play_button")
-        self.record_play_button.setIcon(QtGui.QIcon("images/Run"))
+        self.record_play_button.setIcon(QtGui.QIcon(functions.resource_path("images/Run")))
         self.record_record_button = self.findChild(QPushButton, "record_record_button")
-        self.record_record_button.setIcon(QtGui.QIcon("images/red-circle"))
+        self.record_record_button.setIcon(QtGui.QIcon(functions.resource_path("images/red-circle")))
         self.repeat_for_label_2 = self.findChild(QLabel, "repeat_for_label_2")
         self.repeat_for_number_2 = self.findChild(QLineEdit, "repeat_for_number_2")
         self.repeat_for_number_2.setValidator(self.integer)
@@ -927,7 +927,7 @@ class UI(QMainWindow):
                                                       'background-color: rgb(249, 249, 245);}'
                                                       'QComboBox::down-arrow {'
                                                       'background-color: rgb(249, 249, 245);'
-                                                      'image: url(images/arrow1.png);'
+                                                      'image: url(functions.resource_path(images/arrow1.png));'
                                                       'width: 8px;'
                                                       'height: 8px;}')
         self.delay_time_combobox_record.addItem("ms")
@@ -1050,7 +1050,7 @@ class UI(QMainWindow):
         self.record_record_button.clicked.connect(self.thread_for_live_record)
         # --------------
         # below defines app minimization on close
-        self.minimized_icon = QtGui.QIcon("images/app_logo.png")
+        self.minimized_icon = QtGui.QIcon(functions.resource_path("images/app_logo.png"))
         self.tray = QtWidgets.QSystemTrayIcon()
         self.tray.setIcon(self.minimized_icon)
         self.tray.setVisible(True)
@@ -1071,10 +1071,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/radio_unchecked.png);'
+                           'image: url(functions.resource_path(images/radio_unchecked.png));'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/radio_checked.png);'
+                           'image: url(functions.resource_path(images/radio_checked.png));'
                            'margin-top: 2px;}')
         self.central_widget_2.setStyleSheet("QToolTip {background-color: #e0e0e0;"
                                             "border: none;"
@@ -1091,7 +1091,7 @@ class UI(QMainWindow):
                                             'border-color: rgb(249, 249, 245);}'
                                             'QComboBox::down-arrow {'
                                             'background-color: rgb(249, 249, 245);'
-                                            'image: url(images/arrow1.png);'
+                                            'image: url(functions.resource_path(images/arrow1.png));'
                                             'width: 8px;'
                                             'height: 8px;}'
                                             "QToolTip {background-color: #e0e0e0;"
@@ -1126,29 +1126,29 @@ class UI(QMainWindow):
 
         self.show_after_complete_checkbox2.clicked.connect(self.trigger_show_tool)
         if self.dark_theme_activated:
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
             self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                         "background-color: #10131b;")
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
             self.small_window_checkbox2.setStyleSheet("border: none;"
                                                       "background-color: #10131b;")
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                              "background-color: #10131b")
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
             self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                       "background-color: #10131b")
         else:
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
             self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                         "background-color: rgb(239, 229, 220);")
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
             self.small_window_checkbox2.setStyleSheet("border: none;"
                                                       "background-color: rgb(239, 229, 220);")
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
             self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                       "background-color: rgb(239, 229, 220)")
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
             self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                              "background-color: rgb(239, 229, 220)")
 
@@ -1337,21 +1337,21 @@ class UI(QMainWindow):
         if self.show_after_complete_checkbox.isChecked():
             self.show_after_complete_checkbox.setChecked(False)
             if self.dark_theme_activated:
-                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
                 self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                                  "background-color: #10131b")
             else:
-                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
                 self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                                  "background-color: rgb(239, 229, 220)")
         else:
             self.show_after_complete_checkbox.setChecked(True)
             if self.dark_theme_activated:
-                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
                 self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                                  "background-color: #10131b")
             else:
-                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+                self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
                 self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                                  "background-color: rgb(239, 229, 220)")
         logger.info("ending function to toggle show_tool_after_clicking checkbox")
@@ -1444,10 +1444,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/dark_unchecked.png);'
+                           'image: url(functions.resource_path(images/dark_unchecked.png));'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/dark_checked.png);'
+                           'image: url(functions.resource_path(images/dark_checked.png));'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = True
@@ -1457,17 +1457,17 @@ class UI(QMainWindow):
                                       "border: 2px solid #bfcfb2;"
                                       "border-radius: 10px;")
         self.GG_icon.setStyleSheet("border:none;")
-        self.GG_icon.setIcon(QtGui.QIcon('images/GG_dark'))
+        self.GG_icon.setIcon(QtGui.QIcon(functions.resource_path('images/GG_dark')))
         self.home_button.setStyleSheet("border:none;")
-        self.home_button.setIcon(QtGui.QIcon('images/Home_dark'))
+        self.home_button.setIcon(QtGui.QIcon(functions.resource_path('images/Home_dark')))
         self.record_button.setStyleSheet("border:none;")
-        self.record_button.setIcon(QtGui.QIcon('images/Record_dark'))
+        self.record_button.setIcon(QtGui.QIcon(functions.resource_path('images/Record_dark')))
         self.theme_button.setStyleSheet("border:none;")
-        self.theme_button.setIcon(QtGui.QIcon('images/Mode_dark.png'))
+        self.theme_button.setIcon(QtGui.QIcon(functions.resource_path('images/Mode_dark.png')))
         self.view_settings_button.setStyleSheet("border:none;")
-        self.view_settings_button.setIcon(QtGui.QIcon('images/Setting_dark.png'))
+        self.view_settings_button.setIcon(QtGui.QIcon(functions.resource_path('images/Setting_dark.png')))
         self.hotkey_settings_button.setStyleSheet("border:none;")
-        self.hotkey_settings_button.setIcon(QtGui.QIcon('images/HotKey_dark.png'))
+        self.hotkey_settings_button.setIcon(QtGui.QIcon(functions.resource_path('images/HotKey_dark.png')))
         self.central_widget_2.setStyleSheet("QFrame {background-color: #10131b;"
                                             "color: #bfcfb2;"
                                             "border: none;}"
@@ -1528,7 +1528,7 @@ class UI(QMainWindow):
                                        "color: #c98860;}"
                                        "QPushButton::hover {color:white;"
                                        "background-color: #c98860;}")
-        self.play_button.setIcon(QtGui.QIcon("images/run_dark"))
+        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run_dark")))
         self.save_settings_button.setStyleSheet("QPushButton {color: #1ecd97;"
                                                 "border: 2px solid #1ecd97;"
                                                 "border-radius: 5px;"
@@ -1540,7 +1540,7 @@ class UI(QMainWindow):
                                             "border: 1px solid #bfcfb2;"
                                             "color: #bfcfb2;}")
         self.navigate_button_3.setStyleSheet("border:none;")
-        self.navigate_button_3.setIcon(QtGui.QIcon("images/Menu_dark.png"))
+        self.navigate_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/Menu_dark.png")))
 
         self.on_click_complete_label_3.setStyleSheet("QLabel {color: black;"
                                                      "background-color: rgb(249, 249, 245);"
@@ -1550,7 +1550,7 @@ class UI(QMainWindow):
                                                      'border: none;}')
         # self.set_new_hotkey_1.setStyleSheet
         self.profile_button_3.setStyleSheet("border: none;")
-        self.profile_button_3.setIcon(QtGui.QIcon("images/Profile-Picture_dark"))
+        self.profile_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/Profile-Picture_dark")))
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1658,7 +1658,7 @@ class UI(QMainWindow):
                                               "color: #c98860;}"
                                               "QPushButton::hover {color:white;"
                                               "background-color: #c98860;}")
-        self.record_play_button.setIcon(QtGui.QIcon("images/run_dark"))
+        self.record_play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run_dark")))
         self.record_save_button.setStyleSheet("QPushButton {color: #1ecd97;"
                                               "border: 2px solid #1ecd97;"
                                               "border-radius: 5px;"
@@ -1679,7 +1679,7 @@ class UI(QMainWindow):
                                               'background-color: #e0e0e0;'
                                               'border: none;}'
                                               )
-        self.record_load_button.setIcon(QtGui.QIcon("images/uplode_dark.png"))
+        self.record_load_button.setIcon(QtGui.QIcon(functions.resource_path("images/uplode_dark.png")))
         self.record_add_button.setStyleSheet("QPushButton {border: 1px solid rgb(196, 177, 174);"
                                              "border-radius: 10;"
                                              "background-color: #bfcfb2;}"
@@ -1687,7 +1687,7 @@ class UI(QMainWindow):
                                              'background-color: #e0e0e0;'
                                              'border: none;}'
                                              )
-        self.record_add_button.setIcon(QtGui.QIcon("images/icons8-ui-64.png"))
+        self.record_add_button.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-ui-64.png")))
         self.label_21.setStyleSheet("color: black;"
                                     "background-color: #e0e0e0;")
         self.label_25.setStyleSheet("color: black;"
@@ -1701,27 +1701,27 @@ class UI(QMainWindow):
         self.theme_button.disconnect()
         self.theme_button.clicked.connect(self.get_normal_theme)
         if self.hide_to_tray_checkbox.isChecked():
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
         else:
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
         self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                   "background-color: #10131b;")
         if self.show_after_complete_checkbox.isChecked():
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
         else:
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
         self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                          "background-color: #10131b;")
         if self.mouse_location_checkbox.isChecked():
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
         else:
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
         self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                     "background-color: #10131b;")
         if self.small_window_checkbox.isChecked():
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
         else:
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
         self.small_window_checkbox2.setStyleSheet("border: none;"
                                                   "background-color: #10131b;")
         logger.info("ending function to activate dark theme")
@@ -1739,10 +1739,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/radio_unchecked.png);'
+                           'image: url(functions.resource_path(images/radio_unchecked.png));'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/radio_checked.png);'
+                           'image: url(functions.resource_path(images/radio_checked.png));'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = False
@@ -1751,17 +1751,17 @@ class UI(QMainWindow):
                                       "border: 2px solid rgb(196, 177, 174);"
                                       "border-radius: 10px;")
         self.GG_icon.setStyleSheet("border:none;")
-        self.GG_icon.setIcon(QtGui.QIcon('images/GGicon'))
+        self.GG_icon.setIcon(QtGui.QIcon(functions.resource_path('images/GGicon')))
         self.home_button.setStyleSheet("border:none;")
-        self.home_button.setIcon(QtGui.QIcon('images/home'))
+        self.home_button.setIcon(QtGui.QIcon(functions.resource_path('images/home')))
         self.record_button.setStyleSheet("border:none;")
-        self.record_button.setIcon(QtGui.QIcon('images/Record'))
+        self.record_button.setIcon(QtGui.QIcon(functions.resource_path('images/Record')))
         self.theme_button.setStyleSheet("border:none;")
-        self.theme_button.setIcon(QtGui.QIcon('images/Mode.png'))
+        self.theme_button.setIcon(QtGui.QIcon(functions.resource_path('images/Mode.png')))
         self.view_settings_button.setStyleSheet("border:none;")
-        self.view_settings_button.setIcon(QtGui.QIcon('images/Settings.png'))
+        self.view_settings_button.setIcon(QtGui.QIcon(functions.resource_path('images/Settings.png')))
         self.hotkey_settings_button.setStyleSheet("border:none;")
-        self.hotkey_settings_button.setIcon(QtGui.QIcon('images/HotkeyBlack.png'))
+        self.hotkey_settings_button.setIcon(QtGui.QIcon(functions.resource_path('images/HotkeyBlack.png')))
         self.central_widget_2.setStyleSheet("QFrame {background-color: rgb(239, 229, 220);"
                                             "color: rgb(30, 30, 30);"
                                             "border: none;}"
@@ -1839,7 +1839,7 @@ class UI(QMainWindow):
                                        "color: #3A5A40;}"
                                        "QPushButton::hover {color:white;"
                                        "background-color: #3A5A40;}")
-        self.play_button.setIcon(QtGui.QIcon("images/run"))
+        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run")))
         self.save_settings_button.setStyleSheet("QPushButton {color: rgb(3, 199, 26);"
                                                 "border: 2px solid rgb(3, 199, 26);"
                                                 "border-radius:5px; "
@@ -1849,7 +1849,7 @@ class UI(QMainWindow):
         self.foot_note_label.setStyleSheet("border:none;")
 
         self.navigate_button_3.setStyleSheet("border:none;")
-        self.navigate_button_3.setIcon(QtGui.QIcon("images/Hambuger"))
+        self.navigate_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/Hambuger")))
         self.navigation_frame.setStyleSheet("QPushButton {background-color: rgb(242,242,242);"
                                             "border: 1px solid rgb(204, 204, 204);"
                                             "color: rgb(30, 30, 30);}")
@@ -1860,7 +1860,7 @@ class UI(QMainWindow):
                                                      'background-color: #e0e0e0;'
                                                      'border: none;}')
         self.profile_button_3.setStyleSheet("border: none;")
-        self.profile_button_3.setIcon(QtGui.QIcon("images/liliajohn.png"))
+        self.profile_button_3.setIcon(QtGui.QIcon(functions.resource_path("images/liliajohn.png")))
         self.home_start_stop_hotkey_label.setStyleSheet("color: black;"
                                                         "border: 1px solid #bfcfb2;"
                                                         "border-radius: 5px;"
@@ -1963,7 +1963,7 @@ class UI(QMainWindow):
                                               "color: #3A5A40;}"
                                               "QPushButton::hover {color:white;"
                                               "background-color: #3A5A40;}")
-        self.record_play_button.setIcon(QtGui.QIcon("images/run_dark"))
+        self.record_play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run_dark")))
         self.record_save_button.setStyleSheet("QPushButton {color: rgb(3, 199, 26);"
                                               "border: 2px solid rgb(3, 199, 26);"
                                               "border-radius: 5px;"
@@ -1984,7 +1984,7 @@ class UI(QMainWindow):
                                               'background-color: #e0e0e0;'
                                               'border: none;}'
                                               )
-        self.record_load_button.setIcon(QtGui.QIcon("images/icons8-upload-96.png"))
+        self.record_load_button.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-upload-96.png")))
         self.record_add_button.setStyleSheet("QPushButton {border: 1px solid rgb(196, 177, 174);"
                                              "border-radius: 10;"
                                              "background-color:  #c1b3b0;}"
@@ -1992,31 +1992,31 @@ class UI(QMainWindow):
                                              'background-color: #e0e0e0;'
                                              'border: none;}'
                                              )
-        self.record_add_button.setIcon(QtGui.QIcon("images/icons8-ui-64.png"))
+        self.record_add_button.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-ui-64.png")))
         self.theme_button.clicked.disconnect()
         self.theme_button.clicked.connect(self.get_dark_theme)
         if self.hide_to_tray_checkbox.isChecked():
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
         else:
-            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
         self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                   "background-color: rgb(239, 229, 220);")
         if self.show_after_complete_checkbox.isChecked():
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
         else:
-            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.show_after_complete_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
         self.show_after_complete_checkbox2.setStyleSheet("border: none;"
                                                          "background-color: rgb(239, 229, 220);")
         if self.mouse_location_checkbox.isChecked():
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
         else:
-            self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
         self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                     "background-color: rgb(239, 229, 220);")
         if self.small_window_checkbox.isChecked():
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
         else:
-            self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+            self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
         self.small_window_checkbox2.setStyleSheet("border: none;"
                                                   "background-color: rgb(239, 229, 220);")
         logger.info("ending function to activate dark theme")
@@ -2368,7 +2368,7 @@ class UI(QMainWindow):
         self.font.setPixelSize(11)
         self.record_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
         self.record_save_window.setWindowTitle("Save")
-        self.record_save_window.setWindowIcon(QtGui.QIcon('images/icons8-save-90'))
+        self.record_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         self.record_save_window.setGeometry(827, 520, 300, 115)
         self.record_save_window.setFixedWidth(300)
         self.record_save_window.setFixedHeight(115)
@@ -2415,7 +2415,7 @@ class UI(QMainWindow):
                                                       "font-weight: bold")
         self.record_save_name_label.setGeometry(26, 14, 98, 15)
         self.record_save_name_label.setFont(self.font)
-        self.record_save_button_pc.setIcon(QtGui.QIcon("images/CPU"))
+        self.record_save_button_pc.setIcon(QtGui.QIcon(functions.resource_path("images/CPU")))
         self.record_save_button_pc.setGeometry(30, 60, 115, 30)
         self.record_save_button_pc.setText(" Save to PC")
         self.record_save_button_pc.clicked.connect(self.record_save_settings_pc)
@@ -2438,7 +2438,7 @@ class UI(QMainWindow):
                                                      "border-radius: 3px;"
                                                      "border: 1px solid rgb(158, 143, 141)}")
         self.record_save_button_pc.setFont(self.font)
-        self.record_save_button_db.setIcon(QtGui.QIcon("images/app_logo"))
+        self.record_save_button_db.setIcon(QtGui.QIcon(functions.resource_path("images/app_logo")))
         self.record_save_button_db.setGeometry(160, 60, 115, 30)
         self.record_save_button_db.setText(" Save in App")
         self.record_save_button_db.clicked.connect(self.record_save_settings)
@@ -2638,7 +2638,7 @@ class UI(QMainWindow):
         self.font.setPixelSize(11)
         self.load_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
         self.load_window.setWindowTitle("Load")
-        self.load_window.setWindowIcon(QtGui.QIcon("images/uplode_dark"))
+        self.load_window.setWindowIcon(QtGui.QIcon(functions.resource_path("images/uplode_dark")))
         self.load_window.setGeometry(575, 250, 400, 400)
         self.load_window.setFixedWidth(400)
         self.load_window.setFixedHeight(400)
@@ -2726,7 +2726,7 @@ class UI(QMainWindow):
                                          "border-radius: 5px;}"
                                          "color: black;")
         self.load_list.setFont(self.font)
-        self.load_from_pc.setIcon(QtGui.QIcon("images/icons8-monitor-96"))
+        self.load_from_pc.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-monitor-96")))
         self.load_from_pc.setGeometry(10, 360, 120, 30)
         self.load_from_pc.setText(" Load From PC")
         self.load_from_pc.clicked.connect(self.load_selected_from_pc)
@@ -2749,7 +2749,7 @@ class UI(QMainWindow):
                                             "border-radius: 5px;"
                                             "border: 1px solid rgb(196, 177, 174);}")
         self.load_from_pc.setFont(self.font)
-        self.load_from_list.setIcon(QtGui.QIcon("images/icons8-list-100"))
+        self.load_from_list.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-list-100")))
         self.load_from_list.setGeometry(270, 360, 120, 30)
         self.load_from_list.setText(" Load Selected")
         self.load_from_list.clicked.connect(self.load_selected_from_db)
@@ -2772,7 +2772,7 @@ class UI(QMainWindow):
                                               "border-radius: 5px;"
                                               "border: 1px solid rgb(196, 177, 174);}")
         self.load_from_list.setFont(self.font)
-        self.delete_selected.setIcon(QtGui.QIcon("images/icons8-delete-96"))
+        self.delete_selected.setIcon(QtGui.QIcon(functions.resource_path("images/icons8-delete-96")))
         self.delete_selected.setGeometry(140, 360, 120, 30)
         self.delete_selected.setText(" Delete Selected")
         self.delete_selected.clicked.connect(self.delete_from_db)
@@ -3167,7 +3167,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(functions.resource_path(images/arrow1.png));'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3189,7 +3189,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(functions.resource_path(images/arrow1.png));'
                                'width: 8px;'
                                'height: 8px;}')
         column_10 = QLabel(record_line_frame)
@@ -3204,7 +3204,7 @@ class UI(QMainWindow):
                                 'border-radius: 3px;'
                                 'border-color: rgb(218, 218, 218)')
         column_12 = QPushButton(record_line_frame)
-        column_12.setIcon(QtGui.QIcon("images/Red-Minus-PNG-File"))
+        column_12.setIcon(QtGui.QIcon(functions.resource_path("images/Red-Minus-PNG-File")))
         column_12.setFixedSize(25, 20)
         if self.dark_theme_activated:
             column_12.setStyleSheet("QPushButton {"
@@ -3296,7 +3296,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(functions.resource_path(images/arrow1.png));'
                                'width: 8px;'
                                'height: 8px;}')
         column_6 = QLabel(record_line_frame)
@@ -3317,7 +3317,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(functions.resource_path(images/arrow1.png));'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3333,7 +3333,7 @@ class UI(QMainWindow):
                                'border-radius: 3px;'
                                'border-color: rgb(218, 218, 218)')
         column_10 = QPushButton(record_line_frame)
-        column_10.setIcon(QtGui.QIcon("images/Red-Minus-PNG-File"))
+        column_10.setIcon(QtGui.QIcon(functions.resource_path("images/Red-Minus-PNG-File")))
         column_10.setFixedSize(25, 20)
         if self.dark_theme_activated:
             column_10.setStyleSheet("QPushButton {"
@@ -3431,7 +3431,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(functions.resource_path(images/arrow1.png));'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3456,7 +3456,7 @@ class UI(QMainWindow):
                                 'border-radius: 3px;'
                                 'border-color: rgb(218, 218, 218)')
         column_12 = QPushButton(record_line_frame)
-        column_12.setIcon(QtGui.QIcon("images/Red-Minus-PNG-File"))
+        column_12.setIcon(QtGui.QIcon(functions.resource_path("images/Red-Minus-PNG-File")))
         column_12.setFixedSize(25, 20)
         if self.dark_theme_activated:
             column_12.setStyleSheet("QPushButton {"
@@ -3565,21 +3565,21 @@ class UI(QMainWindow):
         if self.hide_to_tray_checkbox.isChecked():
             self.hide_to_tray_checkbox.setChecked(False)
             if self.dark_theme_activated:
-                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
                 self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: #10131b")
             else:
-                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
                 self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: rgb(239, 229, 220)")
         else:
             self.hide_to_tray_checkbox.setChecked(True)
             if self.dark_theme_activated:
-                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
                 self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: #10131b")
             else:
-                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+                self.hide_to_tray_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
                 self.hide_to_tray_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: rgb(239, 229, 220)")
         self.check_tray_checkbox()
@@ -3612,21 +3612,21 @@ class UI(QMainWindow):
         if self.small_window_checkbox.isChecked():
             self.small_window_checkbox.setChecked(False)
             if self.dark_theme_activated:
-                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+                self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: #10131b;")
             else:
-                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+                self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: rgb(239, 229, 220);")
         else:
             self.small_window_checkbox.setChecked(True)
             if self.dark_theme_activated:
-                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+                self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: #10131b;")
             else:
-                self.small_window_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+                self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
                 self.small_window_checkbox2.setStyleSheet("border: none;"
                                                           "background-color: rgb(239, 229, 220);")
         logger.info("ending function to toggle disable_small_window checkbox")
@@ -3643,21 +3643,21 @@ class UI(QMainWindow):
         if self.mouse_location_checkbox.isChecked():
             self.mouse_location_checkbox.setChecked(False)
             if self.dark_theme_activated:
-                self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox_dark"))
+                self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox_dark")))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: #10131b;")
             else:
-                self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/empty_checkbox"))
+                self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/empty_checkbox")))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: rgb(239, 229, 220);")
         else:
             self.mouse_location_checkbox.setChecked(True)
             if self.dark_theme_activated:
-                self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon_dark"))
+                self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: #10131b;")
             else:
-                self.mouse_location_checkbox2.setIcon(QtGui.QIcon("images/check_icon"))
+                self.mouse_location_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon")))
                 self.mouse_location_checkbox2.setStyleSheet("border: none;"
                                                             "background-color: rgb(239, 229, 220);")
         self.check_live_mouse()
@@ -3724,7 +3724,7 @@ class UI(QMainWindow):
         self.font.setPixelSize(11)
         self.home_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
         self.home_save_window.setWindowTitle("Save")
-        self.home_save_window.setWindowIcon(QtGui.QIcon('images/icons8-save-90'))
+        self.home_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         self.home_save_window.setGeometry(827, 520, 300, 115)
         self.home_save_window.setFixedWidth(300)
         self.home_save_window.setFixedHeight(115)
@@ -3771,7 +3771,7 @@ class UI(QMainWindow):
                                                "font-weight: bold")
         self.save_name_label.setGeometry(26, 14, 98, 15)
         self.save_name_label.setFont(self.font)
-        self.home_save_button_pc.setIcon(QtGui.QIcon("images/CPU"))
+        self.home_save_button_pc.setIcon(QtGui.QIcon(functions.resource_path("images/CPU")))
         self.home_save_button_pc.setGeometry(30, 60, 115, 30)
         self.home_save_button_pc.setText(" Save to PC")
         self.home_save_button_pc.clicked.connect(self.home_save_settings_pc)
@@ -3794,7 +3794,7 @@ class UI(QMainWindow):
                                                    "border-radius: 3px;"
                                                    "border: 1px solid rgb(158, 143, 141)}")
         self.home_save_button_pc.setFont(self.font)
-        self.home_save_button_db.setIcon(QtGui.QIcon("images/app_logo"))
+        self.home_save_button_db.setIcon(QtGui.QIcon(functions.resource_path("images/app_logo")))
         self.home_save_button_db.setGeometry(160, 60, 115, 30)
         self.home_save_button_db.setText(" Save in App")
         self.home_save_button_db.clicked.connect(self.home_save_settings)
@@ -4688,7 +4688,7 @@ class UI(QMainWindow):
         self.foot_note_label.setText('')
         self.play_button.setEnabled(False)
         toaster.show_toast(title="Clicking started", msg=f'Press {self.home_start_stop_hotkey.upper()} to stop',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         if radio_button == 1:
             logger.info("starting new thread for fixed clicking")
             thread = threading.Thread(target=lambda: home_fixed_clicking(
@@ -4754,7 +4754,7 @@ class UI(QMainWindow):
             # self.showNormal()
 
         toaster.show_toast("Clicking stopped", f'Press {self.home_start_stop_hotkey.upper()} to start again',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
 
         computer_type = self.complete_combobox_3.currentText()
         logger.info("done heree")
@@ -4912,7 +4912,7 @@ class UI(QMainWindow):
         self.record_play_button.setEnabled(False)
         toaster.show_toast(title="Playback started",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to stop playback',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         logger.info("starting thread for playing back recorded actions")
         keyboard.remove_hotkey(self.record_recording_hotkey)
 
@@ -4947,7 +4947,7 @@ class UI(QMainWindow):
         # logger.info("bro im here")
         toaster.show_toast(title="Playback completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
         # logger.info("no im here")
         computer_type = self.complete_combobox_3.currentText()
@@ -5172,7 +5172,7 @@ class UI(QMainWindow):
         # send notification to desktop
         toaster.show_toast(title="Recording Started",
                            msg=f'Press {self.record_recording_hotkey.upper()} to stop recording',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         self.record_play_button.setEnabled(False)
         self.mouse_listener.start()
         self.keyboard_listener.start()
@@ -5188,8 +5188,8 @@ class UI(QMainWindow):
         self.keyboard_listener.stop()
         toaster.show_toast(title="Recording completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start playback',
-                           icon_path=r'images/ico_logo.ico', threaded=True, duration=2)
-        self.record_record_button.setIcon(QtGui.QIcon("images/red-circle"))
+                           icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
+        self.record_record_button.setIcon(QtGui.QIcon(functions.resource_path("images/red-circle")))
         self.record_record_button.disconnect()
         self.record_record_button.clicked.connect(self.thread_for_live_record)
         self.record_record_button.setText("Record")
@@ -5222,7 +5222,7 @@ class UI_SmallWindow(QMainWindow):
         self.pushButton.setText("")
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet("border :1px solid black")
-        self.pushButton.setIcon(QIcon("images/red-circle"))
+        self.pushButton.setIcon(QIcon(functions.resource_path("images/red-circle")))
         self.pushButton.clicked.connect(lambda: self.button_action(MainWindow))
         size = QSize(25, 25)
         self.pushButton.setIconSize(size)
@@ -5257,7 +5257,7 @@ class UI_connectivity(QDialog):
     def __init__(self):
         logger.info("started initialisation of connectivity ui")
         super(UI_connectivity, self).__init__()
-        uic.loadUi("connectivity_issue.ui", self)
+        uic.loadUi(functions.resource_path("connectivity_issue.ui"), self)
         self.setWindowTitle("User seems offline")
         self.setObjectName("User seems offline")
         self.resize(327, 205)
@@ -5273,7 +5273,7 @@ class UI_no_actions(QDialog):
     def __init__(self):
         logger.info("started initialisation of no actions ui")
         super(UI_no_actions, self).__init__()
-        uic.loadUi("no_actions.ui", self)
+        uic.loadUi(functions.resource_path("no_actions.ui"), self)
         self.setWindowTitle("No actions available")
         self.setObjectName("No actions available")
         self.resize(327, 205)
@@ -5291,7 +5291,7 @@ class UI_Dialog(QDialog):
         logger.info("started initialisation of email dialog UI")
         super(UI_Dialog, self).__init__()
         # uic.loadUi(functions.resource_path("email_dialog.ui"), self)
-        uic.loadUi("email_dialog.ui", self)
+        uic.loadUi(functions.resource_path("email_dialog.ui"), self)
         self.setObjectName("Email Registration")
         self.resize(442, 159)
         # self.Dialog = Dialog
