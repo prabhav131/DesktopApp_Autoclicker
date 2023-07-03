@@ -752,7 +752,7 @@ class UI(QMainWindow):
         self.x_right_label = self.findChild(QLabel, "x_right_label")
         self.y_left_label = self.findChild(QLabel, "y_left_label")
         self.y_right_label = self.findChild(QLabel, "y_right_label")
-
+        self.arrow_url = 'images/arrow1.png'
         self.click_options_groupbox = self.findChild(QGroupBox, "click_options_groupbox")
         self.click_type_combobox = self.findChild(QComboBox, "click_type_combobox")
         self.click_type_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
@@ -768,7 +768,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(functions.resource_path(images/arrow1.png));'
+                                               f'image: url({self.arrow_url});'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.click_type_label = self.findChild(QLabel, "click_type_label")
@@ -786,7 +786,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(functions.resource_path(images/arrow1.png));'
+                                                 'image: url(images/arrow1.png);'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.mouse_button_label = self.findChild(QLabel, "mouse_button_label")
@@ -805,7 +805,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(functions.resource_path(images/arrow1.png));'
+                                               'image: url(images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.never_stop_label = self.findChild(QLabel, "never_stop_label")
@@ -831,7 +831,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(functions.resource_path(images/arrow1.png));'
+                                               'image: url(images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.delay_time_combobox_2 = self.findChild(QComboBox, "delay_time_combobox_2")
@@ -848,7 +848,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(functions.resource_path(images/arrow1.png));'
+                                                 'image: url(images/arrow1.png);'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.delay_time_entrybox = self.findChild(QLineEdit, "delay_time_entrybox")
@@ -894,7 +894,7 @@ class UI(QMainWindow):
                                                'border-radius: 5px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(functions.resource_path(images/arrow1.png));'
+                                               'image: url(images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
@@ -942,7 +942,7 @@ class UI(QMainWindow):
                                                       'background-color: rgb(249, 249, 245);}'
                                                       'QComboBox::down-arrow {'
                                                       'background-color: rgb(249, 249, 245);'
-                                                      'image: url(functions.resource_path(images/arrow1.png));'
+                                                      'image: url(images/arrow1.png);'
                                                       'width: 8px;'
                                                       'height: 8px;}')
         self.delay_time_combobox_record.addItem("ms")
@@ -1086,10 +1086,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(functions.resource_path(images/radio_unchecked.png));'
+                           'image: url(images/radio_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(functions.resource_path(images/radio_checked.png));'
+                           'image: url(images/radio_checked.png);'
                            'margin-top: 2px;}')
         self.central_widget_2.setStyleSheet("QToolTip {background-color: #e0e0e0;"
                                             "border: none;"
@@ -1106,7 +1106,7 @@ class UI(QMainWindow):
                                             'border-color: rgb(249, 249, 245);}'
                                             'QComboBox::down-arrow {'
                                             'background-color: rgb(249, 249, 245);'
-                                            'image: url(functions.resource_path(images/arrow1.png));'
+                                            'image: url(images/arrow1.png);'
                                             'width: 8px;'
                                             'height: 8px;}'
                                             "QToolTip {background-color: #e0e0e0;"
@@ -1459,10 +1459,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(functions.resource_path(images/dark_unchecked.png));'
+                           'image: url(images/dark_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(functions.resource_path(images/dark_checked.png));'
+                           'image: url(images/dark_checked.png);'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = True
@@ -1754,10 +1754,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(functions.resource_path(images/radio_unchecked.png));'
+                           'image: url(images/radio_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(functions.resource_path(images/radio_checked.png));'
+                           'image: url(images/radio_checked.png);'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = False
@@ -2385,10 +2385,10 @@ class UI(QMainWindow):
         self.record_save_window.setWindowTitle("Save")
         self.record_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         # sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
-        self.record_save_window.setGeometry(self.sizeObject.width()/2.3, self.sizeObject.height()/2.3, self.sizeObject.width()/6.4, self.sizeObject.height()/10.4)
+        self.record_save_window.setGeometry(self.screen_width/2.3, self.screen_height/2.3, self.screen_width/6.4, self.screen_height/10.4)
         # self.record_save_window.setFixedWidth(300)
-        self.record_save_window.setFixedWidth(self.sizeObject.width()/6.4)
-        self.record_save_window.setFixedHeight(self.sizeObject.height()/10.4)
+        self.record_save_window.setFixedWidth(self.screen_width/6.4)
+        self.record_save_window.setFixedHeight(self.screen_height/10.4)
         # self.record_save_window.setFixedHeight(115)
         self.invisible_widget_1 = QWidget(self.record_save_window)
         self.record_save_layout = QGridLayout(self.invisible_widget_1)
@@ -3185,7 +3185,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(functions.resource_path(images/arrow1.png));'
+                               'image: url(images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3207,7 +3207,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(functions.resource_path(images/arrow1.png));'
+                               'image: url(images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_10 = QLabel(record_line_frame)
@@ -3314,7 +3314,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(functions.resource_path(images/arrow1.png));'
+                               'image: url(images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_6 = QLabel(record_line_frame)
@@ -3335,7 +3335,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(functions.resource_path(images/arrow1.png));'
+                               'image: url(images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3449,7 +3449,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(functions.resource_path(images/arrow1.png));'
+                               'image: url(images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
