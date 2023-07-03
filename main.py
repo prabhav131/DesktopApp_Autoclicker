@@ -24,6 +24,7 @@ import webbrowser
 import requests
 from email_validator import validate_email, EmailNotValidError
 import logging
+import re
 
 
 
@@ -75,13 +76,22 @@ def prompt_internet_issue():
 def check(email):
     logger.info("starting function for checking if email entered is valid")
     try:
-      # validate and get info
-        v = validate_email(email)
-        # replace with normalized form
-        email = v["email"]
-        logger.info(f"{email} is valid")
-        logger.info("ending function for checking if email entered is valid")
-        return "Yes"
+        # validate and get info
+        # v = validate_email(email)
+        # # replace with normalized form
+        # email = v["email"]
+        # logger.info(f"{email} is valid")
+        # logger.info("ending function for checking if email entered is valid")
+        # return "Yes"
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+        if re.fullmatch(regex, email):
+            logger.info(f"{email} is valid")
+            logger.info("ending function for checking if email entered is valid")
+            return "Yes"
+        else:
+            logger.info(f"{email} is invalid")
+            logger.info("ending function for checking if email entered is valid")
+            return "Invalid Email"
     except EmailNotValidError as e:
         logger.error("Exception occurred", exc_info=True)
         logger.info("ending function for checking if email entered is valid")
@@ -702,6 +712,11 @@ class UI(QMainWindow):
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setWindowIcon(QtGui.QIcon(functions.resource_path("images/app_logo.png")))
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
+        self.screen_width = self.sizeObject.width()
+        self.screen_height = self.sizeObject.height()
+        # print(self.screen_width)
+        # print(self.screen_height)
         self.setFixedWidth(662)
         self.setFixedHeight(533)
         self.central_widget = self.findChild(QWidget, "central_widget")
@@ -1275,9 +1290,9 @@ class UI(QMainWindow):
         logger.info("starting open email dialog function")
         # self.dialog = QtWidgets.QDialog()
         # self.ui = UI_Dialog()
-        logger.info("dp")
+        # logger.info("dp")
         # self.ui.setupUi(self.dialog)
-        logger.info("yo")
+        # logger.info("yo")
         self.email_dialog = UI_Dialog()
         # show_dialog_thread = threading.Thread(target=self.email_dialog.show)
         # show_dialog_thread.start()
@@ -2369,9 +2384,12 @@ class UI(QMainWindow):
         self.record_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
         self.record_save_window.setWindowTitle("Save")
         self.record_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
-        self.record_save_window.setGeometry(827, 520, 300, 115)
-        self.record_save_window.setFixedWidth(300)
-        self.record_save_window.setFixedHeight(115)
+        # sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
+        self.record_save_window.setGeometry(self.sizeObject.width()/2.3, self.sizeObject.height()/2.3, self.sizeObject.width()/6.4, self.sizeObject.height()/10.4)
+        # self.record_save_window.setFixedWidth(300)
+        self.record_save_window.setFixedWidth(self.sizeObject.width()/6.4)
+        self.record_save_window.setFixedHeight(self.sizeObject.height()/10.4)
+        # self.record_save_window.setFixedHeight(115)
         self.invisible_widget_1 = QWidget(self.record_save_window)
         self.record_save_layout = QGridLayout(self.invisible_widget_1)
         self.record_save_name_box = QLineEdit(self.invisible_widget_1)
@@ -2380,7 +2398,7 @@ class UI(QMainWindow):
         self.record_save_button_pc = QPushButton(self.invisible_widget_1)
         self.record_save_button_db = QPushButton(self.invisible_widget_1)
         self.record_save_footnote = QLabel(self.invisible_widget_1)
-        self.invisible_widget_1.setGeometry(0, 0, 300, 115)
+        self.invisible_widget_1.setGeometry(0, 0, self.sizeObject.width()/6.4, self.sizeObject.height()/10.4)
         if self.dark_theme_activated:
             self.invisible_widget_1.setStyleSheet("background-color: #10131b;")
         else:
@@ -5209,9 +5227,9 @@ class UI_SmallWindow(QMainWindow):
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
         self.setObjectName("SmallWindow")
         # self.resize(140, 41)
-        sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
-        # logger.info(" Screen size : " + str(sizeObject.height()) + "x" + str(sizeObject.width()))
-        self.setGeometry(sizeObject.width() - 141, 1, 140, 41)
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
+        # print(" Screen size : " + str(self.sizeObject.height()) + "x" + str(self.sizeObject.width()))
+        self.setGeometry(self.sizeObject.width() - 141, 1, 140, 41)
         # self.setWindowFlag(Qt.FramelessWindowHint)
         flags = QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.setWindowFlags(flags)
@@ -5252,12 +5270,14 @@ class UI_SmallWindow(QMainWindow):
         MainWindow.record_stop_process()
         logger.info("ending function of button press of small window")
 
+
 class UI_connectivity(QDialog):
 
     def __init__(self):
         logger.info("started initialisation of connectivity ui")
         super(UI_connectivity, self).__init__()
         uic.loadUi(functions.resource_path("connectivity_issue.ui"), self)
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
         self.setWindowTitle("User seems offline")
         self.setObjectName("User seems offline")
         self.resize(327, 205)
@@ -5274,6 +5294,7 @@ class UI_no_actions(QDialog):
         logger.info("started initialisation of no actions ui")
         super(UI_no_actions, self).__init__()
         uic.loadUi(functions.resource_path("no_actions.ui"), self)
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
         self.setWindowTitle("No actions available")
         self.setObjectName("No actions available")
         self.resize(327, 205)
@@ -5284,7 +5305,6 @@ class UI_no_actions(QDialog):
         logger.info("ending initialisation of no actions ui")
 
 
-
 class UI_Dialog(QDialog):
 
     def __init__(self):
@@ -5293,6 +5313,7 @@ class UI_Dialog(QDialog):
         # uic.loadUi(functions.resource_path("email_dialog.ui"), self)
         uic.loadUi(functions.resource_path("email_dialog.ui"), self)
         self.setObjectName("Email Registration")
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
         self.resize(442, 159)
         # self.Dialog = Dialog
         self.submit_key = QtWidgets.QPushButton(self)
@@ -5396,6 +5417,7 @@ class UI_email_sent_Dialog(QDialog):
         super(UI_email_sent_Dialog, self).__init__()
         uic.loadUi(functions.resource_path("email_sent_dialog.ui"), self)
         self.setObjectName("Email Verification")
+        self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
         # logger.info("----")
         # print(email)
         self.em = email
