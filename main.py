@@ -708,6 +708,7 @@ class UI(QMainWindow):
         logger.info("list complete")
         self.small_window_opened = None
         self.small_window = None
+        self.window_status = True
         uic.loadUi(functions.resource_path("version2.ui"), self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
@@ -725,10 +726,10 @@ class UI(QMainWindow):
         self.main_frame = self.findChild(QFrame, "main_frame")
         self.home_frame = self.findChild(QFrame, "home_frame")
         self.authentication_result = 0
-        self.activate_button = self.findChild(QPushButton, "activate_button")
-        # self.activate_button.clicked.connect(self.thread_for_authentication)
-        self.activate_button.clicked.connect(self.authentication_loop2)
-        self.activate_button.setVisible(False)
+        # self.activate_button = self.findChild(QPushButton, "activate_button")
+        # # self.activate_button.clicked.connect(self.thread_for_authentication)
+        # self.activate_button.clicked.connect(self.authentication_loop2)
+        # self.activate_button.setVisible(False)
 
         self.snipping_push_button = self.findChild(QPushButton, "snipping_push_button")
         self.snipping_push_button.clicked.connect(self.screenCapture)
@@ -1033,6 +1034,13 @@ class UI(QMainWindow):
         self.navigate_button_3.clicked.connect(self.open_menu)
         # self.play_button.clicked.connect(self.thread_for_home_start_process)
         self.play_button.clicked.connect(self.home_start_process)
+        self.play_button.setStyleSheet("QPushButton {color: #3A5A40;"
+                                       "border: 2px solid #3A5A40;"
+                                       "border-radius: 5px;"
+                                       "color: #3A5A40;}"
+                                       "QPushButton::hover {color:white;"
+                                       "background-color: #3A5A40;}")
+        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run.png")))
         self.reset_settings_button.clicked.connect(self.home_reset_settings)
         self.record_add_button.clicked.connect(self.add_new_line)
         self.record_load_button.clicked.connect(self.window_load)
@@ -1543,7 +1551,7 @@ class UI(QMainWindow):
                                        "color: #c98860;}"
                                        "QPushButton::hover {color:white;"
                                        "background-color: #c98860;}")
-        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run_dark")))
+        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run_dark.png")))
         self.save_settings_button.setStyleSheet("QPushButton {color: #1ecd97;"
                                                 "border: 2px solid #1ecd97;"
                                                 "border-radius: 5px;"
@@ -1854,7 +1862,7 @@ class UI(QMainWindow):
                                        "color: #3A5A40;}"
                                        "QPushButton::hover {color:white;"
                                        "background-color: #3A5A40;}")
-        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run")))
+        self.play_button.setIcon(QtGui.QIcon(functions.resource_path("images/run.png")))
         self.save_settings_button.setStyleSheet("QPushButton {color: rgb(3, 199, 26);"
                                                 "border: 2px solid rgb(3, 199, 26);"
                                                 "border-radius:5px; "
@@ -2309,6 +2317,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of home -> start_stop button
     def start_thread_hotkey_1(self):
         change_home_start_hotkey_thread = threading.Thread(target=self.change_home_start_hotkey)
+        change_home_start_hotkey_thread.setDaemon(True)
         change_home_start_hotkey_thread.start()
         logger.info("starting thread for hotkey change of home start stop")
         logger.info("showing the current active threads:")
@@ -2318,8 +2327,9 @@ class UI(QMainWindow):
 
     # starts thread for hotkey change of add record line button
     def start_thread_hotkey_6(self):
-        change_home_start_hotkey_thread = threading.Thread(target=self.change_add_record_line_hotkey)
-        change_home_start_hotkey_thread.start()
+        change_add_record_line_hotkey_thread = threading.Thread(target=self.change_add_record_line_hotkey)
+        change_add_record_line_hotkey_thread.setDaemon(True)
+        change_add_record_line_hotkey_thread.start()
         logger.info("starting thread for hotkey change of add record line")
         logger.info("showing the current active threads:")
         for thread in threading.enumerate():
@@ -2329,6 +2339,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of record -> start_stop button
     def start_thread_hotkey_2(self):
         change_record_start_hotkey_thread = threading.Thread(target=self.change_record_start_hotkey)
+        change_record_start_hotkey_thread.setDaemon(True)
         change_record_start_hotkey_thread.start()
         logger.info("starting thread for record change of home start stop")
         logger.info("showing the current active threads:")
@@ -2339,6 +2350,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of getting mouse location
     def start_thread_hotkey_3(self):
         change_mouse_location_hotkey_thread = threading.Thread(target=self.change_mouse_location_hotkey)
+        change_mouse_location_hotkey_thread.setDaemon(True)
         change_mouse_location_hotkey_thread.start()
         logger.info("starting thread for getting mouse location")
         logger.info("showing the current active threads:")
@@ -2349,6 +2361,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of record -> record button
     def start_thread_hotkey_4(self):
         change_recording_hotkey_thread = threading.Thread(target=self.change_recording_hotkey)
+        change_recording_hotkey_thread.setDaemon(True)
         change_recording_hotkey_thread.start()
         logger.info("starting thread for hotkey change of record button")
         logger.info("showing the current active threads:")
@@ -4524,7 +4537,7 @@ class UI(QMainWindow):
                     except:
                         content = json_message["token"]
                         logger.info("user has now been granted access for lifetime")
-                        self.activate_button.setVisible(False)
+                        # self.activate_button.setVisible(False)
                         # print(content)
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
@@ -4736,11 +4749,16 @@ class UI(QMainWindow):
         # close the small window if its open. First check none condition
         # small_window_instance = self.small_window_opened
         # print(self.small_window_opened)
+        logger.info(self.small_window_opened)
         if self.small_window_opened is not None:
             # self.small_window_opened.button_action(self)
             logger.info("small window is opened")
             self.small_window_opened.close()
-            self.showNormal()
+            logger.info("here")
+            # self.small_window_opened.push_button.click()
+            if self.window_status is not True:
+                self.showNormal()
+                logger.info("here22")
         logger.info("ending execution of function: multiple_hotkey_actions_home()")
 
     # starts after the process for home -> play button is finished
@@ -4754,17 +4772,18 @@ class UI(QMainWindow):
         if self.small_window_opened is not None:
             # self.small_window_opened.button_action(self)
             logger.info("small window is opened")
-            self.small_window_opened.close()
+            # self.small_window_opened.close()
         if self.show_after_complete_checkbox.isChecked():
 
             # self.showMinimized()
-            # logger.info("min")
+            logger.info("showing normal view of main window")
             self.showNormal()
+
             # logger.info("norm")
             # if self.small_window_opened is not None:
             # if not self.small_window_checkbox.isChecked():
             # self.small_window_opened.button_action(self)
-            logger.info("small window is opened")
+            # logger.info("small window is opened")
             # closing_thread = threading.Thread(target=self.small_window_opened.close)
             # closing_thread.start()
             # self.small_window_opened.close()
@@ -4775,7 +4794,7 @@ class UI(QMainWindow):
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
 
         computer_type = self.complete_combobox_3.currentText()
-        logger.info("done heree")
+        # logger.info("done heree")
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
         elif computer_type == " Log off":
@@ -4790,13 +4809,15 @@ class UI(QMainWindow):
             os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
 
 
-        small_window_instance = self.small_window_opened
-        # logger.info("--3----")
-        # print(small_window_instance)
-        # logger.info("--4----")
-        if small_window_instance is not None:
-            # small_window_instance.close()
-            self.show()
+        # small_window_instance = self.small_window_opened
+        # # logger.info("--3----")
+        # # print(small_window_instance)
+        # # logger.info("--4----")
+        # if small_window_instance is not None:
+        #     # small_window_instance.close()
+        #     self.show()
+        # # logger.info("showing normal view of main window")
+        # # self.showNormal()
         logger.info("ending execution of function: after_home_thread()")
 
     # stops the actions set in home screen (intervenes the thread)
@@ -4995,22 +5016,44 @@ class UI(QMainWindow):
         logger.info("starting function: insert_recording_list()- gets data from recording and inserts into list in record screen")
         c = 0
         release_counter = 0
+        logger.info(f"the events recorded are- {events}")
         while len(events[c]) == 6:
+            # logger.info("kokoko")
             if events[0][3] == 'release':
                 del events[0]
                 release_counter += 1
+                if len(events) == 0:
+                    break
             else:
                 break
         if release_counter == 0:
+            # logger.info(events)
+            # logger.info(events[-1])
             del events[-1]
+            # logger.info(events)
+            if len(events) == 0:
+                events.append("1")
+
+
+            # logger.info(events[-1])
             del events[-1]
+            # logger.info(events)
+            # logger.info(events[-1])
         else:
-            del events[-1]
+            # logger.info("herere")
+            # logger.info(events)
+            if len(events)>0:
+                # logger.info(events[-1])
+                del events[-1]
         self.remove_all_lines()
         total_row = len(events)
         a = 0
         b = 0
         while a < total_row:
+            # if stop_home_event.is_set():
+            #     break
+            # if stop_record_event.is_set():
+            #     break
             if len(events[a]) == 5:
                 self.add_mouse_line()
                 children = self.line_list[b][1].children()
@@ -5207,6 +5250,8 @@ class UI(QMainWindow):
         toaster.show_toast(title="Recording completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start playback',
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
+
+
         self.record_record_button.setIcon(QtGui.QIcon(functions.resource_path("images/red-circle")))
         self.record_record_button.disconnect()
         self.record_record_button.clicked.connect(self.thread_for_live_record)
@@ -5214,6 +5259,7 @@ class UI(QMainWindow):
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
         self.insert_recording_list(self.record_events)
         self.showNormal()
+        self.window_status = True
         self.record_play_button.setEnabled(True)
         logger.info("ending function to stop recording user actions from screen")
 

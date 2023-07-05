@@ -59,7 +59,7 @@ class functions:
 
     @staticmethod
     def add_run_record_db(save_name, csv_text, saved_date, repeat_all, delay_time, delay_type):
-        logger.info("save vonfiguration in record run settings")
+        logger.info("save configuration in record run settings")
         conn = sqlite3.connect('autoclicker.db')
         cursor = conn.cursor()
         sql = f'''INSERT INTO record_run_settings
