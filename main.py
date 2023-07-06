@@ -25,11 +25,11 @@ import requests
 from email_validator import validate_email, EmailNotValidError
 import logging
 import re
-
+import resource_rc
 
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, filename='/app.log', filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.INFO, filename=functions.resource_path('app.log'), filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
 # def resource_path2(relative_path):
 #     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -239,7 +239,8 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
 def database_action(query, query_params):
     # connecting to database + performing query execution
     logger.info("starting database_action function")
-    con = sqlite3.connect('autoclicker.db')
+    con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+    # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
     logger.info("connected to database")
     cursor = con.cursor()
     cursor.execute(query, query_params)
@@ -753,7 +754,7 @@ class UI(QMainWindow):
         self.x_right_label = self.findChild(QLabel, "x_right_label")
         self.y_left_label = self.findChild(QLabel, "y_left_label")
         self.y_right_label = self.findChild(QLabel, "y_right_label")
-        self.arrow_url = 'images/arrow1.png'
+        # self.arrow_url = functions.resource_path('images/arrow1.png').__str__()
         self.click_options_groupbox = self.findChild(QGroupBox, "click_options_groupbox")
         self.click_type_combobox = self.findChild(QComboBox, "click_type_combobox")
         self.click_type_combobox.setStyleSheet('QComboBox {background-color: rgb(249, 249, 245);'
@@ -769,7 +770,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               f'image: url({self.arrow_url});'
+                                               'image: url(:/images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.click_type_label = self.findChild(QLabel, "click_type_label")
@@ -787,7 +788,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(images/arrow1.png);'
+                                                 'image: url(:/images/arrow1.png);'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.mouse_button_label = self.findChild(QLabel, "mouse_button_label")
@@ -806,7 +807,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(:/images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.never_stop_label = self.findChild(QLabel, "never_stop_label")
@@ -832,7 +833,7 @@ class UI(QMainWindow):
                                                'border-radius: 2px;'
                                                'border-color: rgb(218, 218, 218);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(:/images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.delay_time_combobox_2 = self.findChild(QComboBox, "delay_time_combobox_2")
@@ -849,7 +850,7 @@ class UI(QMainWindow):
                                                  'border-radius: 2px;'
                                                  'border-color: rgb(218, 218, 218);}'
                                                  'QComboBox::down-arrow {'
-                                                 'image: url(images/arrow1.png);'
+                                                 'image: url(:/images/arrow1.png);'
                                                  'width: 8px;'
                                                  'height: 8px;}')
         self.delay_time_entrybox = self.findChild(QLineEdit, "delay_time_entrybox")
@@ -895,7 +896,7 @@ class UI(QMainWindow):
                                                'border-radius: 5px;'
                                                'border-color: rgb(249, 249, 245);}'
                                                'QComboBox::down-arrow {'
-                                               'image: url(images/arrow1.png);'
+                                               'image: url(:/images/arrow1.png);'
                                                'width: 8px;'
                                                'height: 8px;}')
         self.GG_icon = self.findChild(QPushButton, "GG_icon")
@@ -943,7 +944,7 @@ class UI(QMainWindow):
                                                       'background-color: rgb(249, 249, 245);}'
                                                       'QComboBox::down-arrow {'
                                                       'background-color: rgb(249, 249, 245);'
-                                                      'image: url(images/arrow1.png);'
+                                                      'image: url(:/images/arrow1.png);'
                                                       'width: 8px;'
                                                       'height: 8px;}')
         self.delay_time_combobox_record.addItem("ms")
@@ -1094,10 +1095,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/radio_unchecked.png);'
+                           'image: url(:/images/radio_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/radio_checked.png);'
+                           'image: url(:/images/radio_checked.png);'
                            'margin-top: 2px;}')
         self.central_widget_2.setStyleSheet("QToolTip {background-color: #e0e0e0;"
                                             "border: none;"
@@ -1114,7 +1115,7 @@ class UI(QMainWindow):
                                             'border-color: rgb(249, 249, 245);}'
                                             'QComboBox::down-arrow {'
                                             'background-color: rgb(249, 249, 245);'
-                                            'image: url(images/arrow1.png);'
+                                            'image: url(:/images/arrow1.png);'
                                             'width: 8px;'
                                             'height: 8px;}'
                                             "QToolTip {background-color: #e0e0e0;"
@@ -1408,7 +1409,7 @@ class UI(QMainWindow):
         new_record_recording_hotkey = self.record_recording_hotkey
         new_mouse_location_hotkey = self.mouse_location_hotkey
         # self.query_thread.join()
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         logger.info("showing the current active threads:")
         for thread in threading.enumerate():
@@ -1467,10 +1468,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/dark_unchecked.png);'
+                           'image: url(:/images/dark_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/dark_checked.png);'
+                           'image: url(:/images/dark_checked.png);'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = True
@@ -1762,10 +1763,10 @@ class UI(QMainWindow):
                            'height: 15px;'
                            'width: 15px;}'
                            'QRadioButton::indicator::unchecked {'
-                           'image: url(images/radio_unchecked.png);'
+                           'image: url(:/images/radio_unchecked.png);'
                            'margin-top: 2px;}'
                            'QRadioButton::indicator::checked {'
-                           'image: url(images/radio_checked.png);'
+                           'image: url(:/images/radio_checked.png);'
                            'margin-top: 2px;}'
                            )
         self.dark_theme_activated = False
@@ -2839,7 +2840,7 @@ class UI(QMainWindow):
         self.items_list = []
         self.items_from_home = []
         self.items_from_record = []
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         sql = '''SELECT save_name, saved_date FROM home_run_settings'''
         cursor.execute(sql)
@@ -2932,7 +2933,7 @@ class UI(QMainWindow):
             logger.error("Exception occurred", exc_info=True)
             return
         item_key = selected_item[-5:]
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         if item_key == 'home)':
             index = selected_item.find(" (saved from home)")
@@ -2957,7 +2958,7 @@ class UI(QMainWindow):
     def load_home_settings(self):
         logger.info("started function to load saved home settings on the home screen")
         sql = "SELECT * FROM home_run_settings"
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
@@ -3029,7 +3030,7 @@ class UI(QMainWindow):
             logger.info("ending function to load selected action from database")
             return
         item_key = selected_item[-5:]
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         if item_key == 'home)':
             index = selected_item.find(" (saved from home)")
@@ -3198,7 +3199,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(:/images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3220,7 +3221,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(:/images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_10 = QLabel(record_line_frame)
@@ -3327,7 +3328,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(:/images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_6 = QLabel(record_line_frame)
@@ -3348,7 +3349,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(:/images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3462,7 +3463,7 @@ class UI(QMainWindow):
                                'border-radius: 2px;'
                                'border-color: rgb(218, 218, 218);}'
                                'QComboBox::down-arrow {'
-                               'image: url(images/arrow1.png);'
+                               'image: url(:/images/arrow1.png);'
                                'width: 8px;'
                                'height: 8px;}')
         column_8 = QLabel(record_line_frame)
@@ -3561,6 +3562,7 @@ class UI(QMainWindow):
     # removes all lines from the record screen
     def remove_all_lines(self):
         logger.info("started function to remove All lines from record actions")
+        self.foot_note_label.setText("")
         while self.i > 1:
             self.form_layout.removeRow(self.i - 2)
             del self.line_list[-1]
@@ -3940,7 +3942,7 @@ class UI(QMainWindow):
         #delete existing rows from database, it should store only 1 value
 
 
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
 
         delete_home_row = '''DELETE FROM home_run_settings'''
@@ -4191,7 +4193,7 @@ class UI(QMainWindow):
     # def database_action(self, query, query_params):
     #     # connecting to database + performing query execution
     #     logger.info("starting database_action function")
-    #     con = sqlite3.connect('autoclicker.db')
+    #     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
     #     logger.info("connected to database")
     #     cursor = con.cursor()
     #     cursor.execute(query, query_params)
@@ -4211,7 +4213,7 @@ class UI(QMainWindow):
     #         print(thread)
     #     logger.info("*****************************")
     #     logger.info("connecting to database")
-    #     con = sqlite3.connect('autoclicker.db')
+    #     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
     #     logger.info("connected to database")
     #     cursor = con.cursor()
     #     sql = "SELECT * FROM local_table"
@@ -4345,7 +4347,7 @@ class UI(QMainWindow):
     #                     # email has been verified and an infinite token is returned
     #                     # update the database with this token now
     #                     logger.info("connecting to db")
-    #                     con = sqlite3.connect('autoclicker.db')
+    #                     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
     #                     logger.info("connected to db")
     #                     cursor = con.cursor()
     #                     logger.info("start executing query")
@@ -4381,7 +4383,7 @@ class UI(QMainWindow):
             logger.info(thread)
         logger.info("list complete")
         logger.info("connecting to database")
-        con = sqlite3.connect('autoclicker.db')
+        con = sqlite3.connect(functions.resource_path('autoclicker.db'))
         logger.info("connected to database")
         cursor = con.cursor()
         sql = "SELECT * FROM local_table"
@@ -4437,10 +4439,10 @@ class UI(QMainWindow):
             # query_thread.start()
         else:
 
-            logger.info("showing the current active threads:")
-            for thread in threading.enumerate():
-                logger.info(thread)
-            logger.info("list complete")
+            # logger.info("showing the current active threads:")
+            # for thread in threading.enumerate():
+            #     logger.info(thread)
+            # logger.info("list complete")
 
             email = fetched_data[0][0]
             token = fetched_data[0][1]
@@ -4473,6 +4475,7 @@ class UI(QMainWindow):
             try:
                 response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
                 # response2.raise_for_status()
+                logger.info(f'token sent for authentication is- {token}')
                 logger.info("done post call")
             # except requests.exceptions.ConnectionError as conerr:
             except requests.exceptions.ConnectionError as conerr:
@@ -4547,7 +4550,7 @@ class UI(QMainWindow):
 
                         logger.info("starting query_thread")
                         self.query_thread.start()
-                        # con = sqlite3.connect('autoclicker.db')
+                        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
                         # logger.info("connected to db")
                         # cursor = con.cursor()
                         # logger.info("start executing query")
@@ -5391,7 +5394,7 @@ class UI_Dialog(QDialog):
         logger.info("starting function to open email sent dialog box after user enters email")
         email = self.name.text()
         # add email to database
-        # con = sqlite3.connect('autoclicker.db')
+        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
         # cursor = con.cursor()
         # email_data = (email,)
         # cursor.execute("UPDATE local_table SET email = ?", email_data)
@@ -5409,7 +5412,7 @@ class UI_Dialog(QDialog):
         query = "UPDATE local_table SET email = ?"
         self.query_thread = threading.Thread(target=database_action, args=(query, (email,)))
         self.query_thread.start()
-        # con = sqlite3.connect('autoclicker.db')
+        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
         # cursor = con.cursor()
         # email_data = (email,)
         # cursor.execute("UPDATE local_table SET email = ?", email_data)
@@ -5629,7 +5632,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
         logger.info("ending function to capture screen on defined area once mouse press is released")
 
 # below 7 lines gets the latest preferences of the user from the database
-conn = sqlite3.connect('autoclicker.db')
+conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
 cursor = conn.cursor()
 
 logger.info("importing app_settings stored in database")

@@ -42,7 +42,7 @@ class functions:
                         location_x, location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height,
                         saved_date):
         logger.info("adding home run configuration in database")
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         sql = f'''INSERT INTO home_run_settings
             (save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x,
@@ -60,7 +60,7 @@ class functions:
     @staticmethod
     def add_run_record_db(save_name, csv_text, saved_date, repeat_all, delay_time, delay_type):
         logger.info("save configuration in record run settings")
-        conn = sqlite3.connect('autoclicker.db')
+        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
         cursor = conn.cursor()
         sql = f'''INSERT INTO record_run_settings
             (save_name, csv_text, saved_date, repeat_all, delay_time, delay_type)

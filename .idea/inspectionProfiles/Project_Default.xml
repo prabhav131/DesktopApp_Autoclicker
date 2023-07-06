@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="15">
+          <list size="19">
             <item index="0" class="java.lang.String" itemvalue="test-reporter" />
             <item index="1" class="java.lang.String" itemvalue="behave" />
             <item index="2" class="java.lang.String" itemvalue="python-lib-canoe-interface" />
@@ -20,6 +20,10 @@
             <item index="12" class="java.lang.String" itemvalue="packaging" />
             <item index="13" class="java.lang.String" itemvalue="pexpect" />
             <item index="14" class="java.lang.String" itemvalue="numpy" />
+            <item index="15" class="java.lang.String" itemvalue="mouse" />
+            <item index="16" class="java.lang.String" itemvalue="keyboard" />
+            <item index="17" class="java.lang.String" itemvalue="pynput" />
+            <item index="18" class="java.lang.String" itemvalue="win10toast" />
           </list>
         </value>
       </option>
