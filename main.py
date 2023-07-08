@@ -2388,14 +2388,20 @@ class UI(QMainWindow):
     def window_record_save(self):
         logger.info("starting function to open pop up window to save record screen actions")
         if self.i == 1:
-            self.popup = UI_no_actions()
+            self.popup = UI_no_actions(self)
             self.popup.show()
             logger.error("No actions available to save. Nothing to save!")
             logger.info("ending function to open pop up window to save record screen actions")
             return
+        try:
+            keyboard.remove_hotkey(self.add_record_line_hotkey)
+        except:
+            logger.info("add_record_line_hotkey was not active")
         self.font.setBold(False)
         self.font.setPixelSize(11)
-        self.record_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        # self.record_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        self.record_save_window = new_dialog(self)
+
         self.record_save_window.setWindowTitle("Save")
         self.record_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         # sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
@@ -2668,7 +2674,12 @@ class UI(QMainWindow):
         logger.info("started function to load pop up window for uploading record settings")
         self.font.setBold(False)
         self.font.setPixelSize(11)
-        self.load_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        try:
+            keyboard.remove_hotkey(self.add_record_line_hotkey)
+        except:
+            logger.info("add_record_line_hotkey was not active")
+        # self.load_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        self.load_window = new_dialog(self)
         self.load_window.setWindowTitle("Load")
         self.load_window.setWindowIcon(QtGui.QIcon(functions.resource_path("images/uplode_dark")))
         self.load_window.setGeometry(575, 250, 400, 400)
@@ -3755,7 +3766,8 @@ class UI(QMainWindow):
         logger.info("starting function to open pop up window from home screen to save home settings")
         self.font.setBold(False)
         self.font.setPixelSize(11)
-        self.home_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        # self.home_save_window = QDialog(None, Qt.WindowCloseButtonHint | Qt.WindowTitleHint)
+        self.home_save_window = new_dialog(self)
         self.home_save_window.setWindowTitle("Save")
         self.home_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         self.home_save_window.setGeometry(827, 520, 300, 115)
@@ -5337,9 +5349,20 @@ class UI_connectivity(QDialog):
         logger.info("ending initialisation of connectivity ui")
 
 
+class new_dialog(QDialog):
+    def __init__(self, mainwindow):
+        super(new_dialog, self).__init__()
+        # flags = QtCore.Qt.WindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowTitleHint)
+        # self.setWindowFlags(flags)
+        self.parent = mainwindow
+
+    def closeEvent(self, event):
+        keyboard.add_hotkey(self.parent.add_record_line_hotkey, lambda: self.parent.record_add_button.click())
+
+
 class UI_no_actions(QDialog):
 
-    def __init__(self):
+    def __init__(self, mainwindow):
         logger.info("started initialisation of no actions ui")
         super(UI_no_actions, self).__init__()
         uic.loadUi(functions.resource_path("no_actions.ui"), self)
@@ -5347,11 +5370,19 @@ class UI_no_actions(QDialog):
         self.setWindowTitle("No actions available")
         self.setObjectName("No actions available")
         self.resize(327, 205)
+        self.parent = mainwindow
         self.label = QtWidgets.QLabel(self)
         self.label.setGeometry(QtCore.QRect(70, 20, 211, 151))
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
+        try:
+            keyboard.remove_hotkey(mainwindow.add_record_line_hotkey)
+        except:
+            logger.info("add_record_line_hotkey was not active")
         logger.info("ending initialisation of no actions ui")
+
+    def closeEvent(self, event):
+        keyboard.add_hotkey(self.parent.add_record_line_hotkey, lambda: self.parent.record_add_button.click())
 
 
 class UI_Dialog(QDialog):
