@@ -26,10 +26,12 @@ from email_validator import validate_email, EmailNotValidError
 import logging
 import re
 import resource_rc
+from appdirs import *
 
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, filename=functions.resource_path('app.log'), filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+# is_clicking = False
 
 # def resource_path2(relative_path):
 #     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -72,6 +74,96 @@ def prompt_internet_issue():
     dialog.show()
     logger.info("ending function to raise user is offline popup")
 
+def initialise_db():
+    conn = sqlite3.connect(file_path)
+    cursor = conn.cursor()
+    cursor.execute("DROP TABLE IF EXISTS app_settings")
+    cursor.execute("DROP TABLE IF EXISTS home_run_settings")
+    cursor.execute("DROP TABLE IF EXISTS local_table")
+    cursor.execute("DROP TABLE IF EXISTS record_run_settings")
+    cursor.execute("DROP TABLE IF EXISTS session_details")
+    cursor.execute("DROP TABLE IF EXISTS user_info")
+
+    sql = '''CREATE TABLE "app_settings" (
+	"show_tool_after"	INTEGER NOT NULL,
+	"hide_system_tray"	INTEGER NOT NULL,
+	"disable_cursor_location"	INTEGER NOT NULL,
+	"disable_small_window"	INTEGER NOT NULL DEFAULT 0,
+	"dark_theme"	INTEGER NOT NULL,
+	"home_start_hotkey"	TEXT NOT NULL,
+	"record_add_line_hotkey"	TEXT,
+	"record_start_hotkey"	TEXT NOT NULL,
+	"record_recording_hotkey"	TEXT NOT NULL,
+	"mouse_location_hotkey"	TEXT NOT NULL
+    )'''
+    cursor.execute(sql)
+
+    add_new_row = f'''INSERT INTO app_settings VALUES (
+                    '1',
+                    '0',
+                    '0',
+                    '0',
+                    '0',
+                    'f8',
+                    'f7',
+                    'f10',
+                    'f9',
+                    'f6'
+                    )'''
+    cursor.execute(add_new_row)
+    sql = '''CREATE TABLE "home_run_settings" (
+	"save_name"	TEXT NOT NULL,
+	"mouse_type"	TEXT NOT NULL,
+	"click_type"	TEXT NOT NULL,
+	"repeat_or_range"	TEXT NOT NULL,
+	"click_repeat"	INTEGER NOT NULL,
+	"select_or_fixed"	TEXT NOT NULL,
+	"location_x"	INTEGER NOT NULL,
+	"location_y"	INTEGER NOT NULL,
+	"wait_interval_min"	INTEGER NOT NULL,
+	"wait_interval_max"	INTEGER NOT NULL,
+	"wait_type"	TEXT NOT NULL,
+	"area_width"	INTEGER NOT NULL,
+	"area_height"	INTEGER NOT NULL,
+	"saved_date"	TEXT NOT NULL
+    )'''
+    cursor.execute(sql)
+
+    sql = '''CREATE TABLE "local_table" (
+	"email"	TEXT,
+	"access_token"	TEXT
+    )'''
+    cursor.execute(sql)
+
+    sql = '''CREATE TABLE record_run_settings (
+            save_name TEXT NOT NULL UNIQUE,
+            csv_text TEXT NOT NULL,
+            saved_date TEXT NOT NULL,
+            repeat_all INTEGER NOT NULL,
+            delay_time INTEGER NOT NULL,
+            delay_type TEXT NOT NULL
+            )'''
+    cursor.execute(sql)
+
+    sql = '''CREATE TABLE "session_details" (
+	"username"	TEXT,
+	"application_id"	TEXT,
+	"application_key"	TEXT,
+	"key_expiration_date"	TEXT,
+	PRIMARY KEY("application_id")
+    )'''
+    cursor.execute(sql)
+
+    sql = '''CREATE TABLE "user_info" (
+	"username"	TEXT,
+	"password"	TEXT,
+	"whether_subscribed"	INTEGER,
+	"unique_device_id"	TEXT
+    )'''
+    cursor.execute(sql)
+
+    conn.commit()
+    conn.close()
 
 def check(email):
     logger.info("starting function for checking if email entered is valid")
@@ -97,7 +189,6 @@ def check(email):
         logger.info("ending function for checking if email entered is valid")
         # email is not valid, exception message is human-readable
         return str(e)
-
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
@@ -231,16 +322,20 @@ def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, locati
                         break
 
     logger.info("done fixed clicking")
+    clicking_event.clear()
     UIWindow.after_home_thread()
     # UIWindow.showNormal()
+    # global is_clicking
+    # is_clicking = False
+
     logger.info("ending execution of function: home_fixed_clicking()")
 
 
 def database_action(query, query_params):
     # connecting to database + performing query execution
     logger.info("starting database_action function")
-    con = sqlite3.connect(functions.resource_path('autoclicker.db'))
-    # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+    con = sqlite3.connect(file_path)
+    # con = sqlite3.connect(file_path)
     logger.info("connected to database")
     cursor = con.cursor()
     cursor.execute(query, query_params)
@@ -395,9 +490,13 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                         stop_home_event.clear()
                         break
     logger.info("done current clicking")
+    clicking_event.clear()
     UIWindow.after_home_thread()
     # UIWindow.showNormal()
-    logger.info("ending execution of function: home_fixed_clicking()")
+    # global is_clicking
+    # is_clicking = False
+
+    logger.info("ending execution of function: home_current_clicking()")
 
 
 # starts the dragging actions set in home screen
@@ -547,8 +646,11 @@ def home_random_clicking(mouse_type, click_type, click_repeat, location_x, locat
                         stop_home_event.clear()
                         break
     logger.info("done random clicking")
+    clicking_event.clear()
     UIWindow.after_home_thread()
     # UIWindow.showNormal()
+    # global is_clicking
+    # is_clicking = False
     logger.info("ending execution of function: home_random_clicking()")
 
 
@@ -694,6 +796,9 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
                 type_for_record(converted_key, actions_data[c][2], 'Release', 0)
     UIWindow.after_record_thread(last_line)
     # UIWindow.showNormal()
+    # global is_clicking
+    # is_clicking = False
+    clicking_event.clear()
     logger.info("ending execution of function: start_record_action(): playing back record actions from record screen")
 
 
@@ -709,7 +814,8 @@ class UI(QMainWindow):
         logger.info("list complete")
         self.small_window_opened = None
         self.small_window = None
-        self.window_status = True
+        main_window_visible.set()
+        # self.window_status = True
         uic.loadUi(functions.resource_path("version2.ui"), self)
         self.threadLock = threading.Lock()
         self.MainWindow = self.findChild(QMainWindow, "MainWindow")
@@ -1409,7 +1515,7 @@ class UI(QMainWindow):
         new_record_recording_hotkey = self.record_recording_hotkey
         new_mouse_location_hotkey = self.mouse_location_hotkey
         # self.query_thread.join()
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         logger.info("showing the current active threads:")
         for thread in threading.enumerate():
@@ -2318,7 +2424,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of home -> start_stop button
     def start_thread_hotkey_1(self):
         change_home_start_hotkey_thread = threading.Thread(target=self.change_home_start_hotkey)
-        change_home_start_hotkey_thread.setDaemon(True)
+        # change_home_start_hotkey_thread.setDaemon(True)
         change_home_start_hotkey_thread.start()
         logger.info("starting thread for hotkey change of home start stop")
         logger.info("showing the current active threads:")
@@ -2329,7 +2435,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of add record line button
     def start_thread_hotkey_6(self):
         change_add_record_line_hotkey_thread = threading.Thread(target=self.change_add_record_line_hotkey)
-        change_add_record_line_hotkey_thread.setDaemon(True)
+        # change_add_record_line_hotkey_thread.setDaemon(True)
         change_add_record_line_hotkey_thread.start()
         logger.info("starting thread for hotkey change of add record line")
         logger.info("showing the current active threads:")
@@ -2340,7 +2446,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of record -> start_stop button
     def start_thread_hotkey_2(self):
         change_record_start_hotkey_thread = threading.Thread(target=self.change_record_start_hotkey)
-        change_record_start_hotkey_thread.setDaemon(True)
+        # change_record_start_hotkey_thread.setDaemon(True)
         change_record_start_hotkey_thread.start()
         logger.info("starting thread for record change of home start stop")
         logger.info("showing the current active threads:")
@@ -2351,7 +2457,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of getting mouse location
     def start_thread_hotkey_3(self):
         change_mouse_location_hotkey_thread = threading.Thread(target=self.change_mouse_location_hotkey)
-        change_mouse_location_hotkey_thread.setDaemon(True)
+        # change_mouse_location_hotkey_thread.setDaemon(True)
         change_mouse_location_hotkey_thread.start()
         logger.info("starting thread for getting mouse location")
         logger.info("showing the current active threads:")
@@ -2362,7 +2468,7 @@ class UI(QMainWindow):
     # starts thread for hotkey change of record -> record button
     def start_thread_hotkey_4(self):
         change_recording_hotkey_thread = threading.Thread(target=self.change_recording_hotkey)
-        change_recording_hotkey_thread.setDaemon(True)
+        # change_recording_hotkey_thread.setDaemon(True)
         change_recording_hotkey_thread.start()
         logger.info("starting thread for hotkey change of record button")
         logger.info("showing the current active threads:")
@@ -2851,7 +2957,7 @@ class UI(QMainWindow):
         self.items_list = []
         self.items_from_home = []
         self.items_from_record = []
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         sql = '''SELECT save_name, saved_date FROM home_run_settings'''
         cursor.execute(sql)
@@ -2944,7 +3050,7 @@ class UI(QMainWindow):
             logger.error("Exception occurred", exc_info=True)
             return
         item_key = selected_item[-5:]
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         if item_key == 'home)':
             index = selected_item.find(" (saved from home)")
@@ -2969,7 +3075,7 @@ class UI(QMainWindow):
     def load_home_settings(self):
         logger.info("started function to load saved home settings on the home screen")
         sql = "SELECT * FROM home_run_settings"
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         cursor.execute(sql)
         data = cursor.fetchall()
@@ -3041,7 +3147,7 @@ class UI(QMainWindow):
             logger.info("ending function to load selected action from database")
             return
         item_key = selected_item[-5:]
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         if item_key == 'home)':
             index = selected_item.find(" (saved from home)")
@@ -3954,7 +4060,7 @@ class UI(QMainWindow):
         #delete existing rows from database, it should store only 1 value
 
 
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
 
         delete_home_row = '''DELETE FROM home_run_settings'''
@@ -4205,7 +4311,7 @@ class UI(QMainWindow):
     # def database_action(self, query, query_params):
     #     # connecting to database + performing query execution
     #     logger.info("starting database_action function")
-    #     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+    #     con = sqlite3.connect(file_path)
     #     logger.info("connected to database")
     #     cursor = con.cursor()
     #     cursor.execute(query, query_params)
@@ -4225,7 +4331,7 @@ class UI(QMainWindow):
     #         print(thread)
     #     logger.info("*****************************")
     #     logger.info("connecting to database")
-    #     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+    #     con = sqlite3.connect(file_path)
     #     logger.info("connected to database")
     #     cursor = con.cursor()
     #     sql = "SELECT * FROM local_table"
@@ -4359,7 +4465,7 @@ class UI(QMainWindow):
     #                     # email has been verified and an infinite token is returned
     #                     # update the database with this token now
     #                     logger.info("connecting to db")
-    #                     con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+    #                     con = sqlite3.connect(file_path)
     #                     logger.info("connected to db")
     #                     cursor = con.cursor()
     #                     logger.info("start executing query")
@@ -4395,7 +4501,7 @@ class UI(QMainWindow):
             logger.info(thread)
         logger.info("list complete")
         logger.info("connecting to database")
-        con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        con = sqlite3.connect(file_path)
         logger.info("connected to database")
         cursor = con.cursor()
         sql = "SELECT * FROM local_table"
@@ -4561,8 +4667,9 @@ class UI(QMainWindow):
                         self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
 
                         logger.info("starting query_thread")
+                        self.query_thread.setDaemon(True)
                         self.query_thread.start()
-                        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+                        # con = sqlite3.connect(file_path)
                         # logger.info("connected to db")
                         # cursor = con.cursor()
                         # logger.info("start executing query")
@@ -4597,19 +4704,19 @@ class UI(QMainWindow):
                 # return True
                 self.authentication_result = 1
 
-    # starts a thread for home_start_process
-    def thread_for_home_start_process(self):
-        logger.info("started function to start the new thread for home start process")
-        # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
-        new_thread = threading.Thread(target=self.home_start_process)
-        new_thread.setDaemon(True)
-        new_thread.start()
-        logger.info("started the new thread for home start process")
-        logger.info("showing the current active threads:")
-        for thread in threading.enumerate():
-            logger.info(thread)
-        logger.info("list complete")
-        logger.info("ending function to start the new thread for home start process")
+    # # starts a thread for home_start_process
+    # def thread_for_home_start_process(self):
+    #     logger.info("started function to start the new thread for home start process")
+    #     # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
+    #     new_thread = threading.Thread(target=self.home_start_process)
+    #     new_thread.setDaemon(True)
+    #     new_thread.start()
+    #     logger.info("started the new thread for home start process")
+    #     logger.info("showing the current active threads:")
+    #     for thread in threading.enumerate():
+    #         logger.info(thread)
+    #     logger.info("list complete")
+    #     logger.info("ending function to start the new thread for home start process")
 
     # starts the process for home -> play button
     def home_start_process(self):
@@ -4625,17 +4732,23 @@ class UI(QMainWindow):
 
         # if not self.authentication_loop():
         #     return
-        self.authentication_loop2()
-        if self.authentication_result == 0:
-            self.foot_note_label.setText("")
-            self.foot_note_label.setText("please activate your account")
-            logger.info("ending execution of function: home_start_process() as account is yet to be activated")
+
+        if(1 == 2):
             return
-        if self.authentication_result == -1:
-            self.foot_note_label.setText("")
-            self.foot_note_label.setText("you cant access run functionality")
-            logger.info("ending execution of function: home_start_process() as access is blocked")
-            return
+
+        # self.authentication_loop2()
+        # if self.authentication_result == 0:
+        #     self.foot_note_label.setText("")
+        #     self.foot_note_label.setText("please activate your account")
+        #     logger.info("ending execution of function: home_start_process() as account is yet to be activated")
+        #     return
+        # if self.authentication_result == -1:
+        #     self.foot_note_label.setText("")
+        #     self.foot_note_label.setText("you cant access run functionality")
+        #     logger.info("ending execution of function: home_start_process() as access is blocked")
+        #     return
+
+
         # if self.authentication_result == -2:
         #     logger.info("register your email")
         #     self.open_email_dialog()
@@ -4725,6 +4838,8 @@ class UI(QMainWindow):
         else:
             radio_button = 3
         self.showMinimized()
+        main_window_visible.clear()
+        # self.window_status = False
         self.open_small_window(run_mode="home")
         # ----------------------
 
@@ -4733,26 +4848,29 @@ class UI(QMainWindow):
         keyboard.add_hotkey(self.home_start_stop_hotkey, self.multiple_hotkey_actions_home)
         self.foot_note_label.setText('')
         self.play_button.setEnabled(False)
+        # global is_clicking
+        # is_clicking = True
+        clicking_event.set()
         toaster.show_toast(title="Clicking started", msg=f'Press {self.home_start_stop_hotkey.upper()} to stop',
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         if radio_button == 1:
             logger.info("starting new thread for fixed clicking")
             thread = threading.Thread(target=lambda: home_fixed_clicking(
                 mouse_type, click_type, click_repeat, int(location_x), int(location_y), wait_interval))
-            thread.setDaemon(True)
+            # thread.setDaemon(True)
             thread.start()
         elif radio_button == 2:
             logger.info("starting new thread for current clicking")
             thread = threading.Thread(target=lambda: home_current_clicking(mouse_type, click_type,
                                                                               click_repeat, wait_interval))
-            thread.setDaemon(True)
+            # thread.setDaemon(True)
             thread.start()
         else:
             logger.info("starting new thread for random clicking")
             thread = threading.Thread(target=lambda: home_random_clicking(mouse_type, click_type, click_repeat,
                                                                           location_x, location_y,
                                                                           wait_interval, area_width, area_height))
-            thread.setDaemon(True)
+            # thread.setDaemon(True)
             thread.start()
         logger.info("ending execution of function: home_start_process()")
 
@@ -4761,6 +4879,7 @@ class UI(QMainWindow):
         logger.info("started execution of function: multiple_hotkey_actions_home()")
         self.home_stop_process()
         self.record_stop_process()
+        stop_current_action.set()
         # close the small window if its open. First check none condition
         # small_window_instance = self.small_window_opened
         # print(self.small_window_opened)
@@ -4768,13 +4887,11 @@ class UI(QMainWindow):
         if self.small_window_opened is not None:
             # self.small_window_opened.button_action(self)
             logger.info("small window is opened")
-            self.small_window_opened.close()
+            # self.small_window_opened.close()
             logger.info("here")
-            # self.small_window_opened.push_button.click()
-            if self.window_status is not True:
-                self.showNormal()
-                logger.info("here22")
+            
         logger.info("ending execution of function: multiple_hotkey_actions_home()")
+
 
     # starts after the process for home -> play button is finished
     def after_home_thread(self):
@@ -4787,14 +4904,17 @@ class UI(QMainWindow):
         if self.small_window_opened is not None:
             # self.small_window_opened.button_action(self)
             logger.info("small window is opened")
-            # self.small_window_opened.close()
+            self.small_window_opened.close()
         if self.show_after_complete_checkbox.isChecked():
 
             # self.showMinimized()
             logger.info("showing normal view of main window")
-            self.showNormal()
+            logger.info(f"value is {main_window_visible.is_set()}")
+            if main_window_visible.is_set() == False:
+                logger.info("norm")
+                self.showNormal()
+                main_window_visible.set()
 
-            # logger.info("norm")
             # if self.small_window_opened is not None:
             # if not self.small_window_checkbox.isChecked():
             # self.small_window_opened.button_action(self)
@@ -4837,10 +4957,16 @@ class UI(QMainWindow):
 
     # stops the actions set in home screen (intervenes the thread)
     def home_stop_process(self):
+        # global is_clicking
+        # is_clicking = False
+        clicking_event.clear()
         stop_home_event.set()
 
     # stops the actions set in record screen (intervenes the thread)
     def record_stop_process(self):
+        # global is_clicking
+        # is_clicking = False
+        clicking_event.clear()
         stop_record_event.set()
 
     # starts the process for record -> play button
@@ -4959,11 +5085,16 @@ class UI(QMainWindow):
                 delay_time = int(self.delay_2.text()) * 1440
         self.foot_note_label.setText('')
         self.showMinimized()
+        # self.window_status = False
+        main_window_visible.clear()
         self.open_small_window(run_mode="record playback")
         # -------------------------
         keyboard.remove_hotkey(self.record_start_stop_hotkey)
         keyboard.add_hotkey(self.record_start_stop_hotkey, self.multiple_hotkey_actions_home)
         self.record_play_button.setEnabled(False)
+        # global is_clicking
+        # is_clicking = True
+        clicking_event.set()
         toaster.show_toast(title="Playback started",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to stop playback',
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
@@ -4971,7 +5102,7 @@ class UI(QMainWindow):
         keyboard.remove_hotkey(self.record_recording_hotkey)
 
         thread_2 = threading.Thread(target=lambda: start_record_actions(actions_data, repeat_all, delay_time, self.i))
-        thread_2.setDaemon(True)
+        # thread_2.setDaemon(True)
         thread_2.start()
         logger.info("ending execution of function: record_start_process()")
 
@@ -4997,7 +5128,9 @@ class UI(QMainWindow):
             for thread in threading.enumerate():
                 logger.info(thread)
             logger.info("list complete")
-            self.showNormal()
+            if main_window_visible.is_set() == False:
+                self.showNormal()
+                main_window_visible.set()
         # logger.info("bro im here")
         toaster.show_toast(title="Playback completed",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to start again',
@@ -5057,7 +5190,7 @@ class UI(QMainWindow):
         else:
             # logger.info("herere")
             # logger.info(events)
-            if len(events)>0:
+            if len(events) > 0:
                 # logger.info(events[-1])
                 del events[-1]
         self.remove_all_lines()
@@ -5069,7 +5202,13 @@ class UI(QMainWindow):
             #     break
             # if stop_record_event.is_set():
             #     break
+            if stop_current_action.is_set():
+                logger.info("force stopping this-1")
+                return
             if len(events[a]) == 5:
+                if stop_current_action.is_set():
+                    logger.info("force stopping this-2")
+                    return
                 self.add_mouse_line()
                 children = self.line_list[b][1].children()
                 children[3].setText(str(events[a][0]))
@@ -5086,7 +5225,11 @@ class UI(QMainWindow):
                     children[9].setCurrentText('Release')
                 delay = int(events[a][4] * 1000)
                 children[11].setText(str(delay))
+
             elif len(events[a]) == 4:
+                if stop_current_action.is_set():
+                    logger.info("force stopping this-3")
+                    return
                 self.add_scroll_line()
                 children = self.line_list[b][1].children()
                 children[3].setText(str(events[a][0]))
@@ -5121,6 +5264,9 @@ class UI(QMainWindow):
                     a += scroll_count - 1
                 children[11].setText(str(delay))
             elif len(events[a]) == 6:
+                if stop_current_action.is_set():
+                    logger.info("force stopping this-4")
+                    return
                 self.add_keyboard_line()
                 children = self.line_list[b][1].children()
                 char_group = events[a][0]
@@ -5245,6 +5391,8 @@ class UI(QMainWindow):
         self.mouse_listener = pynput.mouse.Listener(on_click=on_click, on_scroll=on_scroll)
         self.keyboard_listener = pynput.keyboard.Listener(on_press=on_press, on_release=on_release)
         self.showMinimized()
+        # self.window_status = False
+        main_window_visible.clear()
         # send notification to desktop
         toaster.show_toast(title="Recording Started",
                            msg=f'Press {self.record_recording_hotkey.upper()} to stop recording',
@@ -5253,8 +5401,8 @@ class UI(QMainWindow):
         self.mouse_listener.start()
         self.keyboard_listener.start()
         time_counter = time.time()
-        self.mouse_listener.join()
-        self.keyboard_listener.join()
+        # self.mouse_listener.join()
+        # self.keyboard_listener.join()
         logger.info("ending function to start recording user actions from screen")
 
     # stops live recording process
@@ -5273,8 +5421,15 @@ class UI(QMainWindow):
         self.record_record_button.setText("Record")
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
         self.insert_recording_list(self.record_events)
-        self.showNormal()
-        self.window_status = True
+        # global is_clicking
+        # if is_clicking == False:
+        if clicking_event.is_set() == False and main_window_visible.is_set() == False:
+            logger.info("showing mainwindow")
+            self.showNormal()
+            main_window_visible.set()
+        # self.window_status = True
+        # main_window_visible.set()
+        stop_current_action.clear()
         self.record_play_button.setEnabled(True)
         logger.info("ending function to stop recording user actions from screen")
 
@@ -5297,6 +5452,7 @@ class UI_SmallWindow(QMainWindow):
         # self.centralwidget = QtWidgets.QWidget(MainWindow)
         # self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        # self.pushButton = QtWidgets.QPushButton(self)
         self.pushButton.setGeometry(QtCore.QRect(88, 0, 52, 41))
         self.pushButton.setText("")
         self.pushButton.setObjectName("pushButton")
@@ -5305,6 +5461,7 @@ class UI_SmallWindow(QMainWindow):
         self.pushButton.clicked.connect(lambda: self.button_action(MainWindow))
         size = QSize(25, 25)
         self.pushButton.setIconSize(size)
+        # self.label = QtWidgets.QLabel(self)
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 89, 41))
         self.label.setFrameShape(QtWidgets.QFrame.Box)
@@ -5323,6 +5480,7 @@ class UI_SmallWindow(QMainWindow):
         logger.info("starting function of button press of small window")
         self.close()
         MainWindow.showNormal()
+        main_window_visible.set()
 
         # MainWindow.after_home_thread()
 
@@ -5425,7 +5583,7 @@ class UI_Dialog(QDialog):
         logger.info("starting function to open email sent dialog box after user enters email")
         email = self.name.text()
         # add email to database
-        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        # con = sqlite3.connect(file_path)
         # cursor = con.cursor()
         # email_data = (email,)
         # cursor.execute("UPDATE local_table SET email = ?", email_data)
@@ -5442,8 +5600,9 @@ class UI_Dialog(QDialog):
         logger.info("connecting to database in open email sent")
         query = "UPDATE local_table SET email = ?"
         self.query_thread = threading.Thread(target=database_action, args=(query, (email,)))
+        self.query_thread.setDaemon(True)
         self.query_thread.start()
-        # con = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        # con = sqlite3.connect(file_path)
         # cursor = con.cursor()
         # email_data = (email,)
         # cursor.execute("UPDATE local_table SET email = ?", email_data)
@@ -5455,6 +5614,7 @@ class UI_Dialog(QDialog):
         # Making a POST request
         logger.info("create new thread for sending verification mail)")
         email_thread = threading.Thread(target=post_register, args=(email,))
+        email_thread.setDaemon(True)
         email_thread.start()
         logger.info("showing the current active threads:")
         for thread in threading.enumerate():
@@ -5548,6 +5708,7 @@ class UI_email_sent_Dialog(QDialog):
         logger.info("starting function to resend verification mail")
         logger.info("create new thread for resending verification mail)")
         resend_email_thread = threading.Thread(target=post_register, args=(email,))
+        resend_email_thread.setDaemon(True)
         resend_email_thread.start()
         logger.info("showing the current active threads:")
         for thread in threading.enumerate():
@@ -5662,8 +5823,21 @@ class CaptureScreen(QtWidgets.QSplashScreen):
             self.master.show()
         logger.info("ending function to capture screen on defined area once mouse press is released")
 
+appname = "GG-Autoclicker"
+appauthor = "GG"
+
+dir_path = os.path.join(user_data_dir(appname,appauthor), 'GG_autoclicker')
+# dir_path = os.path.join(os.environ['APPDATA'], 'GG_autoclicker')
+
+if not os.path.exists(dir_path):
+    os.makedirs(dir_path)
+    file_path = os.path.join(dir_path, 'autoclicker.db')
+    initialise_db()
+
+file_path = os.path.join(dir_path, 'autoclicker.db')
 # below 7 lines gets the latest preferences of the user from the database
-conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+
+conn = sqlite3.connect(file_path)
 cursor = conn.cursor()
 
 logger.info("importing app_settings stored in database")
@@ -5687,9 +5861,13 @@ toaster = ToastNotifier()
 # fetch the hardware UUID
 # print(device_id.get_windows_uuid())
 # ---------
+
 stop_home_event = threading.Event()
 stop_record_event = threading.Event()
 wrong_key_event = threading.Event()
+clicking_event = threading.Event()
+main_window_visible = threading.Event()
+stop_current_action = threading.Event()
 app = QApplication(sys.argv)
 UIWindow = UI()
 UIWindow.show()

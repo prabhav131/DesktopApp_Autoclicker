@@ -5,6 +5,5 @@
     <file>images/dark_unchecked.png</file>
     <file>images/radio_checked.png</file>
     <file>images/radio_unchecked.png</file>
-    <file>autoclicker.db</file>
   </qresource>
 </RCC>

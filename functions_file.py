@@ -5,6 +5,14 @@ import random, string
 import pynput
 import logging
 from PyQt5.QtCore import Qt, QSettings
+from appdirs import *
+
+appname = "GG-Autoclicker"
+appauthor = "GG"
+dir_path = os.path.join(user_data_dir(appname,appauthor), 'GG_autoclicker')
+# dir_path = os.path.join(os.environ['APPDATA'], 'GG_autoclicker')
+file_path = os.path.join(dir_path, 'autoclicker.db')
+# below 7 lines gets the latest preferences of the user from the database
 
 
 def resource_path2(relative_path):
@@ -42,7 +50,7 @@ class functions:
                         location_x, location_y, wait_interval_min, wait_interval_max, wait_type, area_width, area_height,
                         saved_date):
         logger.info("adding home run configuration in database")
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         sql = f'''INSERT INTO home_run_settings
             (save_name, mouse_type, click_type, repeat_or_range, click_repeat, select_or_fixed, location_x,
@@ -60,8 +68,9 @@ class functions:
     @staticmethod
     def add_run_record_db(save_name, csv_text, saved_date, repeat_all, delay_time, delay_type):
         logger.info("save configuration in record run settings")
-        conn = sqlite3.connect(functions.resource_path('autoclicker.db'))
+        conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
+        # logger.info(f"the production path is - {function.resource_path('autoclicker.db')}")
         sql = f'''INSERT INTO record_run_settings
             (save_name, csv_text, saved_date, repeat_all, delay_time, delay_type)
             VALUES (
@@ -77,12 +86,13 @@ class functions:
         """ Get absolute path to resource, works for dev and for PyInstaller """
         try:
             # PyInstaller creates a temp folder and stores path in _MEIPASS
-            # base_path = sys._MEIPASS
-            base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+            logger.info("changed resource_path!!!")
+            base_path = sys._MEIPASS
+            # base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
         except Exception:
             logger.error("Exception occurred", exc_info=True)
             base_path = os.path.abspath(".")
-
+        logger.info("completed function resource_path")
         return os.path.join(base_path, relative_path)
 
     @staticmethod
