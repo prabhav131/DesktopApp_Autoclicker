@@ -131,7 +131,8 @@ def initialise_db():
 
     sql = '''CREATE TABLE "local_table" (
 	"email"	TEXT,
-	"access_token"	TEXT
+	"access_token"	TEXT,
+	"funny_number"	INTEGER DEFAULT 0
     )'''
     cursor.execute(sql)
 
@@ -806,6 +807,21 @@ class UI(QMainWindow):
     # defines all variables and UI elements for the app
     def __init__(self):
         super(UI, self).__init__()
+        self.validity_24_hour = 0
+        self.validity_infinity = 0
+        conn = sqlite3.connect(file_path)
+        cursor = conn.cursor()
+        sql = '''select funny_number from local_table'''
+        cursor.execute(sql)
+        val = cursor.fetchone()
+        if val is not None:
+            funny = val[0]
+            if funny == 1:
+                self.validity_24_hour = 1
+            elif funny == 2:
+                self.validity_infinity = 1
+
+        self.flag = 0
         self.responses = []
         logger.info("starting initialisation of main window")
         logger.info("showing the current active threads:")
@@ -2207,7 +2223,10 @@ class UI(QMainWindow):
     def change_home_start_hotkey(self):
         logger.info("starting function to change_home_start/stop_hotkey")
         self.label_21.show()
-        keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        except:
+            logger.error("error in removing home start stop hotkey", exc_info=True)
         self.home_start_stop_hotkey_label.setText('')
         self.set_new_hotkey_button_1.setEnabled(False)
         self.set_new_hotkey_button_6.setEnabled(False)
@@ -2296,7 +2315,10 @@ class UI(QMainWindow):
     def change_record_start_hotkey(self):
         logger.info("starting function to change_record_start/stop_hotkey")
         self.label_23.show()
-        keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        except:
+            logger.error("error in removing playback start stop hotkey", exc_info=True)
         self.playback_start_stop_hotkey_label.setText('')
         self.set_new_hotkey_button_1.setEnabled(False)
         self.set_new_hotkey_button_6.setEnabled(False)
@@ -2339,7 +2361,10 @@ class UI(QMainWindow):
     def change_mouse_location_hotkey(self):
         logger.info("starting function to change_mouse_location_hotkey")
         self.label_22.show()
-        keyboard.remove_hotkey(self.mouse_location_hotkey)
+        try:
+            keyboard.remove_hotkey(self.mouse_location_hotkey)
+        except:
+            logger.error("error in removing mouse location hotkey", exc_info=True)
         self.mouse_location_hotkey_label.setText('')
         self.set_new_hotkey_button_1.setEnabled(False)
         self.set_new_hotkey_button_6.setEnabled(False)
@@ -2382,7 +2407,10 @@ class UI(QMainWindow):
     def change_recording_hotkey(self):
         logger.info("starting function to change_recording_button_hotkey")
         self.label_24.show()
-        keyboard.remove_hotkey(self.record_recording_hotkey)
+        try:
+            keyboard.remove_hotkey(self.record_recording_hotkey)
+        except:
+            logger.error("error in removing screen recording hotkey", exc_info=True)
         self.record_start_stop_hotkey_label.setText('')
         self.set_new_hotkey_button_1.setEnabled(False)
         self.set_new_hotkey_button_6.setEnabled(False)
@@ -4540,16 +4568,19 @@ class UI(QMainWindow):
             json_info = json.loads(info)
             token = json_info["accessToken"]
             email = ""
-            cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
+            
+
+            logger.info("ending execution of function: authentication_loop2()")
+            # return True
+            self.authentication_result = 1
+            self.validity_24_hour = 1
+
+            cursor.execute("INSERT INTO local_table (email, access_token, funny_number) VALUES(?,?,?)", (email, token,1,))
 
             con.commit()
 
             logger.info("done")
             con.close()
-
-            logger.info("ending execution of function: authentication_loop2()")
-            # return True
-            self.authentication_result = 1
             # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
             # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
             #
@@ -4602,6 +4633,8 @@ class UI(QMainWindow):
                 self.authentication_result = -1
                 logger.info("ending execution of function: authentication_loop2()")
                 return
+            logger.info(response2)
+            logger.info(response2.text)
             logger.info(f"response received from authenticate post call - {response2.text}")
             json_message = json.loads(response2.text)
             # print(type(response2.text))
@@ -4663,12 +4696,12 @@ class UI(QMainWindow):
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
                         logger.info("connecting to db")
-                        query = "UPDATE local_table SET access_token = ? WHERE email = ?"
-                        self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
-
-                        logger.info("starting query_thread")
-                        self.query_thread.setDaemon(True)
-                        self.query_thread.start()
+                        # query = "UPDATE local_table SET access_token = ? WHERE email = ?"
+                        # self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
+                        # 
+                        # logger.info("starting query_thread")
+                        # self.query_thread.setDaemon(True)
+                        # self.query_thread.start()
                         # con = sqlite3.connect(file_path)
                         # logger.info("connected to db")
                         # cursor = con.cursor()
@@ -4682,6 +4715,15 @@ class UI(QMainWindow):
                         logger.info("ending execution of function: authentication_loop2()")
                         # return True
                         self.authentication_result = 1
+                        self.validity_infinity = 1
+                        query = "UPDATE local_table SET access_token = ?, funny_number = 2 WHERE email = ?"
+                        self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
+
+                        logger.info("starting query_thread")
+                        self.query_thread.setDaemon(True)
+                        self.query_thread.start()
+                        
+                        
                 else:
                     # email has not been registered
                     logger.info("email has not been registered, user has to submit an email")
@@ -4733,31 +4775,19 @@ class UI(QMainWindow):
         # if not self.authentication_loop():
         #     return
 
-        if(1 == 2):
-            return
-
-        # self.authentication_loop2()
-        # if self.authentication_result == 0:
-        #     self.foot_note_label.setText("")
-        #     self.foot_note_label.setText("please activate your account")
-        #     logger.info("ending execution of function: home_start_process() as account is yet to be activated")
+        # if(1 == 2):
         #     return
-        # if self.authentication_result == -1:
-        #     self.foot_note_label.setText("")
-        #     self.foot_note_label.setText("you cant access run functionality")
-        #     logger.info("ending execution of function: home_start_process() as access is blocked")
-        #     return
+        if self.validity_infinity == 0 and self.validity_24_hour == 0:
+            logger.info("user has to connect to internet for authentication")
+            self.authentication_loop2()
+            if self.authentication_result == -1 or self.authentication_result == 0:
+                self.foot_note_label.setText("")
+                self.foot_note_label.setText("you cant access run functionality")
+                logger.info("ending execution of function: home_start_process() as access is blocked")
+                return
+        else:
+            logger.info("user doesnt have to connect to internet")
 
-
-        # if self.authentication_result == -2:
-        #     logger.info("register your email")
-        #     self.open_email_dialog()
-        # result = []
-        # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
-        # new_thread.start()
-        # new_thread.join()
-        # if not result:
-        #     return
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
         never_stop_boolean = self.never_stop_combobox.currentText()
@@ -4843,14 +4873,35 @@ class UI(QMainWindow):
         self.open_small_window(run_mode="home")
         # ----------------------
 
-        keyboard.remove_hotkey(self.home_start_stop_hotkey)
-        # keyboard.add_hotkey(self.home_start_stop_hotkey, self.home_stop_process)
+        try:
+            keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        except:
+            logger.error("error in removing home start stop hotkey", exc_info=True)        # keyboard.add_hotkey(self.home_start_stop_hotkey, self.home_stop_process)
         keyboard.add_hotkey(self.home_start_stop_hotkey, self.multiple_hotkey_actions_home)
         self.foot_note_label.setText('')
         self.play_button.setEnabled(False)
         # global is_clicking
         # is_clicking = True
         clicking_event.set()
+        try:
+            keyboard.remove_hotkey(self.add_record_line_hotkey)
+        except:
+            logger.error("error in removing add record line hotkey", exc_info=True)
+        try:
+            keyboard.remove_hotkey(self.record_recording_hotkey)
+        except:
+            logger.error("error in removing screen recording hotkey", exc_info=True)
+
+        try:
+            keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        except:
+            logger.error("error in removing playback start stop hotkey", exc_info=True)
+
+        try:
+            keyboard.remove_hotkey(self.mouse_location_hotkey)
+        except:
+            logger.error("error in removing mouse location hotkey", exc_info=True)
+
         toaster.show_toast(title="Clicking started", msg=f'Press {self.home_start_stop_hotkey.upper()} to stop',
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         if radio_button == 1:
@@ -4897,7 +4948,10 @@ class UI(QMainWindow):
     def after_home_thread(self):
         logger.info("started execution of function: after_home_thread()")
         self.play_button.setEnabled(True)
-        keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        except:
+            logger.error("error in removing home start stop hotkey", exc_info=True)
         keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
         # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
 
@@ -4911,6 +4965,9 @@ class UI(QMainWindow):
             logger.info("showing normal view of main window")
             logger.info(f"value is {main_window_visible.is_set()}")
             if main_window_visible.is_set() == False:
+                # if self.flag == 1:
+                #     self.insert_recording_list(self.record_events)
+                #     self.flag = 0
                 logger.info("norm")
                 self.showNormal()
                 main_window_visible.set()
@@ -4929,6 +4986,23 @@ class UI(QMainWindow):
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
 
         computer_type = self.complete_combobox_3.currentText()
+        
+
+        try:
+            keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
+        except:
+            logger.error("error in adding screen recording hotkey", exc_info=True)
+
+        try:
+            keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
+        except:
+            logger.error("error in adding playback start stop hotkey", exc_info=True)
+
+        try:
+            keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+        except:
+            logger.error("error in adding mouse location hotkey", exc_info=True)
+
         # logger.info("done heree")
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
@@ -4981,23 +5055,34 @@ class UI(QMainWindow):
         #     return
         # if not self.authentication_loop():
         #     return
-        self.authentication_loop2()
-        if self.authentication_result == 0:
-            self.foot_note_label.setText("")
-            self.foot_note_label.setText("please activate your account")
-            logger.info("ending execution of function: record_start_process() as account is yet to be activated")
-            return
-        if self.authentication_result == -1:
-            self.foot_note_label.setText("")
-            self.foot_note_label.setText("you cant access run functionality")
-            logger.info("ending execution of function: record_start_process() as access is blocked")
-            return
+        # self.authentication_loop2()
+        # if self.authentication_result == 0:
+        #     self.foot_note_label.setText("")
+        #     self.foot_note_label.setText("please activate your account")
+        #     logger.info("ending execution of function: record_start_process() as account is yet to be activated")
+        #     return
+        # if self.authentication_result == -1:
+        #     self.foot_note_label.setText("")
+        #     self.foot_note_label.setText("you cant access run functionality")
+        #     logger.info("ending execution of function: record_start_process() as access is blocked")
+        #     return
         # result = []
         # new_thread = threading.Thread(target=self.authentication_loop, args=(result,))
         # new_thread.start()
         # new_thread.join()
         # if not result:
         #     return
+
+        if self.validity_infinity == 0 and self.validity_24_hour == 0:
+            logger.info("user has to connect to internet for authentication")
+            self.authentication_loop2()
+            if self.authentication_result == -1 or self.authentication_result == 0:
+                self.foot_note_label.setText("")
+                self.foot_note_label.setText("you cant access run functionality")
+                logger.info("ending execution of function: home_start_process() as access is blocked")
+                return
+        else:
+            logger.info("user doesnt have to connect to internet")
 
         if self.i == 1:
             logger.error("Exception occurred- no actions available", exc_info=True)
@@ -5089,18 +5174,44 @@ class UI(QMainWindow):
         main_window_visible.clear()
         self.open_small_window(run_mode="record playback")
         # -------------------------
-        keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        except:
+            logger.error("error in removing record start stop hotkey", exc_info=True)
         keyboard.add_hotkey(self.record_start_stop_hotkey, self.multiple_hotkey_actions_home)
         self.record_play_button.setEnabled(False)
         # global is_clicking
         # is_clicking = True
         clicking_event.set()
+        try:
+            keyboard.remove_hotkey(self.add_record_line_hotkey)
+        except:
+            logger.error("error in removing add record line hotkey", exc_info=True)
+
+        try:
+            keyboard.remove_hotkey(self.record_recording_hotkey)
+        except:
+            logger.error("error in removing screen recording hotkey", exc_info=True)
+
+        try:
+            keyboard.remove_hotkey(self.home_start_stop_hotkey)
+        except:
+            logger.error("error in removing home start stop hotkey", exc_info=True)
+
+        try:
+            keyboard.remove_hotkey(self.mouse_location_hotkey)
+        except:
+            logger.error("error in removing mouse location hotkey", exc_info=True)
+
+
         toaster.show_toast(title="Playback started",
                            msg=f'Press {self.record_start_stop_hotkey.upper()} to stop playback',
                            icon_path=functions.resource_path(r'images/ico_logo.ico'), threaded=True, duration=2)
         logger.info("starting thread for playing back recorded actions")
-        keyboard.remove_hotkey(self.record_recording_hotkey)
-
+        try:
+            keyboard.remove_hotkey(self.record_recording_hotkey)
+        except:
+            logger.error("error in removing screen recording hotkey", exc_info=True)
         thread_2 = threading.Thread(target=lambda: start_record_actions(actions_data, repeat_all, delay_time, self.i))
         # thread_2.setDaemon(True)
         thread_2.start()
@@ -5114,7 +5225,10 @@ class UI(QMainWindow):
             wrong_key_event.clear()
         self.record_play_button.setEnabled(True)
         # logger.info("wth")
-        keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        except:
+            logger.error("error in removing record start stop hotkey", exc_info=True)
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
 
         if self.small_window_opened is not None:
@@ -5138,6 +5252,22 @@ class UI(QMainWindow):
         keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
         # logger.info("no im here")
         computer_type = self.complete_combobox_3.currentText()
+
+
+        try:
+            keyboard.add_hotkey(self.record_recording_hotkey, lambda: self.record_record_button.click())
+        except:
+            logger.error("error in adding screen recording hotkey", exc_info=True)
+
+        try:
+            keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
+        except:
+            logger.error("error in adding home start stop hotkey", exc_info=True)
+
+        try:
+            keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+        except:
+            logger.error("error in adding mouse location hotkey", exc_info=True)
 
         if computer_type == " Turn off":
             os.system("shutdown /s /t 1")
@@ -5202,13 +5332,13 @@ class UI(QMainWindow):
             #     break
             # if stop_record_event.is_set():
             #     break
-            if stop_current_action.is_set():
-                logger.info("force stopping this-1")
-                return
+            # if stop_current_action.is_set():
+            #     logger.info("force stopping this-1")
+            #     return
             if len(events[a]) == 5:
-                if stop_current_action.is_set():
-                    logger.info("force stopping this-2")
-                    return
+                # if stop_current_action.is_set():
+                #     logger.info("force stopping this-2")
+                #     return
                 self.add_mouse_line()
                 children = self.line_list[b][1].children()
                 children[3].setText(str(events[a][0]))
@@ -5227,9 +5357,9 @@ class UI(QMainWindow):
                 children[11].setText(str(delay))
 
             elif len(events[a]) == 4:
-                if stop_current_action.is_set():
-                    logger.info("force stopping this-3")
-                    return
+                # if stop_current_action.is_set():
+                #     logger.info("force stopping this-3")
+                #     return
                 self.add_scroll_line()
                 children = self.line_list[b][1].children()
                 children[3].setText(str(events[a][0]))
@@ -5264,9 +5394,9 @@ class UI(QMainWindow):
                     a += scroll_count - 1
                 children[11].setText(str(delay))
             elif len(events[a]) == 6:
-                if stop_current_action.is_set():
-                    logger.info("force stopping this-4")
-                    return
+                # if stop_current_action.is_set():
+                #     logger.info("force stopping this-4")
+                #     return
                 self.add_keyboard_line()
                 children = self.line_list[b][1].children()
                 char_group = events[a][0]
@@ -5317,7 +5447,10 @@ class UI(QMainWindow):
     def live_record_process(self):
         logger.info(
             "starting function to start recording user actions from screen")
-        keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        try:
+            keyboard.remove_hotkey(self.record_start_stop_hotkey)
+        except:
+            logger.error("error in removing record start stop hotkey", exc_info=True)
         def on_click(x, y, button, pressed):
             nonlocal time_counter
             old_time = time_counter
@@ -5420,15 +5553,21 @@ class UI(QMainWindow):
         self.record_record_button.clicked.connect(self.thread_for_live_record)
         self.record_record_button.setText("Record")
         keyboard.add_hotkey(self.record_start_stop_hotkey, lambda: self.record_play_button.click())
-        self.insert_recording_list(self.record_events)
+        # self.insert_recording_list(self.record_events)
         # global is_clicking
         # if is_clicking == False:
         if clicking_event.is_set() == False and main_window_visible.is_set() == False:
+            logger.info("inserting record actions")
+            self.insert_recording_list(self.record_events)
             logger.info("showing mainwindow")
             self.showNormal()
             main_window_visible.set()
+
+        if clicking_event.is_set() == True:
+            self.flag = 1
         # self.window_status = True
         # main_window_visible.set()
+        # self.insert_recording_list(self.record_events)
         stop_current_action.clear()
         self.record_play_button.setEnabled(True)
         logger.info("ending function to stop recording user actions from screen")
@@ -5836,7 +5975,7 @@ if not os.path.exists(dir_path):
 
 file_path = os.path.join(dir_path, 'autoclicker.db')
 # below 7 lines gets the latest preferences of the user from the database
-
+logger.info(f"db file path is - {file_path}")
 conn = sqlite3.connect(file_path)
 cursor = conn.cursor()
 
