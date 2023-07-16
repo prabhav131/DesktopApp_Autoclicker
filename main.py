@@ -2539,10 +2539,10 @@ class UI(QMainWindow):
         self.record_save_window.setWindowTitle("Save")
         self.record_save_window.setWindowIcon(QtGui.QIcon(functions.resource_path('images/icons8-save-90')))
         # sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
-        self.record_save_window.setGeometry(self.screen_width/2.3, self.screen_height/2.3, self.screen_width/6.4, self.screen_height/10.4)
+        self.record_save_window.setGeometry(int(self.screen_width/2.3), int(self.screen_height/2.3), int(self.screen_width/6.4), int(self.screen_height/10.4))
         # self.record_save_window.setFixedWidth(300)
-        self.record_save_window.setFixedWidth(self.screen_width/6.4)
-        self.record_save_window.setFixedHeight(self.screen_height/10.4)
+        self.record_save_window.setFixedWidth(int(self.screen_width/6.4))
+        self.record_save_window.setFixedHeight(int(self.screen_height/10.4))
         # self.record_save_window.setFixedHeight(115)
         self.invisible_widget_1 = QWidget(self.record_save_window)
         self.record_save_layout = QGridLayout(self.invisible_widget_1)
@@ -2552,7 +2552,7 @@ class UI(QMainWindow):
         self.record_save_button_pc = QPushButton(self.invisible_widget_1)
         self.record_save_button_db = QPushButton(self.invisible_widget_1)
         self.record_save_footnote = QLabel(self.invisible_widget_1)
-        self.invisible_widget_1.setGeometry(0, 0, self.sizeObject.width()/6.4, self.sizeObject.height()/10.4)
+        self.invisible_widget_1.setGeometry(0, 0, int(self.sizeObject.width()/6.4), int(self.sizeObject.height()/10.4))
         if self.dark_theme_activated:
             self.invisible_widget_1.setStyleSheet("background-color: #10131b;")
         else:
