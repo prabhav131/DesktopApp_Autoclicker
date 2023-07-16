@@ -11,7 +11,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-#dist/
+dist/
 downloads/
 eggs/
 .eggs/
@@ -55,6 +55,9 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+
+#idea folder
+.idea/
 
 # Django stuff:
 *.log
@@ -105,6 +108,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+gg-venv/
 env/
 venv/
 ENV/

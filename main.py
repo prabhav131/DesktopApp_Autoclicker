@@ -1450,12 +1450,17 @@ class UI(QMainWindow):
         if self.small_window_checkbox.isChecked():
             return
         stop_hotkey_text = ""
+        indicator = 0
         if run_mode == "home":
             stop_hotkey_text = self.home_start_stop_hotkey_label.text()
         elif run_mode == "record playback":
             stop_hotkey_text = self.playback_start_stop_hotkey_label.text()
+        elif run_mode == "recording":
+            indicator = 1
+            logger.info("recording mein small window")
+            stop_hotkey_text = self.record_start_stop_hotkey_label.text()
 
-        self.small_window = UI_SmallWindow(stop_hotkey_text, UIWindow)
+        self.small_window = UI_SmallWindow(stop_hotkey_text, UIWindow, indicator)
 
         self.small_window.show()
         self.small_window_opened = self.small_window  # holds the current object of small window
@@ -5435,6 +5440,7 @@ class UI(QMainWindow):
         logger.info(
             "starting function to start thread to start recording user actions from screen")
         self.remove_all_lines()
+        self.open_small_window(run_mode="recording")
         new_thread = threading.Thread(target=self.live_record_process)
         new_thread.setDaemon(True)
         new_thread.start()
@@ -5449,6 +5455,7 @@ class UI(QMainWindow):
     def live_record_process(self):
         logger.info(
             "starting function to start recording user actions from screen")
+
         try:
             keyboard.remove_hotkey(self.record_start_stop_hotkey)
         except:
@@ -5526,6 +5533,7 @@ class UI(QMainWindow):
         self.mouse_listener = pynput.mouse.Listener(on_click=on_click, on_scroll=on_scroll)
         self.keyboard_listener = pynput.keyboard.Listener(on_press=on_press, on_release=on_release)
         self.showMinimized()
+
         # self.window_status = False
         main_window_visible.clear()
         # send notification to desktop
@@ -5558,6 +5566,10 @@ class UI(QMainWindow):
         # self.insert_recording_list(self.record_events)
         # global is_clicking
         # if is_clicking == False:
+        if self.small_window_opened is not None:
+            # self.small_window_opened.button_action(self)
+            logger.info("small window is opened")
+            self.small_window_opened.close()
         if clicking_event.is_set() == False and main_window_visible.is_set() == False:
             logger.info("inserting record actions")
             self.insert_recording_list(self.record_events)
@@ -5577,7 +5589,7 @@ class UI(QMainWindow):
 
 class UI_SmallWindow(QMainWindow):
     # defines all variables and UI elements for the app
-    def __init__(self, stop_hotkey, MainWindow):
+    def __init__(self, stop_hotkey, MainWindow, indicator):
         logger.info("started initialisation of small window UI")
         super(UI_SmallWindow, self).__init__()
         uic.loadUi(functions.resource_path("small_window.ui"), self)
@@ -5615,19 +5627,22 @@ class UI_SmallWindow(QMainWindow):
         # self.retranslateUi(stop_hotkey)
         # QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def button_action(self, MainWindow):
+    def button_action(self, MainWindow, indicator):
         # master_window = UI()
         # call stop function from this object
         logger.info("starting function of button press of small window")
-        self.close()
-        MainWindow.showNormal()
-        main_window_visible.set()
+        if indicator == 1:
+            logger.info("calling function stop_live_record()")
+            MainWindow.stop_live_record()
 
-        # MainWindow.after_home_thread()
-
-        logger.info("calling function home_stop_process()")
-        MainWindow.home_stop_process()
-        MainWindow.record_stop_process()
+        else:
+            self.close()
+            MainWindow.showNormal()
+            main_window_visible.set()
+            logger.info("calling function home_stop_process()")
+            MainWindow.home_stop_process()
+            logger.info("calling function record_stop_process()")
+            MainWindow.record_stop_process()
         logger.info("ending function of button press of small window")
 
 
