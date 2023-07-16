@@ -3,3 +3,5 @@ keyboard
 win10toast
 pynput
 email_validator
+appdirs
+pyinstaller

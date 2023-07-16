@@ -1,0 +1,205 @@
+15-Jul-23 16:30:27 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:27 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:27 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\app.log
+15-Jul-23 16:30:27 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:27 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:27 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\version2.ui
+15-Jul-23 16:30:27 - INFO     [main.py:5978] - db file path is - C:\Users\pgupta23\AppData\Local\GG\GG-Autoclicker\GG_autoclicker\autoclicker.db
+15-Jul-23 16:30:27 - INFO     [main.py:5982] - importing app_settings stored in database
+15-Jul-23 16:30:27 - INFO     [main.py:826] - starting initialisation of main window
+15-Jul-23 16:30:27 - INFO     [main.py:827] - showing the current active threads:
+15-Jul-23 16:30:27 - INFO     [main.py:829] - <_MainThread(MainThread, started 4348)>
+15-Jul-23 16:30:27 - INFO     [main.py:830] - list complete
+15-Jul-23 16:30:27 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:27 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:27 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\version2.ui
+15-Jul-23 16:30:27 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:27 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:27 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/app_logo.png
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/home
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Record
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Settings
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/HotkeyBlack
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/GGicon
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Hambuger
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/liliajohn
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/icons8-ui-64
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/icons8-upload-96
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Run
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/red-circle
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/run.png
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/app_logo.png
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/empty_checkbox
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/empty_checkbox
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/empty_checkbox
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/empty_checkbox
+15-Jul-23 16:30:28 - INFO     [main.py:3846] - starting function call to start thread to write live mouse position to screen
+15-Jul-23 16:30:28 - INFO     [main.py:3849] - created new thread for get live mouse function
+15-Jul-23 16:30:28 - INFO     [main.py:3860] - starting function to constantly write the live cursor position to the screen
+15-Jul-23 16:30:28 - INFO     [main.py:3851] - started the new thread for get live mouse function
+15-Jul-23 16:30:28 - INFO     [main.py:3852] - showing the current active threads:
+15-Jul-23 16:30:28 - INFO     [main.py:3854] - <_MainThread(MainThread, started 4348)>
+15-Jul-23 16:30:28 - INFO     [main.py:3854] - <Thread(Thread-1, started daemon 14028)>
+15-Jul-23 16:30:28 - INFO     [main.py:3855] - list complete
+15-Jul-23 16:30:28 - INFO     [main.py:3856] - ending function call to start thread to write live mouse position to screen
+15-Jul-23 16:30:28 - INFO     [main.py:1482] - starting function to toggle show_tool_after_clicking checkbox
+15-Jul-23 16:30:28 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:28 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:28 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/check_icon
+15-Jul-23 16:30:28 - INFO     [main.py:1503] - ending function to toggle show_tool_after_clicking checkbox
+15-Jul-23 16:30:29 - INFO     [main.py:3104] - started function to load saved home settings on the home screen
+15-Jul-23 16:30:29 - INFO     [main.py:3111] - no data saved in home run settings
+15-Jul-23 16:30:29 - INFO     [main.py:3113] - ending function to load saved home settings on the home screen
+15-Jul-23 16:30:29 - INFO     [main.py:1418] - ending initialisation of main window
+15-Jul-23 16:30:33 - INFO     [main.py:5433] - starting function to start thread to start recording user actions from screen
+15-Jul-23 16:30:33 - INFO     [main.py:3709] - started function to remove All lines from record actions
+15-Jul-23 16:30:33 - INFO     [main.py:3723] - ending function to remove All lines from record actions
+15-Jul-23 16:30:33 - INFO     [main.py:5448] - starting function to start recording user actions from screen
+15-Jul-23 16:30:33 - INFO     [main.py:5439] - created and started new thread for live record process function
+15-Jul-23 16:30:33 - INFO     [main.py:5440] - showing the current active threads:
+15-Jul-23 16:30:33 - INFO     [main.py:5442] - <_MainThread(MainThread, started 4348)>
+15-Jul-23 16:30:33 - INFO     [main.py:5442] - <Thread(Thread-1, started daemon 14028)>
+15-Jul-23 16:30:33 - INFO     [main.py:5442] - <Thread(Thread-2, started daemon 14152)>
+15-Jul-23 16:30:33 - INFO     [main.py:5442] - <Thread(Thread-3, started daemon 11736)>
+15-Jul-23 16:30:33 - INFO     [main.py:5442] - <Thread(Thread-4, started daemon 31584)>
+15-Jul-23 16:30:33 - INFO     [main.py:5443] - list complete
+15-Jul-23 16:30:33 - INFO     [main.py:5444] - ending function to start thread to start recording user actions from screen
+15-Jul-23 16:30:33 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:33 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:33 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/ico_logo.ico
+15-Jul-23 16:30:33 - INFO     [main.py:5539] - ending function to start recording user actions from screen
+15-Jul-23 16:30:37 - INFO     [main.py:5543] - starting function to stop recording user actions from screen
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/ico_logo.ico
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/red-circle
+15-Jul-23 16:30:37 - INFO     [main.py:5560] - inserting record actions
+15-Jul-23 16:30:37 - INFO     [main.py:5294] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
+15-Jul-23 16:30:37 - INFO     [main.py:5297] - the events recorded are- [[967, 729, <Button.left: (4, 2, 0)>, True, 0.65], [967, 729, <Button.left: (4, 2, 0)>, False, 0.08], [894, 762, <Button.left: (4, 2, 0)>, True, 0.62], [894, 762, <Button.left: (4, 2, 0)>, False, 0.08], [921, 746, <Button.left: (4, 2, 0)>, True, 0.64], [921, 746, <Button.left: (4, 2, 0)>, False, 0.06], [<Key.f9: <120>>, 'key', 1.39, 'press', 0, 0]]
+15-Jul-23 16:30:37 - INFO     [main.py:3709] - started function to remove All lines from record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3723] - ending function to remove All lines from record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3294] - started function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Red-Minus-PNG-File
+15-Jul-23 16:30:37 - INFO     [main.py:3430] - ending function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3294] - started function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Red-Minus-PNG-File
+15-Jul-23 16:30:37 - INFO     [main.py:3430] - ending function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3294] - started function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Red-Minus-PNG-File
+15-Jul-23 16:30:37 - INFO     [main.py:3430] - ending function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3294] - started function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Red-Minus-PNG-File
+15-Jul-23 16:30:37 - INFO     [main.py:3430] - ending function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [main.py:3294] - started function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:37 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:37 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/Red-Minus-PNG-File
+15-Jul-23 16:30:37 - INFO     [main.py:3430] - ending function to add new mouse line in record actions
+15-Jul-23 16:30:37 - INFO     [main.py:5428] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
+15-Jul-23 16:30:37 - INFO     [main.py:5562] - showing mainwindow
+15-Jul-23 16:30:37 - INFO     [main.py:5573] - ending function to stop recording user actions from screen
+15-Jul-23 16:30:39 - INFO     [main.py:3686] - started function to add remove line from record actions
+15-Jul-23 16:30:39 - INFO     [main.py:3705] - ending function to add remove line from record actions
+15-Jul-23 16:30:40 - INFO     [main.py:5049] - started function record_start_process()
+15-Jul-23 16:30:40 - INFO     [main.py:5085] - user doesnt have to connect to internet
+15-Jul-23 16:30:40 - INFO     [main.py:5093] - green signal given to perform recorded autoclicking!!
+15-Jul-23 16:30:40 - INFO     [main.py:1449] - started function call to open small window
+15-Jul-23 16:30:40 - INFO     [main.py:5579] - started initialisation of small window UI
+15-Jul-23 16:30:40 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:40 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:40 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\small_window.ui
+15-Jul-23 16:30:40 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:40 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:40 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/red-circle
+15-Jul-23 16:30:40 - INFO     [main.py:5612] - ending initialisation of small window UI
+15-Jul-23 16:30:40 - INFO     [main.py:1462] - completed function call to open small window
+15-Jul-23 16:30:40 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:40 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:40 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/ico_logo.ico
+15-Jul-23 16:30:40 - INFO     [main.py:5210] - starting thread for playing back recorded actions
+15-Jul-23 16:30:40 - ERROR    [main.py:5214] - error in removing screen recording hotkey
+Traceback (most recent call last):
+  File "main.py", line 5212, in record_start_process
+  File "keyboard\__init__.py", line 750, in remove_hotkey
+KeyError: 'f9'
+15-Jul-23 16:30:40 - INFO     [main.py:747] - start execution of function: start_record_action(): playing back record actions from record screen
+15-Jul-23 16:30:40 - INFO     [main.py:5218] - ending execution of function: record_start_process()
+15-Jul-23 16:30:40 - INFO     [main.py:660] - start execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:41 - INFO     [main.py:673] - ending execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:41 - INFO     [main.py:660] - start execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:41 - INFO     [main.py:673] - ending execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:41 - INFO     [main.py:660] - start execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:42 - INFO     [main.py:673] - ending execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:42 - INFO     [main.py:660] - start execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:43 - INFO     [main.py:673] - ending execution of function: click for record: clicking action for record screen
+15-Jul-23 16:30:43 - INFO     [main.py:5222] - starting execution of function: after_record_thread()
+15-Jul-23 16:30:43 - INFO     [main.py:5236] - small window is opened
+15-Jul-23 16:30:43 - INFO     [main.py:5241] - showing the current active threads:
+15-Jul-23 16:30:43 - INFO     [main.py:5243] - <_MainThread(MainThread, started 4348)>
+15-Jul-23 16:30:43 - INFO     [main.py:5243] - <Thread(Thread-1, started daemon 14028)>
+15-Jul-23 16:30:43 - INFO     [main.py:5243] - <Thread(Thread-2, started daemon 14152)>
+15-Jul-23 16:30:43 - INFO     [main.py:5243] - <Thread(Thread-3, started daemon 11736)>
+15-Jul-23 16:30:43 - INFO     [main.py:5243] - <Thread(Thread-10, started 13192)>
+15-Jul-23 16:30:43 - INFO     [main.py:5244] - list complete
+15-Jul-23 16:30:43 - INFO     [functions_file.py:89] - exe mode
+15-Jul-23 16:30:43 - INFO     [functions_file.py:96] - completed function resource_path
+15-Jul-23 16:30:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\AppData\Local\Temp\_MEI478762\images/ico_logo.ico
+15-Jul-23 16:30:43 - INFO     [main.py:5289] - ending execution of function: after_record_thread()
+15-Jul-23 16:30:43 - INFO     [main.py:803] - ending execution of function: start_record_action(): playing back record actions from record screen
+15-Jul-23 16:30:44 - INFO     [main.py:1507] - starting function to exit app
+15-Jul-23 16:30:44 - INFO     [main.py:1536] - showing the current active threads:
+15-Jul-23 16:30:44 - INFO     [main.py:1538] - <_MainThread(MainThread, started 4348)>
+15-Jul-23 16:30:44 - INFO     [main.py:1538] - <Thread(Thread-1, started daemon 14028)>
+15-Jul-23 16:30:44 - INFO     [main.py:1538] - <Thread(Thread-2, started daemon 14152)>
+15-Jul-23 16:30:44 - INFO     [main.py:1538] - <Thread(Thread-3, started daemon 11736)>
+15-Jul-23 16:30:44 - INFO     [main.py:1538] - <Thread(Thread-11, started 24912)>
+15-Jul-23 16:30:44 - INFO     [main.py:1539] - list complete
+15-Jul-23 16:30:44 - INFO     [main.py:1569] - deleting any stored home settings
+15-Jul-23 16:30:44 - INFO     [main.py:1574] - exiting app
