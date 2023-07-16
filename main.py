@@ -20,6 +20,7 @@ import ctypes
 from win10toast import ToastNotifier
 import pynput
 import datetime
+from datetime import timedelta
 import webbrowser
 import requests
 from email_validator import validate_email, EmailNotValidError
@@ -132,9 +133,12 @@ def initialise_db():
     sql = '''CREATE TABLE "local_table" (
 	"email"	TEXT,
 	"access_token"	TEXT,
-	"funny_number"	INTEGER DEFAULT 0
+	"funny_number"	INTEGER DEFAULT 0,
+	"timestamp" TEXT
     )'''
     cursor.execute(sql)
+
+
 
     sql = '''CREATE TABLE record_run_settings (
             save_name TEXT NOT NULL UNIQUE,
@@ -4113,6 +4117,8 @@ class UI(QMainWindow):
                     )'''
         cursor.execute(sql)
         conn.commit()
+        self.foot_note_label.setText("")
+        self.foot_note_label.setText("Home settings saved!")
         logger.info("saved home settings in database")
         conn.close()
         logger.info("ending function to save home settings in the database")
@@ -4581,8 +4587,11 @@ class UI(QMainWindow):
             # return True
             self.authentication_result = 1
             self.validity_24_hour = 1
+            time_1 = datetime.datetime.now()
+            expiration_datetime = time_1 + timedelta(days=1)
+            time_1_str = str(expiration_datetime)
 
-            cursor.execute("INSERT INTO local_table (email, access_token, funny_number) VALUES(?,?,?)", (email, token,1,))
+            cursor.execute("INSERT INTO local_table (email, access_token, funny_number, timestamp) VALUES(?,?,?,?)", (email, token,1,time_1_str))
 
             con.commit()
 
@@ -4792,7 +4801,24 @@ class UI(QMainWindow):
                 self.foot_note_label.setText("you cant access run functionality")
                 logger.info("ending execution of function: home_start_process() as access is blocked")
                 return
+
         else:
+            time_2 = datetime.datetime.now()
+            con = sqlite3.connect(file_path)
+            cursor = con.cursor()
+            cursor.execute("SELECT timestamp from local_table")
+            value = cursor.fetchone()
+            print(value[0])
+            con.close()
+            expiration_datetime_object = datetime.datetime.strptime(value[0], '%Y-%m-%d %H:%M:%S.%f')
+            print(expiration_datetime_object < time_2)
+            if expiration_datetime_object < time_2:
+                self.authentication_loop2()
+                if self.authentication_result == -1 or self.authentication_result == 0:
+                    self.foot_note_label.setText("")
+                    self.foot_note_label.setText("you cant access run functionality")
+                    logger.info("ending execution of function: home_start_process() as access is blocked")
+                    return
             logger.info("user doesnt have to connect to internet")
 
         mouse_type = self.mouse_button_combobox.currentText().lower()
@@ -5089,6 +5115,20 @@ class UI(QMainWindow):
                 logger.info("ending execution of function: home_start_process() as access is blocked")
                 return
         else:
+            time_2 = datetime.datetime.now()
+            con = sqlite3.connect(file_path)
+            cursor = con.cursor()
+            cursor.execute("SELECT timestamp from local_table")
+            value = cursor.fetchone()
+            con.close()
+            expiration_datetime_object = datetime.datetime.strptime(value[0], '%Y-%m-%d %H:%M:%S.%f')
+            if expiration_datetime_object < time_2:
+                self.authentication_loop2()
+                if self.authentication_result == -1 or self.authentication_result == 0:
+                    self.foot_note_label.setText("")
+                    self.foot_note_label.setText("you cant access run functionality")
+                    logger.info("ending execution of function: record_start_process() as access is blocked")
+                    return
             logger.info("user doesnt have to connect to internet")
 
         if self.i == 1:

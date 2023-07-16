@@ -1,310 +1,181 @@
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\app.log
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
-16-Jul-23 22:52:43 - INFO     [main.py:5995] - db file path is - C:\Users\pgupta23\AppData\Local\GG\GG-Autoclicker\GG_autoclicker\autoclicker.db
-16-Jul-23 22:52:43 - INFO     [main.py:5999] - importing app_settings stored in database
-16-Jul-23 22:52:43 - INFO     [main.py:826] - starting initialisation of main window
-16-Jul-23 22:52:43 - INFO     [main.py:827] - showing the current active threads:
-16-Jul-23 22:52:43 - INFO     [main.py:829] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:52:43 - INFO     [main.py:830] - list complete
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/home
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Record
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Settings
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/HotkeyBlack
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/GGicon
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Hambuger
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/liliajohn
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-ui-64
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-upload-96
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Run
-16-Jul-23 22:52:43 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:43 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:43 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/run.png
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-16-Jul-23 22:52:44 - INFO     [main.py:3853] - starting function call to start thread to write live mouse position to screen
-16-Jul-23 22:52:44 - INFO     [main.py:3856] - created new thread for get live mouse function
-16-Jul-23 22:52:44 - INFO     [main.py:3867] - starting function to constantly write the live cursor position to the screen
-16-Jul-23 22:52:44 - INFO     [main.py:3858] - started the new thread for get live mouse function
-16-Jul-23 22:52:44 - INFO     [main.py:3859] - showing the current active threads:
-16-Jul-23 22:52:44 - INFO     [main.py:3861] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:52:44 - INFO     [main.py:3861] - <Thread(Thread-1, started daemon 49276)>
-16-Jul-23 22:52:44 - INFO     [main.py:3862] - list complete
-16-Jul-23 22:52:44 - INFO     [main.py:3863] - ending function call to start thread to write live mouse position to screen
-16-Jul-23 22:52:44 - INFO     [main.py:1487] - starting function to toggle show_tool_after_clicking checkbox
-16-Jul-23 22:52:44 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:44 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:44 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/check_icon
-16-Jul-23 22:52:44 - INFO     [main.py:1508] - ending function to toggle show_tool_after_clicking checkbox
-16-Jul-23 22:52:45 - INFO     [main.py:3111] - started function to load saved home settings on the home screen
-16-Jul-23 22:52:45 - INFO     [main.py:3118] - no data saved in home run settings
-16-Jul-23 22:52:45 - INFO     [main.py:3120] - ending function to load saved home settings on the home screen
-16-Jul-23 22:52:45 - INFO     [main.py:1418] - ending initialisation of main window
-16-Jul-23 22:52:48 - INFO     [main.py:5440] - starting function to start thread to start recording user actions from screen
-16-Jul-23 22:52:48 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:52:48 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:52:48 - INFO     [main.py:1449] - started function call to open small window
-16-Jul-23 22:52:48 - INFO     [main.py:1460] - recording mein small window
-16-Jul-23 22:52:48 - INFO     [main.py:5593] - started initialisation of small window UI
-16-Jul-23 22:52:48 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:48 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\small_window.ui
-16-Jul-23 22:52:48 - INFO     [main.py:5600] -  Screen size : 1200x1920
-16-Jul-23 22:52:48 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:48 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:52:48 - INFO     [main.py:5626] - ending initialisation of small window UI
-16-Jul-23 22:52:48 - INFO     [main.py:1467] - completed function call to open small window
-16-Jul-23 22:52:48 - INFO     [main.py:5456] - starting function to start recording user actions from screen
-16-Jul-23 22:52:48 - INFO     [main.py:5447] - created and started new thread for live record process function
-16-Jul-23 22:52:48 - INFO     [main.py:5448] - showing the current active threads:
-16-Jul-23 22:52:48 - INFO     [main.py:5450] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:52:48 - INFO     [main.py:5450] - <Thread(Thread-1, started daemon 49276)>
-16-Jul-23 22:52:48 - INFO     [main.py:5450] - <Thread(Thread-2, started daemon 48532)>
-16-Jul-23 22:52:48 - INFO     [main.py:5450] - <Thread(Thread-3, started daemon 40900)>
-16-Jul-23 22:52:48 - INFO     [main.py:5450] - <Thread(Thread-4, started daemon 44784)>
-16-Jul-23 22:52:48 - INFO     [main.py:5451] - list complete
-16-Jul-23 22:52:48 - INFO     [main.py:5452] - ending function to start thread to start recording user actions from screen
-16-Jul-23 22:52:48 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:48 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:48 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:52:48 - INFO     [main.py:5549] - ending function to start recording user actions from screen
-16-Jul-23 22:52:52 - INFO     [main.py:5553] - starting function to stop recording user actions from screen
-16-Jul-23 22:52:52 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:52 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:52:52 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:52 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:52:52 - INFO     [main.py:5571] - small window is opened
-16-Jul-23 22:52:52 - INFO     [main.py:5574] - inserting record actions
-16-Jul-23 22:52:52 - INFO     [main.py:5301] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:52:52 - INFO     [main.py:5304] - the events recorded are- [[1030, 622, <Button.left: (4, 2, 0)>, True, 1.48], [1030, 622, <Button.left: (4, 2, 0)>, False, 0.06], [1036, 610, <Button.left: (4, 2, 0)>, True, 0.81], [1036, 610, <Button.left: (4, 2, 0)>, False, 0.07], [<Key.f9: <120>>, 'key', 1.31, 'press', 0, 0]]
-16-Jul-23 22:52:52 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:52:52 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:52:52 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:52 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:52:52 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:52 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:52:52 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:52 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:52 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:52:52 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:52:52 - INFO     [main.py:5435] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:52:52 - INFO     [main.py:5576] - showing mainwindow
-16-Jul-23 22:52:52 - INFO     [main.py:5587] - ending function to stop recording user actions from screen
-16-Jul-23 22:52:56 - INFO     [main.py:5440] - starting function to start thread to start recording user actions from screen
-16-Jul-23 22:52:56 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:52:56 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:52:56 - INFO     [main.py:1449] - started function call to open small window
-16-Jul-23 22:52:56 - INFO     [main.py:1460] - recording mein small window
-16-Jul-23 22:52:56 - INFO     [main.py:5593] - started initialisation of small window UI
-16-Jul-23 22:52:56 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:56 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\small_window.ui
-16-Jul-23 22:52:56 - INFO     [main.py:5600] -  Screen size : 1200x1920
-16-Jul-23 22:52:56 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:56 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:52:56 - INFO     [main.py:5626] - ending initialisation of small window UI
-16-Jul-23 22:52:56 - INFO     [main.py:1467] - completed function call to open small window
-16-Jul-23 22:52:56 - INFO     [main.py:5456] - starting function to start recording user actions from screen
-16-Jul-23 22:52:56 - INFO     [main.py:5447] - created and started new thread for live record process function
-16-Jul-23 22:52:56 - INFO     [main.py:5448] - showing the current active threads:
-16-Jul-23 22:52:56 - INFO     [main.py:5450] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:52:56 - INFO     [main.py:5450] - <Thread(Thread-1, started daemon 49276)>
-16-Jul-23 22:52:56 - INFO     [main.py:5450] - <Thread(Thread-2, started daemon 48532)>
-16-Jul-23 22:52:56 - INFO     [main.py:5450] - <Thread(Thread-3, started daemon 40900)>
-16-Jul-23 22:52:56 - INFO     [main.py:5450] - <Thread(Thread-9, started daemon 36796)>
-16-Jul-23 22:52:56 - INFO     [main.py:5451] - list complete
-16-Jul-23 22:52:56 - INFO     [main.py:5452] - ending function to start thread to start recording user actions from screen
-16-Jul-23 22:52:56 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:52:56 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:52:56 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:52:56 - INFO     [main.py:5549] - ending function to start recording user actions from screen
-16-Jul-23 22:53:00 - INFO     [main.py:5553] - starting function to stop recording user actions from screen
-16-Jul-23 22:53:00 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:00 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:53:00 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:00 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:53:00 - INFO     [main.py:5571] - small window is opened
-16-Jul-23 22:53:00 - INFO     [main.py:5574] - inserting record actions
-16-Jul-23 22:53:00 - INFO     [main.py:5301] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:53:00 - INFO     [main.py:5304] - the events recorded are- [[1100, 434, <Button.left: (4, 2, 0)>, True, 1.17], [1100, 434, <Button.left: (4, 2, 0)>, False, 0.05], [1030, 385, <Button.left: (4, 2, 0)>, True, 0.62], [1030, 385, <Button.left: (4, 2, 0)>, False, 0.05], [<Key.f9: <120>>, 'key', 1.24, 'press', 0, 0]]
-16-Jul-23 22:53:00 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:53:00 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:53:00 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:00 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:53:00 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:00 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:53:00 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [main.py:3301] - started function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:00 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:00 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Red-Minus-PNG-File
-16-Jul-23 22:53:00 - INFO     [main.py:3437] - ending function to add new mouse line in record actions
-16-Jul-23 22:53:00 - INFO     [main.py:5435] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:53:00 - INFO     [main.py:5576] - showing mainwindow
-16-Jul-23 22:53:00 - INFO     [main.py:5587] - ending function to stop recording user actions from screen
-16-Jul-23 22:53:05 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:53:05 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:53:05 - INFO     [main.py:5440] - starting function to start thread to start recording user actions from screen
-16-Jul-23 22:53:05 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:53:05 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:53:05 - INFO     [main.py:1449] - started function call to open small window
-16-Jul-23 22:53:05 - INFO     [main.py:1460] - recording mein small window
-16-Jul-23 22:53:05 - INFO     [main.py:5593] - started initialisation of small window UI
-16-Jul-23 22:53:05 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:05 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:05 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:05 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\small_window.ui
-16-Jul-23 22:53:05 - INFO     [main.py:5600] -  Screen size : 1200x1920
-16-Jul-23 22:53:05 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:05 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:05 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:05 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:53:05 - INFO     [main.py:5626] - ending initialisation of small window UI
-16-Jul-23 22:53:05 - INFO     [main.py:1467] - completed function call to open small window
-16-Jul-23 22:53:05 - INFO     [main.py:5456] - starting function to start recording user actions from screen
-16-Jul-23 22:53:05 - INFO     [main.py:5447] - created and started new thread for live record process function
-16-Jul-23 22:53:05 - INFO     [main.py:5448] - showing the current active threads:
-16-Jul-23 22:53:05 - INFO     [main.py:5450] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:53:05 - INFO     [main.py:5450] - <Thread(Thread-1, started daemon 49276)>
-16-Jul-23 22:53:05 - INFO     [main.py:5450] - <Thread(Thread-2, started daemon 48532)>
-16-Jul-23 22:53:05 - INFO     [main.py:5450] - <Thread(Thread-3, started daemon 40900)>
-16-Jul-23 22:53:05 - INFO     [main.py:5450] - <Thread(Thread-14, started daemon 11404)>
-16-Jul-23 22:53:05 - INFO     [main.py:5451] - list complete
-16-Jul-23 22:53:05 - INFO     [main.py:5452] - ending function to start thread to start recording user actions from screen
-16-Jul-23 22:53:06 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:06 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:06 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:06 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:53:06 - INFO     [main.py:5549] - ending function to start recording user actions from screen
-16-Jul-23 22:53:08 - INFO     [main.py:5553] - starting function to stop recording user actions from screen
-16-Jul-23 22:53:08 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:08 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:08 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:08 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
-16-Jul-23 22:53:08 - INFO     [functions_file.py:89] - exe mode
-16-Jul-23 22:53:08 - INFO     [functions_file.py:94] - development mode
-16-Jul-23 22:53:08 - INFO     [functions_file.py:96] - completed function resource_path
-16-Jul-23 22:53:08 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-16-Jul-23 22:53:08 - INFO     [main.py:5571] - small window is opened
-16-Jul-23 22:53:08 - INFO     [main.py:5574] - inserting record actions
-16-Jul-23 22:53:08 - INFO     [main.py:5301] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:53:08 - INFO     [main.py:5304] - the events recorded are- [[<Key.f9: <120>>, 'key', 2.22, 'press', 0, 0]]
-16-Jul-23 22:53:08 - INFO     [main.py:3716] - started function to remove All lines from record actions
-16-Jul-23 22:53:08 - INFO     [main.py:3730] - ending function to remove All lines from record actions
-16-Jul-23 22:53:08 - INFO     [main.py:5435] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Jul-23 22:53:08 - INFO     [main.py:5576] - showing mainwindow
-16-Jul-23 22:53:08 - INFO     [main.py:5587] - ending function to stop recording user actions from screen
-16-Jul-23 22:53:15 - INFO     [main.py:1512] - starting function to exit app
-16-Jul-23 22:53:15 - INFO     [main.py:1541] - showing the current active threads:
-16-Jul-23 22:53:15 - INFO     [main.py:1543] - <_MainThread(MainThread, started 27680)>
-16-Jul-23 22:53:15 - INFO     [main.py:1543] - <Thread(Thread-1, started daemon 49276)>
-16-Jul-23 22:53:15 - INFO     [main.py:1543] - <Thread(Thread-2, started daemon 48532)>
-16-Jul-23 22:53:15 - INFO     [main.py:1543] - <Thread(Thread-3, started daemon 40900)>
-16-Jul-23 22:53:15 - INFO     [main.py:1544] - list complete
-16-Jul-23 22:53:15 - INFO     [main.py:1574] - deleting any stored home settings
-16-Jul-23 22:53:15 - INFO     [main.py:1579] - exiting app
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\app.log
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
+17-Jul-23 00:23:21 - INFO     [main.py:6035] - db file path is - C:\Users\pgupta23\AppData\Local\GG\GG-Autoclicker\GG_autoclicker\autoclicker.db
+17-Jul-23 00:23:21 - INFO     [main.py:6039] - importing app_settings stored in database
+17-Jul-23 00:23:21 - INFO     [main.py:830] - starting initialisation of main window
+17-Jul-23 00:23:21 - INFO     [main.py:831] - showing the current active threads:
+17-Jul-23 00:23:21 - INFO     [main.py:833] - <_MainThread(MainThread, started 44932)>
+17-Jul-23 00:23:21 - INFO     [main.py:834] - list complete
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/home
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Record
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Settings
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/HotkeyBlack
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/GGicon
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Hambuger
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/liliajohn
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-ui-64
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-upload-96
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Run
+17-Jul-23 00:23:21 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:21 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:21 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/run.png
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
+17-Jul-23 00:23:22 - INFO     [main.py:3857] - starting function call to start thread to write live mouse position to screen
+17-Jul-23 00:23:22 - INFO     [main.py:3860] - created new thread for get live mouse function
+17-Jul-23 00:23:22 - INFO     [main.py:3871] - starting function to constantly write the live cursor position to the screen
+17-Jul-23 00:23:22 - INFO     [main.py:3862] - started the new thread for get live mouse function
+17-Jul-23 00:23:22 - INFO     [main.py:3863] - showing the current active threads:
+17-Jul-23 00:23:22 - INFO     [main.py:3865] - <_MainThread(MainThread, started 44932)>
+17-Jul-23 00:23:22 - INFO     [main.py:3865] - <Thread(Thread-1, started daemon 47332)>
+17-Jul-23 00:23:22 - INFO     [main.py:3866] - list complete
+17-Jul-23 00:23:22 - INFO     [main.py:3867] - ending function call to start thread to write live mouse position to screen
+17-Jul-23 00:23:22 - INFO     [main.py:1491] - starting function to toggle show_tool_after_clicking checkbox
+17-Jul-23 00:23:22 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:22 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/check_icon
+17-Jul-23 00:23:22 - INFO     [main.py:1512] - ending function to toggle show_tool_after_clicking checkbox
+17-Jul-23 00:23:23 - INFO     [main.py:3115] - started function to load saved home settings on the home screen
+17-Jul-23 00:23:23 - INFO     [main.py:3122] - no data saved in home run settings
+17-Jul-23 00:23:23 - INFO     [main.py:3124] - ending function to load saved home settings on the home screen
+17-Jul-23 00:23:23 - INFO     [main.py:1422] - ending initialisation of main window
+17-Jul-23 00:23:29 - INFO     [main.py:4781] - start execution of function: home_start_process()
+17-Jul-23 00:23:29 - INFO     [main.py:2184] - add_record_line_hotkey was not active
+17-Jul-23 00:23:29 - INFO     [main.py:4539] - started execution of function: authentication_loop2()
+17-Jul-23 00:23:29 - INFO     [main.py:4540] - showing the current active threads:
+17-Jul-23 00:23:29 - INFO     [main.py:4542] - <_MainThread(MainThread, started 44932)>
+17-Jul-23 00:23:29 - INFO     [main.py:4542] - <Thread(Thread-1, started daemon 47332)>
+17-Jul-23 00:23:29 - INFO     [main.py:4542] - <Thread(Thread-2, started daemon 40524)>
+17-Jul-23 00:23:29 - INFO     [main.py:4542] - <Thread(Thread-3, started daemon 15568)>
+17-Jul-23 00:23:29 - INFO     [main.py:4543] - list complete
+17-Jul-23 00:23:29 - INFO     [main.py:4544] - connecting to database
+17-Jul-23 00:23:29 - INFO     [main.py:4546] - connected to database
+17-Jul-23 00:23:29 - INFO     [main.py:4549] - executing sql query
+17-Jul-23 00:23:29 - INFO     [main.py:4552] - completed sql query
+17-Jul-23 00:23:29 - INFO     [main.py:4620] - token found in local database
+17-Jul-23 00:23:29 - INFO     [main.py:4621] - authenticating
+17-Jul-23 00:23:29 - INFO     [main.py:4623] - started post call
+17-Jul-23 00:23:30 - INFO     [main.py:4643] - token sent for authentication is- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIwZDRmMThkMTJkZGU2NmE2ODNmYmIwNzNlNTBiOTIxY2Y4MDA0YTFhIiwiaWF0IjoxNjg5NTMzMTU3LCJleHAiOjE2ODk2MTk1NTd9.RnrupPC_PHfxGaFbfCEN2NunDmCSccOi2cUYviFLdQQ
+17-Jul-23 00:23:30 - INFO     [main.py:4644] - done post call
+17-Jul-23 00:23:30 - INFO     [main.py:4652] - <Response [200]>
+17-Jul-23 00:23:30 - INFO     [main.py:4653] - {"message":"success"}
+17-Jul-23 00:23:30 - INFO     [main.py:4654] - response received from authenticate post call - {"message":"success"}
+17-Jul-23 00:23:30 - INFO     [main.py:4759] - authentication success
+17-Jul-23 00:23:30 - INFO     [main.py:4761] - ending execution of function: authentication_loop2()
+17-Jul-23 00:23:30 - INFO     [main.py:4822] - user doesnt have to connect to internet
+17-Jul-23 00:23:30 - INFO     [main.py:1453] - started function call to open small window
+17-Jul-23 00:23:30 - INFO     [main.py:5633] - started initialisation of small window UI
+17-Jul-23 00:23:30 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:30 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\small_window.ui
+17-Jul-23 00:23:30 - INFO     [main.py:5640] -  Screen size : 1200x1920
+17-Jul-23 00:23:30 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:30 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
+17-Jul-23 00:23:30 - INFO     [main.py:5666] - ending initialisation of small window UI
+17-Jul-23 00:23:30 - INFO     [main.py:1471] - completed function call to open small window
+17-Jul-23 00:23:30 - ERROR    [main.py:4922] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 4920, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+17-Jul-23 00:23:30 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:30 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:30 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
+17-Jul-23 00:23:30 - INFO     [main.py:4947] - starting new thread for current clicking
+17-Jul-23 00:23:30 - INFO     [main.py:380] - start execution of function: home_current_clicking()
+17-Jul-23 00:23:30 - INFO     [main.py:4959] - ending execution of function: home_start_process()
+17-Jul-23 00:23:39 - INFO     [main.py:4963] - started execution of function: multiple_hotkey_actions_home()
+17-Jul-23 00:23:39 - INFO     [main.py:4970] - <__main__.UI_SmallWindow object at 0x00000139B24DDDC0>
+17-Jul-23 00:23:39 - INFO     [main.py:4973] - small window is opened
+17-Jul-23 00:23:39 - INFO     [main.py:4975] - here
+17-Jul-23 00:23:39 - INFO     [main.py:4977] - ending execution of function: multiple_hotkey_actions_home()
+17-Jul-23 00:23:39 - INFO     [main.py:497] - done current clicking
+17-Jul-23 00:23:39 - INFO     [main.py:4982] - started execution of function: after_home_thread()
+17-Jul-23 00:23:39 - INFO     [main.py:4993] - small window is opened
+17-Jul-23 00:23:39 - INFO     [main.py:4998] - showing normal view of main window
+17-Jul-23 00:23:39 - INFO     [main.py:4999] - value is False
+17-Jul-23 00:23:39 - INFO     [main.py:5004] - norm
+17-Jul-23 00:23:39 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:23:39 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:23:39 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:23:39 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
+17-Jul-23 00:23:39 - INFO     [main.py:5063] - ending execution of function: after_home_thread()
+17-Jul-23 00:23:39 - INFO     [main.py:504] - ending execution of function: home_current_clicking()
