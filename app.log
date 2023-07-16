@@ -179,3 +179,46 @@ KeyError: 'f7'
 17-Jul-23 00:23:39 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/ico_logo.ico
 17-Jul-23 00:23:39 - INFO     [main.py:5063] - ending execution of function: after_home_thread()
 17-Jul-23 00:23:39 - INFO     [main.py:504] - ending execution of function: home_current_clicking()
+17-Jul-23 00:24:57 - INFO     [main.py:4781] - start execution of function: home_start_process()
+17-Jul-23 00:24:57 - INFO     [main.py:2184] - add_record_line_hotkey was not active
+17-Jul-23 00:24:57 - INFO     [main.py:4539] - started execution of function: authentication_loop2()
+17-Jul-23 00:24:57 - INFO     [main.py:4540] - showing the current active threads:
+17-Jul-23 00:24:57 - INFO     [main.py:4542] - <_MainThread(MainThread, started 44932)>
+17-Jul-23 00:24:57 - INFO     [main.py:4542] - <Thread(Thread-1, started daemon 47332)>
+17-Jul-23 00:24:57 - INFO     [main.py:4542] - <Thread(Thread-2, started daemon 40524)>
+17-Jul-23 00:24:57 - INFO     [main.py:4542] - <Thread(Thread-3, started daemon 15568)>
+17-Jul-23 00:24:57 - INFO     [main.py:4543] - list complete
+17-Jul-23 00:24:57 - INFO     [main.py:4544] - connecting to database
+17-Jul-23 00:24:57 - INFO     [main.py:4546] - connected to database
+17-Jul-23 00:24:57 - INFO     [main.py:4549] - executing sql query
+17-Jul-23 00:24:57 - INFO     [main.py:4552] - completed sql query
+17-Jul-23 00:24:57 - INFO     [main.py:4620] - token found in local database
+17-Jul-23 00:24:57 - INFO     [main.py:4621] - authenticating
+17-Jul-23 00:24:57 - INFO     [main.py:4623] - started post call
+17-Jul-23 00:24:58 - INFO     [main.py:4643] - token sent for authentication is- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIwZDRmMThkMTJkZGU2NmE2ODNmYmIwNzNlNTBiOTIxY2Y4MDA0YTFhIiwiaWF0IjoxNjg5NTMzMTU3LCJleHAiOjE2ODk2MTk1NTd9.RnrupPC_PHfxGaFbfCEN2NunDmCSccOi2cUYviFLdQQhh
+17-Jul-23 00:24:58 - INFO     [main.py:4644] - done post call
+17-Jul-23 00:24:58 - INFO     [main.py:4652] - <Response [500]>
+17-Jul-23 00:24:58 - INFO     [main.py:4653] - {"name":"JsonWebTokenError","message":"invalid signature"}
+17-Jul-23 00:24:58 - INFO     [main.py:4654] - response received from authenticate post call - {"name":"JsonWebTokenError","message":"invalid signature"}
+17-Jul-23 00:24:58 - INFO     [main.py:4663] - authentication failed
+17-Jul-23 00:24:58 - INFO     [main.py:4745] - email has not been registered, user has to submit an email
+17-Jul-23 00:24:58 - INFO     [main.py:4746] - calling function to open email dialog
+17-Jul-23 00:24:58 - INFO     [main.py:1425] - starting open email dialog function
+17-Jul-23 00:24:58 - INFO     [main.py:5745] - started initialisation of email dialog UI
+17-Jul-23 00:24:58 - INFO     [functions_file.py:89] - exe mode
+17-Jul-23 00:24:58 - INFO     [functions_file.py:94] - development mode
+17-Jul-23 00:24:58 - INFO     [functions_file.py:96] - completed function resource_path
+17-Jul-23 00:24:58 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\email_dialog.ui
+17-Jul-23 00:24:58 - INFO     [main.py:5776] - ending initialisation of email dialog UI
+17-Jul-23 00:24:58 - INFO     [main.py:1436] - ending open email dialog function
+17-Jul-23 00:24:58 - INFO     [main.py:4755] - ending execution of function: authentication_loop2()
+17-Jul-23 00:24:58 - INFO     [main.py:4820] - ending execution of function: home_start_process() as access is blocked
+17-Jul-23 00:27:16 - INFO     [main.py:1516] - starting function to exit app
+17-Jul-23 00:27:16 - INFO     [main.py:1545] - showing the current active threads:
+17-Jul-23 00:27:16 - INFO     [main.py:1547] - <_MainThread(MainThread, started 44932)>
+17-Jul-23 00:27:16 - INFO     [main.py:1547] - <Thread(Thread-1, started daemon 47332)>
+17-Jul-23 00:27:16 - INFO     [main.py:1547] - <Thread(Thread-2, started daemon 40524)>
+17-Jul-23 00:27:16 - INFO     [main.py:1547] - <Thread(Thread-3, started daemon 15568)>
+17-Jul-23 00:27:16 - INFO     [main.py:1548] - list complete
+17-Jul-23 00:27:16 - INFO     [main.py:1578] - deleting any stored home settings
+17-Jul-23 00:27:16 - INFO     [main.py:1583] - exiting app

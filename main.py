@@ -4802,7 +4802,7 @@ class UI(QMainWindow):
                 logger.info("ending execution of function: home_start_process() as access is blocked")
                 return
 
-        else:
+        elif self.validity_infinity == 0 and self.validity_24_hour == 1:
             time_2 = datetime.datetime.now()
             con = sqlite3.connect(file_path)
             cursor = con.cursor()
@@ -5114,7 +5114,7 @@ class UI(QMainWindow):
                 self.foot_note_label.setText("you cant access run functionality")
                 logger.info("ending execution of function: home_start_process() as access is blocked")
                 return
-        else:
+        elif self.validity_infinity == 0 and self.validity_24_hour == 1:
             time_2 = datetime.datetime.now()
             con = sqlite3.connect(file_path)
             cursor = con.cursor()
@@ -6029,6 +6029,10 @@ if not os.path.exists(dir_path):
     os.makedirs(dir_path)
     file_path = os.path.join(dir_path, 'autoclicker.db')
     initialise_db()
+else:
+    file_path = os.path.join(dir_path, 'autoclicker.db')
+    if not os.path.exists(file_path):
+        initialise_db()
 
 file_path = os.path.join(dir_path, 'autoclicker.db')
 # below 7 lines gets the latest preferences of the user from the database
