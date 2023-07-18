@@ -28,6 +28,10 @@ import logging
 import re
 import resource_rc
 from appdirs import *
+import base64
+import encrypt
+import decrypt
+import generateKey
 
 
 logger = logging.getLogger(__name__)
@@ -66,6 +70,46 @@ form = functions.resource_path("version2.ui")
 # form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
 responses = []
+
+
+def combine(str1,str2):
+    l1 = len(str1)
+    l2 = len(str2)
+    result = ""
+    i = 0
+    j = 0
+    while i < l1 and j < l2:
+        result += str1[i]
+        result += str2[j]
+        i += 1
+        j += 1
+    while i < l1:
+        result += str1[i]
+        i += 1
+    while j < l2:
+        result += str2[j]
+        j += 1
+    # print(result)
+    return result
+
+def de_combine(str):
+    l = len(str)
+    s1 = ""
+    s2 = ""
+    if l%2 == 0:
+        i = 0
+        while(i < l):
+            s1 += str[i]
+            s2 += str[i+1]
+            i += 2
+    else:
+        i = 0
+        while (i < l-1):
+            s1 += str[i]
+            s2 += str[i + 1]
+            i += 2
+        s2 += str[l-1]
+    return s1,s2
 
 
 def prompt_internet_issue():
@@ -133,7 +177,8 @@ def initialise_db():
     sql = '''CREATE TABLE "local_table" (
 	"email"	TEXT,
 	"access_token"	TEXT,
-	"funny_number"	INTEGER DEFAULT 0,
+	"funny_number"  TEXT,
+	"funny_number_2"  TEXT,
 	"timestamp" TEXT
     )'''
     cursor.execute(sql)
@@ -811,15 +856,29 @@ class UI(QMainWindow):
     # defines all variables and UI elements for the app
     def __init__(self):
         super(UI, self).__init__()
+
         self.validity_24_hour = 0
         self.validity_infinity = 0
         conn = sqlite3.connect(file_path)
+
         cursor = conn.cursor()
-        sql = '''select funny_number from local_table'''
+        sql = '''select funny_number, funny_number_2 from local_table'''
         cursor.execute(sql)
         val = cursor.fetchone()
+        # print(val)f
         if val is not None:
-            funny = val[0]
+            part1 = val[0]
+            part2 = val[1]
+            # print(combine(part1,part2))
+            # print(type(combine(part1,part2)))
+            try:
+                funny = decrypt.Decrypt(combine(part1,part2))
+                funny = int(funny)
+            except:
+                logger.error("invalid signature")
+                funny = 0
+
+            # print(funny)
             if funny == 1:
                 self.validity_24_hour = 1
             elif funny == 2:
@@ -4591,7 +4650,16 @@ class UI(QMainWindow):
             expiration_datetime = time_1 + timedelta(days=1)
             time_1_str = str(expiration_datetime)
 
-            cursor.execute("INSERT INTO local_table (email, access_token, funny_number, timestamp) VALUES(?,?,?,?)", (email, token,1,time_1_str))
+            funny_enc = encrypt.Encrypt(str(1))
+            # print(funny_enc)
+            funny_enc = str(funny_enc, encoding='utf-8')
+            # print(funny_enc + "------")
+            res_first, res_second = de_combine(funny_enc)
+
+            # res_first, res_second = funny_enc[:len(funny_enc) // 2], funny_enc[len(funny_enc) // 2:]
+            funny_encrypt = res_first
+            funny_pt2_encrypt = res_second
+            cursor.execute("INSERT INTO local_table (email, access_token, funny_number, funny_number_2, timestamp) VALUES(?,?,?,?,?)", (email, token,funny_encrypt,funny_pt2_encrypt, time_1_str))
 
             con.commit()
 
@@ -4732,8 +4800,16 @@ class UI(QMainWindow):
                         # return True
                         self.authentication_result = 1
                         self.validity_infinity = 1
-                        query = "UPDATE local_table SET access_token = ?, funny_number = 2 WHERE email = ?"
-                        self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
+                        funny_2_enc = encrypt.Encrypt(str(2))
+                        # print(funny_2_enc)
+                        funny_2_enc = str(funny_2_enc, encoding='utf-8')
+                        # print(funny_2_enc)
+                        res_first, res_second = de_combine(funny_2_enc)
+                        # res_first, res_second = funny_2_enc[:len(funny_2_enc) // 2], funny_2_enc[len(funny_2_enc) // 2:]
+                        funny_2_encrypt = res_first
+                        funny_2_pt2_encrypt = res_second
+                        query = "UPDATE local_table SET access_token = ?, funny_number = ?, funny_number_2 = ? WHERE email = ?"
+                        self.query_thread = threading.Thread(target=database_action, args=(query, (content, funny_2_encrypt, funny_2_pt2_encrypt, email,)))
 
                         logger.info("starting query_thread")
                         self.query_thread.setDaemon(True)
@@ -4793,6 +4869,8 @@ class UI(QMainWindow):
 
         # if(1 == 2):
         #     return
+        # print(self.validity_24_hour)
+        # print(self.validity_infinity)
         if self.validity_infinity == 0 and self.validity_24_hour == 0:
             logger.info("user has to connect to internet for authentication")
             self.authentication_loop2()
@@ -4808,11 +4886,12 @@ class UI(QMainWindow):
             cursor = con.cursor()
             cursor.execute("SELECT timestamp from local_table")
             value = cursor.fetchone()
-            print(value[0])
+            # print(value[0])
             con.close()
             expiration_datetime_object = datetime.datetime.strptime(value[0], '%Y-%m-%d %H:%M:%S.%f')
-            print(expiration_datetime_object < time_2)
+            # print(expiration_datetime_object < time_2)
             if expiration_datetime_object < time_2:
+                logger.info("token has expired")
                 self.authentication_loop2()
                 if self.authentication_result == -1 or self.authentication_result == 0:
                     self.foot_note_label.setText("")
@@ -5651,7 +5730,7 @@ class UI_SmallWindow(QMainWindow):
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setStyleSheet("border :1px solid black")
         self.pushButton.setIcon(QIcon(functions.resource_path("images/red-circle")))
-        self.pushButton.clicked.connect(lambda: self.button_action(MainWindow))
+        self.pushButton.clicked.connect(lambda: self.button_action(MainWindow, indicator))
         size = QSize(25, 25)
         self.pushButton.setIconSize(size)
         # self.label = QtWidgets.QLabel(self)
@@ -6028,15 +6107,17 @@ dir_path = os.path.join(user_data_dir(appname,appauthor), 'GG_autoclicker')
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
     file_path = os.path.join(dir_path, 'autoclicker.db')
+    generateKey.generate()
     initialise_db()
 else:
     file_path = os.path.join(dir_path, 'autoclicker.db')
     if not os.path.exists(file_path):
+        generateKey.generate()
         initialise_db()
 
 file_path = os.path.join(dir_path, 'autoclicker.db')
 # below 7 lines gets the latest preferences of the user from the database
-logger.info(f"db file path is - {file_path}")
+# logger.info(f"db file path is - {file_path}")
 conn = sqlite3.connect(file_path)
 cursor = conn.cursor()
 

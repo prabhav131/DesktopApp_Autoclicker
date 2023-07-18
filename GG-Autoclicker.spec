@@ -3,7 +3,7 @@
 
 block_cipher = None
 
-added_files = [ ('images', 'images'), ('no_actions.ui','.'), ('version2.ui','.'), ('small_window.ui','.'), ('email_sent_dialog.ui','.'), ('email_dialog.ui','.'), ('connectivity_issue.ui','.'), ('functions_file.py','.') ]
+added_files = [ ('images', 'images'), ('no_actions.ui','.'), ('version2.ui','.'), ('small_window.ui','.'), ('email_sent_dialog.ui','.'), ('email_dialog.ui','.'), ('connectivity_issue.ui','.'), ('functions_file.py','.'), ('encrypt.py','.') , ('decrypt.py','.') , ('generateKey.py','.') , ('universal.key','.') ]
 
 
 a = Analysis(
