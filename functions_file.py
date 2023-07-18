@@ -86,15 +86,15 @@ class functions:
         """ Get absolute path to resource, works for dev and for PyInstaller """
         try:
             # PyInstaller creates a temp folder and stores path in _MEIPASS
-            logger.info("exe mode")
+            # logger.info("exe mode")
             base_path = sys._MEIPASS
             # base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
         except Exception:
             # logger.error("Exception occurred", exc_info=True)
-            logger.info("development mode")
+            # logger.info("development mode")
             base_path = os.path.abspath(".")
-        logger.info("completed function resource_path")
-        logger.info(os.path.join(base_path, relative_path))
+        # logger.info("completed function resource_path")
+        # logger.info(os.path.join(base_path, relative_path))
         return os.path.join(base_path, relative_path)
 
     @staticmethod

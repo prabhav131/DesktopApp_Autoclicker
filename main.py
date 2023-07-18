@@ -28,10 +28,7 @@ import logging
 import re
 import resource_rc
 from appdirs import *
-import base64
-import encrypt
-import decrypt
-import generateKey
+import hashlib
 
 
 logger = logging.getLogger(__name__)
@@ -869,19 +866,23 @@ class UI(QMainWindow):
         if val is not None:
             part1 = val[0]
             part2 = val[1]
-            # print(combine(part1,part2))
-            # print(type(combine(part1,part2)))
-            try:
-                funny = decrypt.Decrypt(combine(part1,part2))
-                funny = int(funny)
-            except:
-                logger.error("invalid signature")
-                funny = 0
+            full = combine(part1,part2)
 
-            # print(funny)
-            if funny == 1:
+            funny = full
+            a = str(1)
+            hash_funny_enc = hashlib.sha256(a.encode())
+            funny_enc = hash_funny_enc.hexdigest()
+
+            b = str(2)
+            hash_funny_2_enc = hashlib.sha256(b.encode())
+            funny_2_enc = hash_funny_2_enc.hexdigest()
+            logger.info("setting value of validity to avoid server call")
+            print(funny)
+            if funny == funny_enc:
+                logger.info("token is valid under 24 hours, now no need to call server")
                 self.validity_24_hour = 1
-            elif funny == 2:
+            elif funny == funny_2_enc:
+                logger.info("token is valid forever, now no need to call server")
                 self.validity_infinity = 1
 
         self.flag = 0
@@ -4404,195 +4405,10 @@ class UI(QMainWindow):
         connection.commit()
 
         logger.info("updated database")
-        con.close()
+        connection.close()
 
         logger.info("ending database_query_execution function")
 
-    # def database_action(self, query, query_params):
-    #     # connecting to database + performing query execution
-    #     logger.info("starting database_action function")
-    #     con = sqlite3.connect(file_path)
-    #     logger.info("connected to database")
-    #     cursor = con.cursor()
-    #     cursor.execute(query, query_params)
-    #
-    #     con.commit()
-    #
-    #     logger.info("updated database")
-    #     con.close()
-    #     logger.info("ending database_action function")
-
-    # function to perform entire authentication, returns boolean value
-    # def authentication_loop(self, result):
-    # def authentication_loop(self):
-    #     logger.info("started execution of function: authentication_loop()")
-    #     logger.info("*****************************")
-    #     for thread in threading.enumerate():
-    #         print(thread)
-    #     logger.info("*****************************")
-    #     logger.info("connecting to database")
-    #     con = sqlite3.connect(file_path)
-    #     logger.info("connected to database")
-    #     cursor = con.cursor()
-    #     sql = "SELECT * FROM local_table"
-    #     logger.info("executing sql query")
-    #     cursor.execute(sql)
-    #     fetched_data = cursor.fetchall()
-    #     logger.info("completed sql query")
-    #     # print(fetched_data)
-    #     if len(fetched_data) == 0:
-    #         # Making a GET request
-    #         logger.info("no token found in local database")
-    #         logger.info("started get call")
-    #         generate_token_thread = threading.Thread(target=self.get_generate)
-    #         # live_mouse_thread.setDaemon(True)
-    #         logger.info("created new thread for generating token server call")
-    #         generate_token_thread.start()
-    #         logger.info("started the new thread for generating token server call")
-    #         logger.info("*****************************")
-    #         for thread in threading.enumerate():
-    #             print(thread)
-    #         logger.info("*****************************")
-    #         generate_token_thread.join() # if i am joining just after starting, threading ka koi point hi nhi hua
-    #         # logger.info("self.responses is: " + str(self.responses))
-    #         #
-    #         # response = requests.get('https://auth-provider.onrender.com/generate-token')
-    #         logger.info("completed get call")
-    #         response = self.responses[0]
-    #         info = response.text
-    #         # print(info)
-    #         # logger.info("--------")
-    #         json_info = json.loads(info)
-    #         # print(json_info["accessToken"])
-    #         # logger.info("--------")
-    #         token = json_info["accessToken"]
-    #         # token = "abc"
-    #         # print(type(token))
-    #         email = ""
-    #         cursor.execute("INSERT INTO local_table (email, access_token) VALUES(?,?)", (email, token,))
-    #
-    #         con.commit()
-    #
-    #         logger.info("done")
-    #         con.close()
-    #         # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
-    #         # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
-    #         #
-    #         # logger.info("starting query_thread")
-    #         # query_thread.start()
-    #         logger.info("completed execution of function: authentication_loop()")
-    #         return True
-    #     else:
-    #         email = fetched_data[0][0]
-    #         token = fetched_data[0][1]
-    #         # print(email == "")
-    #         # logger.info("---")
-    #         # print(type(email))
-    #         # print(token)
-    #         # print(type(token))
-    #         # authenticate the obtained token
-    #         logger.info("token found in local database")
-    #         logger.info("authenticating")
-    #         # Making a POST request
-    #         logger.info("started post call")
-    #         authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
-    #         # live_mouse_thread.setDaemon(True)
-    #         logger.info("created new thread for authenticate token server call")
-    #         authenticate_token_thread.start()
-    #         logger.info("started the new thread for authenticate token server call")
-    #         logger.info("*****************************")
-    #         for thread in threading.enumerate():
-    #             print(thread)
-    #         logger.info("*****************************")
-    #         authenticate_token_thread.join()
-    #         logger.info("completed post call")
-    #         # authenticate_token_thread.join()
-    #         logger.info("self.responses is: " + str(self.responses))
-    #         # return True
-    #         response2 = self.responses[0]
-    #         # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
-    #         logger.info("done post call")
-    #         print(response2.text)
-    #         json_message = json.loads(response2.text)
-    #         # print(type(response2.text))
-    #         # logger.info("huhu")
-    #
-    #         content = json_message["message"]
-    #         if content != "success":
-    #             # the token has expired and user doesnt have a token with infinite validity
-    #             # either the user has not registered with mail or they have registered but not verified
-    #             logger.info("authentication failed")
-    #             if email != "":
-    #                 logger.info("user has submitted email before, trying to check validity of email")
-    #                 # email has been registered and may or may not been verified
-    #                 # call api to send login email and check if email has been verified or not
-    #                 # Making a POST request
-    #                 logger.info("started post call")
-    #                 response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
-    #                 logger.info("done post call")
-    #                 print(response2.text)
-    #                 json_message = json.loads(response2.text)
-    #                 # print(type(response2.text))
-    #                 # logger.info("hihi")
-    #                 try:
-    #                     content = json_message["message"]
-    #                     if content == "Email not found":
-    #                         # register email
-    #                         # Making a POST request
-    #                         logger.info("asking user to register their email as it is not found in our database")
-    #                         logger.info("started post call")
-    #                         response2 = requests.post('https://auth-provider.onrender.com/register',
-    #                                                   data={"email": email})
-    #                         logger.info("done post call")
-    #                         print(response2.text)
-    #                         json_message = json.loads(response2.text)
-    #                         # print(type(response2.text))
-    #                         # logger.info("hehe")
-    #                     elif content == "Email not verified":
-    #                         # email is not verified, prompt the user to verify the email or if that has expired start
-    #                         # from scratch and register
-    #                         logger.info("asking user to verify their email or resend verification link")
-    #                         logger.info("calling function to open email sent dialog")
-    #                         self.open_email_sent_dialog(email)
-    #                         logger.info("function call complete")
-    #                     # result[0] = False
-    #                     logger.info("completed execution of function: authentication_loop()")
-    #                     return False
-    #                 except:
-    #                     content = json_message["token"]
-    #                     logger.info("user has now been granted access for lifetime")
-    #                     # print(content)
-    #                     # email has been verified and an infinite token is returned
-    #                     # update the database with this token now
-    #                     logger.info("connecting to db")
-    #                     con = sqlite3.connect(file_path)
-    #                     logger.info("connected to db")
-    #                     cursor = con.cursor()
-    #                     logger.info("start executing query")
-    #                     cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
-    #                     con.commit()
-    #                     logger.info("finished executing")
-    #                     con.close()
-    #                     logger.info("database connection closed")
-    #                     # result[0] = True
-    #                     logger.info("completed execution of function: authentication_loop()")
-    #                     return True
-    #
-    #             else:
-    #                 # email has not been registered
-    #                 logger.info("email has not been registered, user has to submit an email")
-    #                 logger.info("calling function to open email dialog")
-    #                 self.open_email_dialog()
-    #                 logger.info("function call complete")
-    #                 # result[0] = False
-    #                 logger.info("completed execution of function: authentication_loop()")
-    #                 return False
-    #
-    #         else:
-    #             logger.info("authentication success")
-    #             # result[0] = True
-    #             logger.info("completed execution of function: authentication_loop()")
-    #             return True
 
     def authentication_loop2(self):
         logger.info("started execution of function: authentication_loop2()")
@@ -4613,19 +4429,6 @@ class UI(QMainWindow):
             # Making a GET request
             logger.info("no token found in local database")
             logger.info("started get call")
-            # generate_token_thread = threading.Thread(target=self.get_generate)
-            # # live_mouse_thread.setDaemon(True)
-            # logger.info("created new thread for generating token server call")
-            # generate_token_thread.start()
-            # logger.info("started the new thread for generating token server call")
-            # logger.info("*****************************")
-            # for thread in threading.enumerate():
-            #     print(thread)
-            # logger.info("*****************************")
-            # generate_token_thread.join() # if i am joining just after starting, threading ka koi point hi nhi hua
-            # logger.info("self.responses is: " + str(self.responses))
-            #
-            # response = requests.get('https://auth-provider.onrender.com/generate-token')
             try:
                 response = requests.get('http://146.190.166.207/generate-token')
                 # response.raise_for_status()
@@ -4640,7 +4443,7 @@ class UI(QMainWindow):
             json_info = json.loads(info)
             token = json_info["accessToken"]
             email = ""
-            
+            logger.info(f"token is - {token}")
 
             logger.info("ending execution of function: authentication_loop2()")
             # return True
@@ -4649,62 +4452,25 @@ class UI(QMainWindow):
             time_1 = datetime.datetime.now()
             expiration_datetime = time_1 + timedelta(days=1)
             time_1_str = str(expiration_datetime)
+            a = str(1)
+            hash_funny_enc = hashlib.sha256(a.encode())
+            funny_enc = hash_funny_enc.hexdigest()
 
-            funny_enc = encrypt.Encrypt(str(1))
-            # print(funny_enc)
-            funny_enc = str(funny_enc, encoding='utf-8')
-            # print(funny_enc + "------")
             res_first, res_second = de_combine(funny_enc)
-
-            # res_first, res_second = funny_enc[:len(funny_enc) // 2], funny_enc[len(funny_enc) // 2:]
             funny_encrypt = res_first
             funny_pt2_encrypt = res_second
             cursor.execute("INSERT INTO local_table (email, access_token, funny_number, funny_number_2, timestamp) VALUES(?,?,?,?,?)", (email, token,funny_encrypt,funny_pt2_encrypt, time_1_str))
-
             con.commit()
-
             logger.info("done")
             con.close()
-            # query = "INSERT INTO local_table (email, access_token) VALUES(?,?)"
-            # query_thread = threading.Thread(target=self.database_query_execution, args=(con, cursor, query, (email, token,)))
-            #
-            # logger.info("starting query_thread")
-            # query_thread.start()
         else:
-
-            # logger.info("showing the current active threads:")
-            # for thread in threading.enumerate():
-            #     logger.info(thread)
-            # logger.info("list complete")
 
             email = fetched_data[0][0]
             token = fetched_data[0][1]
-            # print(email == "")
-            # logger.info("---")
-            # print(type(email))
-            # print(token)
-            # print(type(token))
-            # authenticate the obtained token
             logger.info("token found in local database")
             logger.info("authenticating")
             # Making a POST request
             logger.info("started post call")
-            # authenticate_token_thread = threading.Thread(target=self.post_authenticate, args=(token,))
-            # # live_mouse_thread.setDaemon(True)
-            # logger.info("created new thread for authenticate token server call")
-            # authenticate_token_thread.start()
-            # logger.info("started the new thread for authenticate token server call")
-            # logger.info("*****************************")
-            # for thread in threading.enumerate():
-            #     print(thread)
-            # logger.info("*****************************")
-            # authenticate_token_thread.join()
-            # logger.info("completed post call")
-            # # authenticate_token_thread.join()
-            # logger.info("self.responses is: " + str(self.responses))
-            # # return True
-            # response2 = self.responses[0]
-            # response2 = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             try:
                 response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
                 # response2.raise_for_status()
@@ -4775,34 +4541,17 @@ class UI(QMainWindow):
                     except:
                         content = json_message["token"]
                         logger.info("user has now been granted access for lifetime")
-                        # self.activate_button.setVisible(False)
-                        # print(content)
+
                         # email has been verified and an infinite token is returned
                         # update the database with this token now
                         logger.info("connecting to db")
-                        # query = "UPDATE local_table SET access_token = ? WHERE email = ?"
-                        # self.query_thread = threading.Thread(target=database_action, args=(query, (content, email,)))
-                        # 
-                        # logger.info("starting query_thread")
-                        # self.query_thread.setDaemon(True)
-                        # self.query_thread.start()
-                        # con = sqlite3.connect(file_path)
-                        # logger.info("connected to db")
-                        # cursor = con.cursor()
-                        # logger.info("start executing query")
-                        # cursor.execute("UPDATE local_table SET access_token = ? WHERE email = ?", (content, email,))
-                        # con.commit()
-                        # logger.info("finished executing")
-                        # con.close()
-                        # logger.info("database connection closed")
-                        # result[0] = True
                         logger.info("ending execution of function: authentication_loop2()")
                         # return True
                         self.authentication_result = 1
                         self.validity_infinity = 1
-                        funny_2_enc = encrypt.Encrypt(str(2))
-                        # print(funny_2_enc)
-                        funny_2_enc = str(funny_2_enc, encoding='utf-8')
+                        b = str(2)
+                        hash_funny_2_enc = hashlib.sha256(b.encode())
+                        funny_2_enc = hash_funny_2_enc.hexdigest()
                         # print(funny_2_enc)
                         res_first, res_second = de_combine(funny_2_enc)
                         # res_first, res_second = funny_2_enc[:len(funny_2_enc) // 2], funny_2_enc[len(funny_2_enc) // 2:]
@@ -4820,11 +4569,7 @@ class UI(QMainWindow):
                     # email has not been registered
                     logger.info("email has not been registered, user has to submit an email")
                     logger.info("calling function to open email dialog")
-                    # self.open_email_dialog()
-                    # email_dialog_thread = threading.Thread(target=self.open_email_dialog)
-                    # logger.info("starting email dialog thread")
-                    # email_dialog_thread.setDaemon(True)
-                    # email_dialog_thread.start()
+
                     self.open_email_dialog()
                     # logger.info("function call complete")
                     # result[0] = False
@@ -4838,21 +4583,6 @@ class UI(QMainWindow):
                 # return True
                 self.authentication_result = 1
 
-    # # starts a thread for home_start_process
-    # def thread_for_home_start_process(self):
-    #     logger.info("started function to start the new thread for home start process")
-    #     # new_thread = threading.Thread(target=self.authentication_loop2, args=(result,))
-    #     new_thread = threading.Thread(target=self.home_start_process)
-    #     new_thread.setDaemon(True)
-    #     new_thread.start()
-    #     logger.info("started the new thread for home start process")
-    #     logger.info("showing the current active threads:")
-    #     for thread in threading.enumerate():
-    #         logger.info(thread)
-    #     logger.info("list complete")
-    #     logger.info("ending function to start the new thread for home start process")
-
-    # starts the process for home -> play button
     def home_start_process(self):
         logger.info("start execution of function: home_start_process()")
         self.get_home_screen()
@@ -4881,6 +4611,7 @@ class UI(QMainWindow):
                 return
 
         elif self.validity_infinity == 0 and self.validity_24_hour == 1:
+            logger.info("token may be valid under 24 hours")
             time_2 = datetime.datetime.now()
             con = sqlite3.connect(file_path)
             cursor = con.cursor()
@@ -4899,6 +4630,9 @@ class UI(QMainWindow):
                     logger.info("ending execution of function: home_start_process() as access is blocked")
                     return
             logger.info("user doesnt have to connect to internet")
+
+        else:
+            logger.info("token is valid for infinity")
 
         mouse_type = self.mouse_button_combobox.currentText().lower()
         click_type = self.click_type_combobox.currentText()
@@ -6107,12 +5841,12 @@ dir_path = os.path.join(user_data_dir(appname,appauthor), 'GG_autoclicker')
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
     file_path = os.path.join(dir_path, 'autoclicker.db')
-    generateKey.generate()
+    # generateKey.generate()
     initialise_db()
 else:
     file_path = os.path.join(dir_path, 'autoclicker.db')
     if not os.path.exists(file_path):
-        generateKey.generate()
+        # generateKey.generate()
         initialise_db()
 
 file_path = os.path.join(dir_path, 'autoclicker.db')

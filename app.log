@@ -1,157 +1,248 @@
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\app.log
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
-18-Jul-23 16:19:22 - INFO     [main.py:6124] - importing app_settings stored in database
-18-Jul-23 16:19:22 - ERROR    [main.py:878] - invalid signature
-18-Jul-23 16:19:22 - INFO     [main.py:889] - starting initialisation of main window
-18-Jul-23 16:19:22 - INFO     [main.py:890] - showing the current active threads:
-18-Jul-23 16:19:22 - INFO     [main.py:892] - <_MainThread(MainThread, started 27540)>
-18-Jul-23 16:19:22 - INFO     [main.py:893] - list complete
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\version2.ui
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/home
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Record
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Settings
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/HotkeyBlack
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/GGicon
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Hambuger
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/liliajohn
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-ui-64
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/icons8-upload-96
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/Run
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/red-circle
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/run.png
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/app_logo.png
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/empty_checkbox
-18-Jul-23 16:19:22 - INFO     [main.py:3916] - starting function call to start thread to write live mouse position to screen
-18-Jul-23 16:19:22 - INFO     [main.py:3919] - created new thread for get live mouse function
-18-Jul-23 16:19:22 - INFO     [main.py:3930] - starting function to constantly write the live cursor position to the screen
-18-Jul-23 16:19:22 - INFO     [main.py:3921] - started the new thread for get live mouse function
-18-Jul-23 16:19:22 - INFO     [main.py:3922] - showing the current active threads:
-18-Jul-23 16:19:22 - INFO     [main.py:3924] - <_MainThread(MainThread, started 27540)>
-18-Jul-23 16:19:22 - INFO     [main.py:3924] - <Thread(Thread-1, started daemon 25000)>
-18-Jul-23 16:19:22 - INFO     [main.py:3925] - list complete
-18-Jul-23 16:19:22 - INFO     [main.py:3926] - ending function call to start thread to write live mouse position to screen
-18-Jul-23 16:19:22 - INFO     [main.py:1550] - starting function to toggle show_tool_after_clicking checkbox
-18-Jul-23 16:19:22 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:22 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:22 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\images/check_icon
-18-Jul-23 16:19:22 - INFO     [main.py:1571] - ending function to toggle show_tool_after_clicking checkbox
-18-Jul-23 16:19:23 - INFO     [main.py:3174] - started function to load saved home settings on the home screen
-18-Jul-23 16:19:23 - INFO     [main.py:3181] - no data saved in home run settings
-18-Jul-23 16:19:23 - INFO     [main.py:3183] - ending function to load saved home settings on the home screen
-18-Jul-23 16:19:23 - INFO     [main.py:1481] - ending initialisation of main window
-18-Jul-23 16:19:24 - INFO     [main.py:4857] - start execution of function: home_start_process()
-18-Jul-23 16:19:24 - INFO     [main.py:2243] - add_record_line_hotkey was not active
-18-Jul-23 16:19:24 - INFO     [main.py:4875] - user has to connect to internet for authentication
-18-Jul-23 16:19:24 - INFO     [main.py:4598] - started execution of function: authentication_loop2()
-18-Jul-23 16:19:24 - INFO     [main.py:4599] - showing the current active threads:
-18-Jul-23 16:19:24 - INFO     [main.py:4601] - <_MainThread(MainThread, started 27540)>
-18-Jul-23 16:19:24 - INFO     [main.py:4601] - <Thread(Thread-1, started daemon 25000)>
-18-Jul-23 16:19:24 - INFO     [main.py:4601] - <Thread(Thread-2, started daemon 33116)>
-18-Jul-23 16:19:24 - INFO     [main.py:4601] - <Thread(Thread-3, started daemon 47060)>
-18-Jul-23 16:19:24 - INFO     [main.py:4602] - list complete
-18-Jul-23 16:19:24 - INFO     [main.py:4603] - connecting to database
-18-Jul-23 16:19:24 - INFO     [main.py:4605] - connected to database
-18-Jul-23 16:19:24 - INFO     [main.py:4608] - executing sql query
-18-Jul-23 16:19:24 - INFO     [main.py:4611] - completed sql query
-18-Jul-23 16:19:24 - INFO     [main.py:4688] - token found in local database
-18-Jul-23 16:19:24 - INFO     [main.py:4689] - authenticating
-18-Jul-23 16:19:24 - INFO     [main.py:4691] - started post call
-18-Jul-23 16:19:24 - INFO     [main.py:4711] - token sent for authentication is- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiIwMzlhYzAxYzUyMmM2YTMwYjNjOWNiN2ZmZDllM2ViYzk1NTg2MTI1IiwiaWF0IjoxNjg5Njc2ODk4LCJleHAiOjE2ODk3NjMyOTh9.QVQdkiwTLdVhW6e0-wqVqcoJculwdaiTdwMhvHi7WrUa
-18-Jul-23 16:19:24 - INFO     [main.py:4712] - done post call
-18-Jul-23 16:19:24 - INFO     [main.py:4720] - <Response [500]>
-18-Jul-23 16:19:24 - INFO     [main.py:4721] - {"name":"JsonWebTokenError","message":"invalid signature"}
-18-Jul-23 16:19:24 - INFO     [main.py:4722] - response received from authenticate post call - {"name":"JsonWebTokenError","message":"invalid signature"}
-18-Jul-23 16:19:24 - INFO     [main.py:4731] - authentication failed
-18-Jul-23 16:19:24 - INFO     [main.py:4821] - email has not been registered, user has to submit an email
-18-Jul-23 16:19:24 - INFO     [main.py:4822] - calling function to open email dialog
-18-Jul-23 16:19:24 - INFO     [main.py:1484] - starting open email dialog function
-18-Jul-23 16:19:24 - INFO     [main.py:5824] - started initialisation of email dialog UI
-18-Jul-23 16:19:24 - INFO     [functions_file.py:89] - exe mode
-18-Jul-23 16:19:24 - INFO     [functions_file.py:94] - development mode
-18-Jul-23 16:19:24 - INFO     [functions_file.py:96] - completed function resource_path
-18-Jul-23 16:19:24 - INFO     [functions_file.py:97] - C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\email_dialog.ui
-18-Jul-23 16:19:24 - INFO     [main.py:5855] - ending initialisation of email dialog UI
-18-Jul-23 16:19:24 - INFO     [main.py:1495] - ending open email dialog function
-18-Jul-23 16:19:24 - INFO     [main.py:4831] - ending execution of function: authentication_loop2()
-18-Jul-23 16:19:24 - INFO     [main.py:4880] - ending execution of function: home_start_process() as access is blocked
-18-Jul-23 16:19:26 - INFO     [main.py:1575] - starting function to exit app
-18-Jul-23 16:19:26 - INFO     [main.py:1604] - showing the current active threads:
-18-Jul-23 16:19:26 - INFO     [main.py:1606] - <_MainThread(MainThread, started 27540)>
-18-Jul-23 16:19:26 - INFO     [main.py:1606] - <Thread(Thread-1, started daemon 25000)>
-18-Jul-23 16:19:26 - INFO     [main.py:1606] - <Thread(Thread-2, started daemon 33116)>
-18-Jul-23 16:19:26 - INFO     [main.py:1606] - <Thread(Thread-3, started daemon 47060)>
-18-Jul-23 16:19:26 - INFO     [main.py:1607] - list complete
-18-Jul-23 16:19:26 - INFO     [main.py:1637] - deleting any stored home settings
-18-Jul-23 16:19:26 - INFO     [main.py:1642] - exiting app
+18-Jul-23 23:37:39 - INFO     [main.py:5858] - importing app_settings stored in database
+18-Jul-23 23:37:39 - INFO     [main.py:879] - setting value of validity to avoid server call
+18-Jul-23 23:37:39 - INFO     [main.py:885] - token is valid forever, now no need to call server
+18-Jul-23 23:37:39 - INFO     [main.py:890] - starting initialisation of main window
+18-Jul-23 23:37:39 - INFO     [main.py:891] - showing the current active threads:
+18-Jul-23 23:37:39 - INFO     [main.py:893] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:37:39 - INFO     [main.py:894] - list complete
+18-Jul-23 23:37:40 - INFO     [main.py:3917] - starting function call to start thread to write live mouse position to screen
+18-Jul-23 23:37:40 - INFO     [main.py:3920] - created new thread for get live mouse function
+18-Jul-23 23:37:40 - INFO     [main.py:3931] - starting function to constantly write the live cursor position to the screen
+18-Jul-23 23:37:40 - INFO     [main.py:3922] - started the new thread for get live mouse function
+18-Jul-23 23:37:40 - INFO     [main.py:3923] - showing the current active threads:
+18-Jul-23 23:37:40 - INFO     [main.py:3925] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:37:40 - INFO     [main.py:3925] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:37:40 - INFO     [main.py:3926] - list complete
+18-Jul-23 23:37:40 - INFO     [main.py:3927] - ending function call to start thread to write live mouse position to screen
+18-Jul-23 23:37:40 - INFO     [main.py:1551] - starting function to toggle show_tool_after_clicking checkbox
+18-Jul-23 23:37:40 - INFO     [main.py:1572] - ending function to toggle show_tool_after_clicking checkbox
+18-Jul-23 23:37:40 - INFO     [main.py:3175] - started function to load saved home settings on the home screen
+18-Jul-23 23:37:40 - INFO     [main.py:3182] - no data saved in home run settings
+18-Jul-23 23:37:40 - INFO     [main.py:3184] - ending function to load saved home settings on the home screen
+18-Jul-23 23:37:40 - INFO     [main.py:1482] - ending initialisation of main window
+18-Jul-23 23:37:51 - INFO     [main.py:4587] - start execution of function: home_start_process()
+18-Jul-23 23:37:51 - INFO     [main.py:2244] - add_record_line_hotkey was not active
+18-Jul-23 23:37:51 - INFO     [main.py:4635] - token is valid for infinity
+18-Jul-23 23:37:51 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:37:51 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:37:51 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:37:51 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:37:51 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:37:51 - ERROR    [main.py:4735] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 4733, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+18-Jul-23 23:37:51 - INFO     [main.py:4760] - starting new thread for current clicking
+18-Jul-23 23:37:51 - INFO     [main.py:422] - start execution of function: home_current_clicking()
+18-Jul-23 23:37:51 - INFO     [main.py:4772] - ending execution of function: home_start_process()
+18-Jul-23 23:37:54 - INFO     [main.py:4776] - started execution of function: multiple_hotkey_actions_home()
+18-Jul-23 23:37:54 - INFO     [main.py:4783] - <__main__.UI_SmallWindow object at 0x00000225CC99FE50>
+18-Jul-23 23:37:54 - INFO     [main.py:4786] - small window is opened
+18-Jul-23 23:37:54 - INFO     [main.py:4788] - here
+18-Jul-23 23:37:54 - INFO     [main.py:4790] - ending execution of function: multiple_hotkey_actions_home()
+18-Jul-23 23:37:54 - INFO     [main.py:539] - done current clicking
+18-Jul-23 23:37:54 - INFO     [main.py:4795] - started execution of function: after_home_thread()
+18-Jul-23 23:37:54 - INFO     [main.py:4806] - small window is opened
+18-Jul-23 23:37:54 - INFO     [main.py:4811] - showing normal view of main window
+18-Jul-23 23:37:54 - INFO     [main.py:4812] - value is False
+18-Jul-23 23:37:54 - INFO     [main.py:4817] - norm
+18-Jul-23 23:37:54 - INFO     [main.py:4876] - ending execution of function: after_home_thread()
+18-Jul-23 23:37:54 - INFO     [main.py:546] - ending execution of function: home_current_clicking()
+18-Jul-23 23:37:57 - INFO     [main.py:4895] - started function record_start_process()
+18-Jul-23 23:37:57 - ERROR    [main.py:4948] - Exception occurred- no actions available
+NoneType: None
+18-Jul-23 23:37:57 - INFO     [main.py:4949] - ending execution of function: record_start_process()
+18-Jul-23 23:37:59 - INFO     [main.py:5293] - starting function to start thread to start recording user actions from screen
+18-Jul-23 23:37:59 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:37:59 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:37:59 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:37:59 - INFO     [main.py:1524] - recording mein small window
+18-Jul-23 23:37:59 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:37:59 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:37:59 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:37:59 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:37:59 - INFO     [main.py:5309] - starting function to start recording user actions from screen
+18-Jul-23 23:37:59 - INFO     [main.py:5300] - created and started new thread for live record process function
+18-Jul-23 23:37:59 - INFO     [main.py:5301] - showing the current active threads:
+18-Jul-23 23:37:59 - INFO     [main.py:5303] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:37:59 - INFO     [main.py:5303] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:37:59 - INFO     [main.py:5303] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:37:59 - INFO     [main.py:5303] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:37:59 - INFO     [main.py:5303] - <Thread(Thread-7, started daemon 4892)>
+18-Jul-23 23:37:59 - INFO     [main.py:5304] - list complete
+18-Jul-23 23:37:59 - INFO     [main.py:5305] - ending function to start thread to start recording user actions from screen
+18-Jul-23 23:37:59 - INFO     [main.py:5402] - ending function to start recording user actions from screen
+18-Jul-23 23:38:02 - INFO     [main.py:5406] - starting function to stop recording user actions from screen
+18-Jul-23 23:38:02 - INFO     [main.py:5424] - small window is opened
+18-Jul-23 23:38:02 - INFO     [main.py:5427] - inserting record actions
+18-Jul-23 23:38:02 - INFO     [main.py:5154] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:02 - INFO     [main.py:5157] - the events recorded are- [[1257, 544, <Button.left: (4, 2, 0)>, True, 0.77], [1257, 544, <Button.left: (4, 2, 0)>, False, 0.07], [1583, 460, <Button.left: (4, 2, 0)>, True, 0.55], [1583, 460, <Button.left: (4, 2, 0)>, False, 0.08], [1481, 524, <Button.left: (4, 2, 0)>, True, 0.56], [1481, 524, <Button.left: (4, 2, 0)>, False, 0.06], [<Key.f9: <120>>, 'key', 0.88, 'press', 0, 0]]
+18-Jul-23 23:38:02 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:02 - INFO     [main.py:5288] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:02 - INFO     [main.py:5429] - showing mainwindow
+18-Jul-23 23:38:02 - INFO     [main.py:5440] - ending function to stop recording user actions from screen
+18-Jul-23 23:38:03 - INFO     [main.py:4895] - started function record_start_process()
+18-Jul-23 23:38:03 - INFO     [main.py:4953] - green signal given to perform recorded autoclicking!!
+18-Jul-23 23:38:03 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:38:03 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:38:03 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:38:03 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:38:03 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:38:03 - INFO     [main.py:5070] - starting thread for playing back recorded actions
+18-Jul-23 23:38:03 - ERROR    [main.py:5074] - error in removing screen recording hotkey
+Traceback (most recent call last):
+  File "main.py", line 5072, in record_start_process
+    keyboard.remove_hotkey(self.record_recording_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f9'
+18-Jul-23 23:38:03 - INFO     [main.py:793] - start execution of function: start_record_action(): playing back record actions from record screen
+18-Jul-23 23:38:03 - INFO     [main.py:5078] - ending execution of function: record_start_process()
+18-Jul-23 23:38:03 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:04 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:04 - INFO     [main.py:5082] - starting execution of function: after_record_thread()
+18-Jul-23 23:38:04 - INFO     [main.py:5096] - small window is opened
+18-Jul-23 23:38:04 - INFO     [main.py:5101] - showing the current active threads:
+18-Jul-23 23:38:04 - INFO     [main.py:5103] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:38:04 - INFO     [main.py:5103] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:38:04 - INFO     [main.py:5103] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:38:04 - INFO     [main.py:5103] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:38:04 - INFO     [main.py:5103] - <Thread(Thread-12, started 18188)>
+18-Jul-23 23:38:04 - INFO     [main.py:5104] - list complete
+18-Jul-23 23:38:04 - INFO     [main.py:5149] - ending execution of function: after_record_thread()
+18-Jul-23 23:38:04 - INFO     [main.py:849] - ending execution of function: start_record_action(): playing back record actions from record screen
+18-Jul-23 23:38:06 - INFO     [main.py:5293] - starting function to start thread to start recording user actions from screen
+18-Jul-23 23:38:06 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:06 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:06 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:38:06 - INFO     [main.py:1524] - recording mein small window
+18-Jul-23 23:38:06 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:38:06 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:38:06 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:38:06 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:38:06 - INFO     [main.py:5309] - starting function to start recording user actions from screen
+18-Jul-23 23:38:06 - INFO     [main.py:5300] - created and started new thread for live record process function
+18-Jul-23 23:38:06 - INFO     [main.py:5301] - showing the current active threads:
+18-Jul-23 23:38:06 - INFO     [main.py:5303] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:38:06 - INFO     [main.py:5303] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:38:06 - INFO     [main.py:5303] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:38:06 - INFO     [main.py:5303] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:38:06 - INFO     [main.py:5303] - <Thread(Thread-14, started daemon 18336)>
+18-Jul-23 23:38:06 - INFO     [main.py:5304] - list complete
+18-Jul-23 23:38:06 - INFO     [main.py:5305] - ending function to start thread to start recording user actions from screen
+18-Jul-23 23:38:06 - INFO     [main.py:5402] - ending function to start recording user actions from screen
+18-Jul-23 23:38:12 - INFO     [main.py:5406] - starting function to stop recording user actions from screen
+18-Jul-23 23:38:12 - INFO     [main.py:5424] - small window is opened
+18-Jul-23 23:38:12 - INFO     [main.py:5427] - inserting record actions
+18-Jul-23 23:38:12 - INFO     [main.py:5154] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:12 - INFO     [main.py:5157] - the events recorded are- [[1298, 538, <Button.left: (4, 2, 0)>, True, 4.7], [1298, 538, <Button.left: (4, 2, 0)>, False, 0.12], [<Key.f9: <120>>, 'key', 1.05, 'press', 0, 0]]
+18-Jul-23 23:38:12 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:12 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:12 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:12 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:12 - INFO     [main.py:5288] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:12 - INFO     [main.py:5429] - showing mainwindow
+18-Jul-23 23:38:12 - INFO     [main.py:5440] - ending function to stop recording user actions from screen
+18-Jul-23 23:38:14 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:14 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:15 - INFO     [main.py:5293] - starting function to start thread to start recording user actions from screen
+18-Jul-23 23:38:15 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:15 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:15 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:38:15 - INFO     [main.py:1524] - recording mein small window
+18-Jul-23 23:38:15 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:38:15 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:38:15 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:38:15 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:38:15 - INFO     [main.py:5309] - starting function to start recording user actions from screen
+18-Jul-23 23:38:15 - INFO     [main.py:5300] - created and started new thread for live record process function
+18-Jul-23 23:38:15 - INFO     [main.py:5301] - showing the current active threads:
+18-Jul-23 23:38:15 - INFO     [main.py:5303] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:38:15 - INFO     [main.py:5303] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:38:15 - INFO     [main.py:5303] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:38:15 - INFO     [main.py:5303] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:38:15 - INFO     [main.py:5303] - <Thread(Thread-19, started daemon 14204)>
+18-Jul-23 23:38:15 - INFO     [main.py:5304] - list complete
+18-Jul-23 23:38:15 - INFO     [main.py:5305] - ending function to start thread to start recording user actions from screen
+18-Jul-23 23:38:15 - INFO     [main.py:5402] - ending function to start recording user actions from screen
+18-Jul-23 23:38:18 - INFO     [main.py:5406] - starting function to stop recording user actions from screen
+18-Jul-23 23:38:18 - INFO     [main.py:5424] - small window is opened
+18-Jul-23 23:38:18 - INFO     [main.py:5427] - inserting record actions
+18-Jul-23 23:38:18 - INFO     [main.py:5154] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:18 - INFO     [main.py:5157] - the events recorded are- [[1623, 536, <Button.left: (4, 2, 0)>, True, 0.88], [1623, 536, <Button.left: (4, 2, 0)>, False, 0.08], [1616, 362, <Button.left: (4, 2, 0)>, True, 0.44], [1616, 362, <Button.left: (4, 2, 0)>, False, 0.09], [1566, 272, <Button.left: (4, 2, 0)>, True, 0.44], [1566, 272, <Button.left: (4, 2, 0)>, False, 0.09], [<Key.f9: <120>>, 'key', 0.78, 'press', 0, 0]]
+18-Jul-23 23:38:18 - INFO     [main.py:3780] - started function to remove All lines from record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3794] - ending function to remove All lines from record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3365] - started function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:3501] - ending function to add new mouse line in record actions
+18-Jul-23 23:38:18 - INFO     [main.py:5288] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
+18-Jul-23 23:38:18 - INFO     [main.py:5429] - showing mainwindow
+18-Jul-23 23:38:18 - INFO     [main.py:5440] - ending function to stop recording user actions from screen
+18-Jul-23 23:38:20 - INFO     [main.py:4895] - started function record_start_process()
+18-Jul-23 23:38:20 - INFO     [main.py:4953] - green signal given to perform recorded autoclicking!!
+18-Jul-23 23:38:20 - INFO     [main.py:1513] - started function call to open small window
+18-Jul-23 23:38:20 - INFO     [main.py:5446] - started initialisation of small window UI
+18-Jul-23 23:38:20 - INFO     [main.py:5453] -  Screen size : 1200x1920
+18-Jul-23 23:38:20 - INFO     [main.py:5479] - ending initialisation of small window UI
+18-Jul-23 23:38:20 - INFO     [main.py:1531] - completed function call to open small window
+18-Jul-23 23:38:20 - INFO     [main.py:5070] - starting thread for playing back recorded actions
+18-Jul-23 23:38:20 - ERROR    [main.py:5074] - error in removing screen recording hotkey
+Traceback (most recent call last):
+  File "main.py", line 5072, in record_start_process
+    keyboard.remove_hotkey(self.record_recording_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f9'
+18-Jul-23 23:38:20 - INFO     [main.py:793] - start execution of function: start_record_action(): playing back record actions from record screen
+18-Jul-23 23:38:20 - INFO     [main.py:5078] - ending execution of function: record_start_process()
+18-Jul-23 23:38:20 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:21 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:21 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:21 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:21 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:706] - start execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:719] - ending execution of function: click for record: clicking action for record screen
+18-Jul-23 23:38:22 - INFO     [main.py:5082] - starting execution of function: after_record_thread()
+18-Jul-23 23:38:22 - INFO     [main.py:5096] - small window is opened
+18-Jul-23 23:38:22 - INFO     [main.py:5101] - showing the current active threads:
+18-Jul-23 23:38:22 - INFO     [main.py:5103] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:38:22 - INFO     [main.py:5103] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:38:22 - INFO     [main.py:5103] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:38:22 - INFO     [main.py:5103] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:38:22 - INFO     [main.py:5103] - <Thread(Thread-25, started 10640)>
+18-Jul-23 23:38:22 - INFO     [main.py:5104] - list complete
+18-Jul-23 23:38:22 - INFO     [main.py:5149] - ending execution of function: after_record_thread()
+18-Jul-23 23:38:22 - INFO     [main.py:849] - ending execution of function: start_record_action(): playing back record actions from record screen
+18-Jul-23 23:38:27 - INFO     [main.py:1576] - starting function to exit app
+18-Jul-23 23:38:27 - INFO     [main.py:1605] - showing the current active threads:
+18-Jul-23 23:38:27 - INFO     [main.py:1607] - <_MainThread(MainThread, started 10952)>
+18-Jul-23 23:38:27 - INFO     [main.py:1607] - <Thread(Thread-1, started daemon 10680)>
+18-Jul-23 23:38:27 - INFO     [main.py:1607] - <Thread(Thread-2, started daemon 14304)>
+18-Jul-23 23:38:27 - INFO     [main.py:1607] - <Thread(Thread-3, started daemon 17868)>
+18-Jul-23 23:38:27 - INFO     [main.py:1608] - list complete
+18-Jul-23 23:38:27 - INFO     [main.py:1638] - deleting any stored home settings
+18-Jul-23 23:38:27 - INFO     [main.py:1643] - exiting app
