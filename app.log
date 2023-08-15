@@ -1,62 +1,286 @@
-02-Aug-23 13:40:59 - INFO     [main.py:6142] - importing app_settings stored in database
-02-Aug-23 13:40:59 - INFO     [main.py:913] - setting value of validity to avoid server call
-02-Aug-23 13:40:59 - INFO     [main.py:919] - token is valid forever, now no need to call server
-02-Aug-23 13:40:59 - INFO     [main.py:924] - starting initialisation of main window
-02-Aug-23 13:40:59 - INFO     [main.py:925] - showing the current active threads:
-02-Aug-23 13:40:59 - INFO     [main.py:927] - <_MainThread(MainThread, started 28768)>
-02-Aug-23 13:40:59 - INFO     [main.py:928] - list complete
-02-Aug-23 13:41:00 - INFO     [main.py:4086] - starting function call to start thread to write live mouse position to screen
-02-Aug-23 13:41:00 - INFO     [main.py:4089] - created new thread for get live mouse function
-02-Aug-23 13:41:00 - INFO     [main.py:4104] - starting function to constantly write the live cursor position to the screen
-02-Aug-23 13:41:00 - INFO     [main.py:4091] - started the new thread for get live mouse function
-02-Aug-23 13:41:00 - INFO     [main.py:4092] - showing the current active threads:
-02-Aug-23 13:41:00 - INFO     [main.py:4094] - <_MainThread(MainThread, started 28768)>
-02-Aug-23 13:41:00 - INFO     [main.py:4094] - <Thread(Thread-1, started daemon 26640)>
-02-Aug-23 13:41:00 - INFO     [main.py:4095] - list complete
-02-Aug-23 13:41:00 - INFO     [main.py:4096] - ending function call to start thread to write live mouse position to screen
-02-Aug-23 13:41:00 - INFO     [main.py:1595] - starting function to toggle show_tool_after_clicking checkbox
-02-Aug-23 13:41:00 - INFO     [main.py:1616] - ending function to toggle show_tool_after_clicking checkbox
-02-Aug-23 13:41:00 - INFO     [main.py:3307] - started function to load saved home settings on the home screen
-02-Aug-23 13:41:00 - INFO     [main.py:3314] - no data saved in home run settings
-02-Aug-23 13:41:00 - INFO     [main.py:3316] - ending function to load saved home settings on the home screen
-02-Aug-23 13:41:00 - INFO     [main.py:1516] - ending initialisation of main window
-02-Aug-23 13:41:01 - INFO     [main.py:4784] - start execution of function: home_start_process()
-02-Aug-23 13:41:01 - INFO     [main.py:2300] - add_record_line_hotkey was not active
-02-Aug-23 13:41:01 - INFO     [main.py:4832] - token is valid for infinity
-02-Aug-23 13:41:01 - INFO     [main.py:1551] - started function call to open small window
-02-Aug-23 13:41:01 - INFO     [main.py:5676] - started initialisation of small window UI
-02-Aug-23 13:41:01 - INFO     [main.py:5683] -  Screen size : 1200x1920
-02-Aug-23 13:41:01 - INFO     [main.py:5709] - ending initialisation of small window UI
-02-Aug-23 13:41:01 - INFO     [main.py:1569] - completed function call to open small window
-02-Aug-23 13:41:01 - ERROR    [main.py:4932] - error in removing add record line hotkey
+15-Aug-23 16:02:25 - INFO     [main.py:6288] - importing app_settings stored in database
+15-Aug-23 16:02:25 - INFO     [main.py:1034] - setting value of validity to avoid server call
+15-Aug-23 16:02:25 - INFO     [main.py:1040] - token is valid forever, now no need to call server
+15-Aug-23 16:02:25 - INFO     [main.py:1045] - starting initialisation of main window
+15-Aug-23 16:02:25 - INFO     [main.py:1046] - showing the current active threads:
+15-Aug-23 16:02:25 - INFO     [main.py:1048] - <_MainThread(MainThread, started 13564)>
+15-Aug-23 16:02:25 - INFO     [main.py:1049] - list complete
+15-Aug-23 16:02:26 - INFO     [main.py:4217] - starting function call to start thread to write live mouse position to screen
+15-Aug-23 16:02:26 - INFO     [main.py:4220] - created new thread for get live mouse function
+15-Aug-23 16:02:26 - INFO     [main.py:4235] - starting function to constantly write the live cursor position to the screen
+15-Aug-23 16:02:26 - INFO     [main.py:4222] - started the new thread for get live mouse function
+15-Aug-23 16:02:26 - INFO     [main.py:4223] - showing the current active threads:
+15-Aug-23 16:02:26 - INFO     [main.py:4225] - <_MainThread(MainThread, started 13564)>
+15-Aug-23 16:02:26 - INFO     [main.py:4225] - <Thread(Thread-1, started daemon 15336)>
+15-Aug-23 16:02:26 - INFO     [main.py:4226] - list complete
+15-Aug-23 16:02:26 - INFO     [main.py:4227] - ending function call to start thread to write live mouse position to screen
+15-Aug-23 16:02:26 - INFO     [main.py:1726] - starting function to toggle show_tool_after_clicking checkbox
+15-Aug-23 16:02:26 - INFO     [main.py:1747] - ending function to toggle show_tool_after_clicking checkbox
+15-Aug-23 16:02:26 - INFO     [main.py:4159] - starting function to toggle disable_small_window checkbox
+15-Aug-23 16:02:26 - INFO     [main.py:4181] - ending function to toggle disable_small_window checkbox
+15-Aug-23 16:02:26 - INFO     [main.py:3438] - started function to load saved home settings on the home screen
+15-Aug-23 16:02:26 - INFO     [main.py:3445] - no data saved in home run settings
+15-Aug-23 16:02:26 - INFO     [main.py:3447] - ending function to load saved home settings on the home screen
+15-Aug-23 16:02:26 - INFO     [main.py:1638] - ending initialisation of main window
+15-Aug-23 16:03:13 - INFO     [main.py:2461] - add_record_line_hotkey was not active
+15-Aug-23 16:03:21 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:26 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:26 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:26 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:26 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:26 - ERROR    [main.py:5050] - error in removing add record line hotkey
 Traceback (most recent call last):
-  File "main.py", line 4930, in home_start_process
+  File "main.py", line 5048, in home_start_process
     keyboard.remove_hotkey(self.add_record_line_hotkey)
   File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
     _hotkeys[hotkey_or_callback]()
 KeyError: 'f7'
-02-Aug-23 13:41:01 - INFO     [main.py:4957] - starting new thread for current clicking
-02-Aug-23 13:41:01 - INFO     [main.py:440] - start execution of function: home_current_clicking()
-02-Aug-23 13:41:01 - INFO     [main.py:4969] - ending execution of function: home_start_process()
-02-Aug-23 13:41:03 - INFO     [main.py:4976] - started execution of function: multiple_hotkey_actions_home()
-02-Aug-23 13:41:03 - INFO     [main.py:4983] - <__main__.UI_SmallWindow object at 0x0000023FD0A00F70>
-02-Aug-23 13:41:03 - INFO     [main.py:4986] - small window is opened
-02-Aug-23 13:41:03 - INFO     [main.py:4988] - here
-02-Aug-23 13:41:03 - INFO     [main.py:4990] - ending execution of function: multiple_hotkey_actions_home()
-02-Aug-23 13:41:03 - INFO     [main.py:557] - done current clicking
-02-Aug-23 13:41:03 - INFO     [main.py:4998] - started execution of function: after_home_thread()
-02-Aug-23 13:41:03 - INFO     [main.py:5009] - small window is opened
-02-Aug-23 13:41:03 - INFO     [main.py:5014] - showing normal view of main window
-02-Aug-23 13:41:03 - INFO     [main.py:5015] - value is False
-02-Aug-23 13:41:03 - INFO     [main.py:5020] - norm
-02-Aug-23 13:41:03 - INFO     [main.py:5079] - ending execution of function: after_home_thread()
-02-Aug-23 13:41:03 - INFO     [main.py:564] - ending execution of function: home_current_clicking()
-02-Aug-23 13:41:04 - INFO     [main.py:1623] - starting function to exit app
-02-Aug-23 13:41:04 - INFO     [main.py:1652] - showing the current active threads:
-02-Aug-23 13:41:04 - INFO     [main.py:1654] - <_MainThread(MainThread, started 28768)>
-02-Aug-23 13:41:04 - INFO     [main.py:1654] - <Thread(Thread-1, started daemon 26640)>
-02-Aug-23 13:41:04 - INFO     [main.py:1654] - <Thread(Thread-2, started daemon 29824)>
-02-Aug-23 13:41:04 - INFO     [main.py:1654] - <Thread(Thread-3, started daemon 1512)>
-02-Aug-23 13:41:04 - INFO     [main.py:1655] - list complete
-02-Aug-23 13:41:04 - INFO     [main.py:1685] - deleting any stored home settings
-02-Aug-23 13:41:04 - INFO     [main.py:1690] - exiting app
+15-Aug-23 16:03:26 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:26 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:26 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:29 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:29 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:29 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:29 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:29 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:29 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:29 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:29 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:30 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:30 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:30 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:30 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:30 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:30 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:30 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:30 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:31 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:31 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:31 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:31 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:31 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:31 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:31 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:31 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:31 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:31 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:31 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:31 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:31 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:31 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:31 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:31 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:32 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:32 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:32 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:32 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:32 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:32 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:32 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:32 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:33 - INFO     [main.py:2461] - add_record_line_hotkey was not active
+15-Aug-23 16:03:34 - INFO     [main.py:4159] - starting function to toggle disable_small_window checkbox
+15-Aug-23 16:03:34 - INFO     [main.py:4181] - ending function to toggle disable_small_window checkbox
+15-Aug-23 16:03:35 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:36 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:36 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:36 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:36 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:36 - INFO     [main.py:5815] - started initialisation of small window UI
+15-Aug-23 16:03:36 - INFO     [main.py:5823] -  Screen size : 1200x1920
+15-Aug-23 16:03:36 - INFO     [main.py:5849] - ending initialisation of small window UI
+15-Aug-23 16:03:36 - INFO     [main.py:1696] - starting to show small window
+15-Aug-23 16:03:36 - INFO     [main.py:1698] - small window should be visible
+15-Aug-23 16:03:36 - INFO     [main.py:1700] - completed function call to open small window
+15-Aug-23 16:03:36 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:36 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:36 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:36 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:37 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:37 - INFO     [main.py:5106] - small window is opened
+15-Aug-23 16:03:37 - INFO     [main.py:5108] - here
+15-Aug-23 16:03:37 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:37 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:37 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:37 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:37 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:37 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:37 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:37 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:37 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:37 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:37 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:37 - INFO     [main.py:5815] - started initialisation of small window UI
+15-Aug-23 16:03:37 - INFO     [main.py:5823] -  Screen size : 1200x1920
+15-Aug-23 16:03:37 - INFO     [main.py:5849] - ending initialisation of small window UI
+15-Aug-23 16:03:37 - INFO     [main.py:1696] - starting to show small window
+15-Aug-23 16:03:37 - INFO     [main.py:1698] - small window should be visible
+15-Aug-23 16:03:37 - INFO     [main.py:1700] - completed function call to open small window
+15-Aug-23 16:03:37 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:37 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:37 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:37 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:38 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:38 - INFO     [main.py:5106] - small window is opened
+15-Aug-23 16:03:38 - INFO     [main.py:5108] - here
+15-Aug-23 16:03:38 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:38 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:38 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:38 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:38 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:38 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:38 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:38 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:38 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:38 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:38 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:38 - INFO     [main.py:5815] - started initialisation of small window UI
+15-Aug-23 16:03:38 - INFO     [main.py:5823] -  Screen size : 1200x1920
+15-Aug-23 16:03:38 - INFO     [main.py:5849] - ending initialisation of small window UI
+15-Aug-23 16:03:38 - INFO     [main.py:1696] - starting to show small window
+15-Aug-23 16:03:38 - INFO     [main.py:1698] - small window should be visible
+15-Aug-23 16:03:38 - INFO     [main.py:1700] - completed function call to open small window
+15-Aug-23 16:03:38 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:38 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:38 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:38 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:39 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:39 - INFO     [main.py:5106] - small window is opened
+15-Aug-23 16:03:39 - INFO     [main.py:5108] - here
+15-Aug-23 16:03:39 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:39 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:39 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:39 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:39 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:39 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:39 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:40 - INFO     [main.py:2461] - add_record_line_hotkey was not active
+15-Aug-23 16:03:41 - INFO     [main.py:4159] - starting function to toggle disable_small_window checkbox
+15-Aug-23 16:03:41 - INFO     [main.py:4181] - ending function to toggle disable_small_window checkbox
+15-Aug-23 16:03:42 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:42 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:42 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:42 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:42 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:42 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:42 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:42 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:43 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:43 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:43 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:43 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:43 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:43 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:43 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:43 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:43 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:43 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:43 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:43 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:43 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:43 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:43 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:43 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:43 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:43 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:43 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:43 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:43 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:43 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:43 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:43 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:44 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:44 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:44 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:44 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:44 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:44 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:44 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:44 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:44 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:44 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:44 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:44 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:44 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:44 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:44 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:44 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:50 - INFO     [main.py:4916] - start execution of function: home_start_process()
+15-Aug-23 16:03:50 - INFO     [main.py:2431] - add_record_line_hotkey was not active
+15-Aug-23 16:03:50 - INFO     [main.py:4950] - token is valid for infinity
+15-Aug-23 16:03:50 - INFO     [main.py:1680] - started function call to open small window
+15-Aug-23 16:03:50 - ERROR    [main.py:5050] - error in removing add record line hotkey
+Traceback (most recent call last):
+  File "main.py", line 5048, in home_start_process
+    keyboard.remove_hotkey(self.add_record_line_hotkey)
+  File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
+    _hotkeys[hotkey_or_callback]()
+KeyError: 'f7'
+15-Aug-23 16:03:50 - INFO     [main.py:5076] - starting new thread for current clicking
+15-Aug-23 16:03:50 - INFO     [main.py:54] - start execution of function: home_current_clicking()
+15-Aug-23 16:03:50 - INFO     [main.py:5095] - ending execution of function: home_start_process()
+15-Aug-23 16:03:53 - INFO     [main.py:5102] - started execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:53 - INFO     [main.py:5118] - ending execution of function: multiple_hotkey_actions_home()
+15-Aug-23 16:03:53 - INFO     [main.py:171] - done current clicking
+15-Aug-23 16:03:53 - INFO     [main.py:5126] - started execution of function: after_home_thread()
+15-Aug-23 16:03:53 - INFO     [main.py:1643] - inside function to maximise window
+15-Aug-23 16:03:53 - INFO     [main.py:1646] - after calling shownormal
+15-Aug-23 16:03:53 - INFO     [main.py:5215] - ending execution of function: after_home_thread()
+15-Aug-23 16:03:53 - INFO     [main.py:179] - ending execution of function: home_current_clicking()
+15-Aug-23 16:03:56 - INFO     [main.py:1754] - starting function to exit app
+15-Aug-23 16:03:56 - INFO     [main.py:1783] - showing the current active threads:
+15-Aug-23 16:03:56 - INFO     [main.py:1785] - <_MainThread(MainThread, started 13564)>
+15-Aug-23 16:03:56 - INFO     [main.py:1785] - <Thread(Thread-1, started daemon 15336)>
+15-Aug-23 16:03:56 - INFO     [main.py:1785] - <Thread(Thread-2, started daemon 13396)>
+15-Aug-23 16:03:56 - INFO     [main.py:1785] - <Thread(Thread-3, started daemon 2336)>
+15-Aug-23 16:03:56 - INFO     [main.py:1786] - list complete
+15-Aug-23 16:03:56 - INFO     [main.py:1816] - deleting any stored home settings
+15-Aug-23 16:03:56 - INFO     [main.py:1821] - exiting app

@@ -1,12 +1,13 @@
 import csv
 import json
 import sqlite3
+
 from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QFrame, QWidget, QComboBox, QPushButton, QGroupBox, \
     QLineEdit, QRadioButton, QScrollArea, QHBoxLayout, QFormLayout, QFileDialog, QGridLayout, QListWidgetItem, \
     QCheckBox, QDialog, QListWidget, QToolButton
 from PyQt5 import uic, QtGui, QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator, QIcon
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal
 import sys
 import os
 import threading
@@ -33,40 +34,151 @@ import hashlib
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, filename=functions.resource_path('app.log'), filemode='w', format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
-# is_clicking = False
 
-# def resource_path2(relative_path):
-#     """ Get absolute path to resource, works for dev and for PyInstaller """
-#     logger.info(f"Get absolute path to - {relative_path}")
-#     if getattr(sys, 'frozen', False):
-#         application_path = os.path.dirname(sys.executable)
-#         running_mode = 'Frozen/executable'
-#         logger.info(f"running mode is - {running_mode}")
-#     else:
-#         try:
-#             app_full_path = os.path.realpath(__file__)
-#             application_path = os.path.dirname(app_full_path)
-#             running_mode = "Non-interactive (e.g. 'python myapp.py')"
-#             logger.info(f"running mode is - {running_mode}")
-#         except NameError:
-#             logger.error("Exception occurred", exc_info=True)
-#             application_path = os.getcwd()
-#             running_mode = 'Interactive'
-#             logger.info(f"running mode is - {running_mode}")
-# 
-#     file_full_path = os.path.join(application_path, relative_path)
-# 
-#     # print('Running mode:', running_mode)
-#     # print('  Application path  :', application_path)
-#     # print('  File full path :', file_full_path)
-#     logger.info(f"the final absolute path - {file_full_path}")
-#     return file_full_path
-# 
 
 form = functions.resource_path("version2.ui")
-# form = functions.resource_path("version2.ui")
 Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
 responses = []
+
+class WorkerThread1(threading.Thread):
+    def __init__(self, main_window, mouse_type, click_type,click_repeat, waiting_interval):
+        super().__init__()
+        self.main_window = main_window
+        self.mouse_type = mouse_type
+        self.click_type = click_type
+        self.click_repeat = click_repeat
+        self.waiting_interval = waiting_interval
+
+    def run(self):
+        try:
+            logger.info("start execution of function: home_current_clicking()")
+            stop_home_event.clear()
+            if self.waiting_interval[0] == self.waiting_interval[1]:
+                if self.waiting_interval[0] > 2:
+                    repeat = int(self.waiting_interval[0] / 2)
+                    last = float(self.waiting_interval[0] - (repeat * 2))
+                    delay = 2
+                else:
+                    repeat = 1
+                    last = 0
+                    delay = self.waiting_interval[0]
+                if self.click_repeat > 0:
+                    if self.click_type == 'Single':
+                        for i in range(self.click_repeat):
+                            mouse.click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                    else:
+                        for i in range(self.click_repeat):
+                            mouse.double_click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                elif self.click_repeat == 0:
+                    pass
+                else:
+                    if self.click_type == 'Single':
+                        while True:
+                            mouse.click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                    else:
+                        while True:
+                            mouse.double_click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+            else:
+                wait_time = round(random.uniform(self.waiting_interval[0], self.waiting_interval[1]), 1)
+                if wait_time > 2:
+                    repeat = int(wait_time / 2)
+                    last = float(wait_time - (repeat * 2))
+                    delay = 2
+                else:
+                    repeat = 1
+                    last = 0
+                    delay = wait_time
+                if self.click_repeat > 0:
+                    if self.click_type == 'Single':
+                        for i in range(self.click_repeat):
+                            mouse.click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                    else:
+                        for i in range(self.click_repeat):
+                            mouse.double_click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                elif self.click_repeat == 0:
+                    pass
+                else:
+                    if self.click_type == 'Single':
+                        while True:
+                            mouse.click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+                    else:
+                        while True:
+                            mouse.double_click(button=self.mouse_type)
+                            for j in range(repeat):
+                                sleep(delay)
+                                if stop_home_event.is_set():
+                                    break
+                            sleep(last)
+                            if stop_home_event.is_set():
+                                stop_home_event.clear()
+                                break
+            logger.info("done current clicking")
+            clicking_event.clear()
+            self.main_window.maximize_signal.emit()
+            UIWindow.after_home_thread()
+            # UIWindow.showNormal()
+            # global is_clicking
+            # is_clicking = False
+
+            logger.info("ending execution of function: home_current_clicking()")
+        except:
+            logger.error("exception in home_current_clicking()", exc_info=True)
 
 
 def combine(str1,str2):
@@ -91,6 +203,7 @@ def combine(str1,str2):
         return result
     except:
         logger.error("exception in combine()", exc_info=True)
+
 
 def de_combine(str):
     try:
@@ -124,6 +237,7 @@ def prompt_internet_issue():
         logger.info("ending function to raise user is offline popup")
     except:
         logger.error("exception in prompt_internet_issue()", exc_info=True)
+
 
 def initialise_db():
     try:
@@ -224,6 +338,7 @@ def initialise_db():
     except:
         logger.error("exception in initialise_db()", exc_info=True)
 
+
 def check(email):
     logger.info("starting function for checking if email entered is valid")
     try:
@@ -248,6 +363,7 @@ def check(email):
         logger.info("ending function for checking if email entered is valid")
         # email is not valid, exception message is human-readable
         return str(e)
+
 
 # starts the clicking actions set in home screen
 def home_fixed_clicking(mouse_type, click_type, click_repeat, location_x, location_y, wait_interval):
@@ -416,7 +532,7 @@ def post_register(email):
     try:
         responses = []
         try:
-            r = requests.post('http://146.190.166.207/register', data={"email": email})
+            r = requests.post('http://146.190.166.207/register', data={"email": email}, headers={'Connection':'close'})
             # r.raise_for_status()
             # r = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
         except requests.exceptions.ConnectionError as conerr:
@@ -556,6 +672,7 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                             break
         logger.info("done current clicking")
         clicking_event.clear()
+
         UIWindow.after_home_thread()
         # UIWindow.showNormal()
         # global is_clicking
@@ -882,12 +999,16 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
     except:
         logger.error("exception in start_record_action()", exc_info=True)
 
+
 class UI(QMainWindow):
     # defines all variables and UI elements for the app
+    maximize_signal = pyqtSignal()
     def __init__(self):
         try:
             super(UI, self).__init__()
-
+            # self.maximize_signal.connect(self.showNormal)
+            # flags = QtCore.Qt.WindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+            # self.setWindowFlags(flags)
             self.validity_24_hour = 0
             self.validity_infinity = 0
             conn = sqlite3.connect(file_path)
@@ -1513,9 +1634,17 @@ class UI(QMainWindow):
                 prompt_internet_issue()
             self.save_home_params = 0
             self.load_home_settings()
+            self.maximize_signal.connect(self.maximise)
             logger.info("ending initialisation of main window")
         except:
             logger.error("exception in init()", exc_info=True)
+
+    def maximise(self):
+        logger.info("inside function to maximise window")
+        # self.showMaximized()
+        self.showNormal()
+        logger.info("after calling shownormal")
+        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
 
     def open_email_dialog(self):
         try:
@@ -1562,10 +1691,12 @@ class UI(QMainWindow):
                 logger.info("recording mein small window")
                 stop_hotkey_text = self.record_start_stop_hotkey_label.text()
 
-            self.small_window = UI_SmallWindow(stop_hotkey_text, UIWindow, indicator)
-
-            self.small_window.show()
-            self.small_window_opened = self.small_window  # holds the current object of small window
+            self.small_window_opened = UI_SmallWindow(stop_hotkey_text, UIWindow, indicator)
+            # self.dialogs.append(weakref.ref(self.small_window_opened, self.dialogs.remove))
+            logger.info("starting to show small window")
+            self.small_window_opened.show()
+            logger.info("small window should be visible")
+            # self.small_window_opened = self.small_window  # holds the current object of small window
             logger.info("completed function call to open small window")
         except:
             logger.error("exception in open_small_window()", exc_info=True)
@@ -4547,7 +4678,7 @@ class UI(QMainWindow):
             try:
                 self.responses = []
                 try:
-                    r = requests.get('http://146.190.166.207/generate-token')
+                    r = requests.get('http://146.190.166.207/generate-token', headers={'Connection':'close'})
                     # r.raise_for_status()
                 # r = requests.get('https://auth-provider.onrender.com/generate-token')
                 except requests.exceptions.ConnectionError as conerr:
@@ -4572,7 +4703,7 @@ class UI(QMainWindow):
             self.responses = []
             # r = requests.post('https://auth-provider.onrender.com/authenticate', data={"token": token})
             try:
-                r = requests.post('http://146.190.166.207/authenticate', data={"token": token})
+                r = requests.post('http://146.190.166.207/authenticate', data={"token": token}, headers={'Connection':'close'})
                 # r.raise_for_status()
             except requests.exceptions.ConnectionError as conerr:
                 logger.error("Exception occurred", exc_info=True)
@@ -4624,7 +4755,7 @@ class UI(QMainWindow):
                 logger.info("no token found in local database")
                 logger.info("started get call")
                 try:
-                    response = requests.get('http://146.190.166.207/generate-token')
+                    response = requests.get('http://146.190.166.207/generate-token', headers={'Connection':'close'})
                     # response.raise_for_status()
                 except requests.exceptions.ConnectionError as conerr:
                     logger.error("Exception occurred", exc_info=True)
@@ -4654,6 +4785,7 @@ class UI(QMainWindow):
                 funny_encrypt = res_first
                 funny_pt2_encrypt = res_second
                 cursor.execute("INSERT INTO local_table (email, access_token, funny_number, funny_number_2, timestamp) VALUES(?,?,?,?,?)", (email, token,funny_encrypt,funny_pt2_encrypt, time_1_str))
+                cursor.close()
                 con.commit()
                 logger.info("done")
                 con.close()
@@ -4666,7 +4798,7 @@ class UI(QMainWindow):
                 # Making a POST request
                 logger.info("started post call")
                 try:
-                    response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token})
+                    response2 = requests.post('http://146.190.166.207/authenticate', data={"token": token}, headers={'Connection':'close'})
                     # response2.raise_for_status()
                     logger.info(f'token sent for authentication is- {token}')
                     logger.info("done post call")
@@ -4696,7 +4828,7 @@ class UI(QMainWindow):
                         # Making a POST request
                         logger.info("started post call")
                         # response2 = requests.post('https://auth-provider.onrender.com/login', data={"email": email})
-                        response2 = requests.post('http://146.190.166.207/login', data={"email": email})
+                        response2 = requests.post('http://146.190.166.207/login', data={"email": email}, headers={'Connection':'close'})
                         logger.info("done post call")
                         logger.info(f"received response- {response2.text}")
                         json_message = json.loads(response2.text)
@@ -4710,7 +4842,7 @@ class UI(QMainWindow):
                                 logger.info("asking user to register their email as it is not found in our database")
                                 logger.info("started post call")
                                 # response2 = requests.post('https://auth-provider.onrender.com/register', data={"email": email})
-                                response2 = requests.post('http://146.190.166.207/register', data={"email": email})
+                                response2 = requests.post('http://146.190.166.207/register', data={"email": email}, headers={'Connection':'close'})
                                 logger.info("done post call")
                                 logger.info(f"received response- {response2.text}")
                                 json_message = json.loads(response2.text)
@@ -4783,21 +4915,6 @@ class UI(QMainWindow):
         try:
             logger.info("start execution of function: home_start_process()")
             self.get_home_screen()
-    
-            # running authentication
-            # a = self.thread_for_authentication()
-            # the_thread = a[0]
-            # the_thread.join()
-            # if not a[1][0]:
-            #     return
-    
-            # if not self.authentication_loop():
-            #     return
-    
-            # if(1 == 2):
-            #     return
-            # print(self.validity_24_hour)
-            # print(self.validity_infinity)
             if self.validity_infinity == 0 and self.validity_24_hour == 0:
                 logger.info("user has to connect to internet for authentication")
                 self.authentication_loop2()
@@ -4815,6 +4932,7 @@ class UI(QMainWindow):
                 cursor.execute("SELECT timestamp from local_table")
                 value = cursor.fetchone()
                 # print(value[0])
+                cursor.close()
                 con.close()
                 expiration_datetime_object = datetime.datetime.strptime(value[0], '%Y-%m-%d %H:%M:%S.%f')
                 # print(expiration_datetime_object < time_2)
@@ -4953,12 +5071,17 @@ class UI(QMainWindow):
                     mouse_type, click_type, click_repeat, int(location_x), int(location_y), wait_interval))
                 # thread.setDaemon(True)
                 thread.start()
+                # thread.join()
             elif radio_button == 2:
                 logger.info("starting new thread for current clicking")
-                thread = threading.Thread(target=lambda: home_current_clicking(mouse_type, click_type,
-                                                                                  click_repeat, wait_interval))
-                # thread.setDaemon(True)
-                thread.start()
+                worker = WorkerThread1(self,mouse_type, click_type,click_repeat, wait_interval)
+                worker.start()
+
+                # thread = threading.Thread(target=lambda: home_current_clicking(mouse_type, click_type,
+                #                                                                   click_repeat, wait_interval))
+                # # thread.setDaemon(True)
+                # thread.start()
+                # thread.join()
             else:
                 logger.info("starting new thread for random clicking")
                 thread = threading.Thread(target=lambda: home_random_clicking(mouse_type, click_type, click_repeat,
@@ -4966,6 +5089,9 @@ class UI(QMainWindow):
                                                                               wait_interval, area_width, area_height))
                 # thread.setDaemon(True)
                 thread.start()
+                # thread.join()
+
+
             logger.info("ending execution of function: home_start_process()")
         except:
             logger.error("exception in home_start_process()", exc_info=True)
@@ -4974,18 +5100,20 @@ class UI(QMainWindow):
     def multiple_hotkey_actions_home(self):
         try:
             logger.info("started execution of function: multiple_hotkey_actions_home()")
+            if not self.small_window_checkbox.isChecked():
+                if self.small_window_opened is not None:
+                    # self.small_window_opened.button_action(self)
+                    logger.info("small window is opened")
+                    self.small_window_opened.close()
+                    logger.info("here")
             self.home_stop_process()
             self.record_stop_process()
-            stop_current_action.set()
+            # stop_current_action.set()
             # close the small window if its open. First check none condition
             # small_window_instance = self.small_window_opened
             # print(self.small_window_opened)
-            logger.info(self.small_window_opened)
-            if self.small_window_opened is not None:
-                # self.small_window_opened.button_action(self)
-                logger.info("small window is opened")
-                # self.small_window_opened.close()
-                logger.info("here")
+            # logger.info(self.small_window_opened)
+
                 
             logger.info("ending execution of function: multiple_hotkey_actions_home()")
         except:
@@ -5002,29 +5130,37 @@ class UI(QMainWindow):
             except:
                 logger.error("error in removing home start stop hotkey", exc_info=True)
             keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
-            # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
+            # keyboard.add_hotkey(self., lambda: self.multiple_hotkey_actions_home())
     
-            if self.small_window_opened is not None:
-                # self.small_window_opened.button_action(self)
-                logger.info("small window is opened")
-                self.small_window_opened.close()
-            if self.show_after_complete_checkbox.isChecked():
-    
-                # self.showMinimized()
-                logger.info("showing normal view of main window")
-                logger.info(f"value is {main_window_visible.is_set()}")
-                if main_window_visible.is_set() == False:
-                    # if self.flag == 1:
-                    #     self.insert_recording_list(self.record_events)
-                    #     self.flag = 0
-                    logger.info("norm")
-                    self.showNormal()
-                    main_window_visible.set()
-    
-                # if self.small_window_opened is not None:
+            # if self.small_window_opened is not None:
+            #     # self.small_window_opened.button_action(self)
+            #     logger.info("small window is opened")
+            #     self.small_window_opened.close()
+
+
+            # if small_window is not None:
+            #     # self.small_window_opened.button_action(self)
+            #     logger.info("small window is opened")
+            #     small_window.close()
+            # if self.show_after_complete_checkbox.isChecked():
+            #
+            #     # self.showMinimized()
+            #     logger.info("showing normal view of main window")
+            #     logger.info(f"value is {main_window_visible.is_set()}")
+            #     if main_window_visible.is_set() == False:
+            #         # if self.flag == 1:insert_recording_list
+            #         #     self.(self.record_events)
+            #         #     self.flag = 0
+            #         logger.info("norm")
+            #         # time.sleep(0.2)
+            #         self.showNormal()
+            #         logger.info("main window should be opened by now")
+            #         # main_window_visible.set()
+            # logger.info("small window is opened")
+
+            # if self.small_window_opened is not None:
                 # if not self.small_window_checkbox.isChecked():
                 # self.small_window_opened.button_action(self)
-                # logger.info("small window is opened")
                 # closing_thread = threading.Thread(target=self.small_window_opened.close)
                 # closing_thread.start()
                 # self.small_window_opened.close()
@@ -5087,6 +5223,8 @@ class UI(QMainWindow):
             # is_clicking = False
             clicking_event.clear()
             stop_home_event.set()
+            # self.thread.join()
+
         except:
             logger.error("exception in home_stop_process()", exc_info=True)
 
@@ -5145,6 +5283,7 @@ class UI(QMainWindow):
                 cursor = con.cursor()
                 cursor.execute("SELECT timestamp from local_table")
                 value = cursor.fetchone()
+                cursor.close()
                 con.close()
                 expiration_datetime_object = datetime.datetime.strptime(value[0], '%Y-%m-%d %H:%M:%S.%f')
                 if expiration_datetime_object < time_2:
@@ -5662,7 +5801,7 @@ class UI(QMainWindow):
             # self.window_status = True
             # main_window_visible.set()
             # self.insert_recording_list(self.record_events)
-            stop_current_action.clear()
+            # stop_current_action.clear()
             self.record_play_button.setEnabled(True)
             logger.info("ending function to stop recording user actions from screen")
         except:
@@ -5675,6 +5814,7 @@ class UI_SmallWindow(QMainWindow):
         try:
             logger.info("started initialisation of small window UI")
             super(UI_SmallWindow, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             uic.loadUi(functions.resource_path("small_window.ui"), self)
             self.MainWindow = self.findChild(QMainWindow, "MainWindow")
             self.setObjectName("SmallWindow")
@@ -5741,6 +5881,7 @@ class UI_connectivity(QDialog):
 
             logger.info("started initialisation of connectivity ui")
             super(UI_connectivity, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             uic.loadUi(functions.resource_path("connectivity_issue.ui"), self)
             self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
             self.setWindowTitle("User seems offline")
@@ -5759,6 +5900,7 @@ class new_dialog(QDialog):
     def __init__(self, mainwindow):
         try:
             super(new_dialog, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             # flags = QtCore.Qt.WindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowTitleHint)
             # self.setWindowFlags(flags)
             self.parent = mainwindow
@@ -5778,6 +5920,7 @@ class UI_no_actions(QDialog):
         try:
             logger.info("started initialisation of no actions ui")
             super(UI_no_actions, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             uic.loadUi(functions.resource_path("no_actions.ui"), self)
             self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
             self.setWindowTitle("No actions available")
@@ -5809,6 +5952,7 @@ class UI_Dialog(QDialog):
         try:
             logger.info("started initialisation of email dialog UI")
             super(UI_Dialog, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             # uic.loadUi(functions.resource_path("email_dialog.ui"), self)
             uic.loadUi(functions.resource_path("email_dialog.ui"), self)
             self.setObjectName("Email Registration")
@@ -5910,6 +6054,7 @@ class UI_email_sent_Dialog(QDialog):
         try:
             logger.info("started initialisation of email sent dialog UI")
             super(UI_email_sent_Dialog, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             uic.loadUi(functions.resource_path("email_sent_dialog.ui"), self)
             self.setObjectName("Email Verification")
             self.sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
@@ -5994,6 +6139,7 @@ class CaptureScreen(QtWidgets.QSplashScreen):
         try:
             logger.info("started initialisation of Capture Screen class")
             super(CaptureScreen, self).__init__()
+            self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
             self.master = MainWindow
             # Points on screen marking the origin and end of regtangle area.
             self.origin = QtCore.QPoint(0, 0)
@@ -6147,6 +6293,7 @@ app_settings = cursor.fetchone()
 sql = '''SELECT * FROM home_run_settings LIMIT 1'''
 cursor.execute(sql)
 home_settings = cursor.fetchone()
+cursor.close()
 conn.close()
 show_tool_after, hide_system_tray, disable_cursor_location, disable_small_window, dark_theme, home_start_hotkey,\
 add_record_line_hotkey, record_start_hotkey, record_recording_hotkey, mouse_location_hotkey = app_settings
@@ -6166,7 +6313,7 @@ stop_record_event = threading.Event()
 wrong_key_event = threading.Event()
 clicking_event = threading.Event()
 main_window_visible = threading.Event()
-stop_current_action = threading.Event()
+# stop_current_action = threading.Event()
 app = QApplication(sys.argv)
 UIWindow = UI()
 UIWindow.show()
