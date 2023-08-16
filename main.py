@@ -516,6 +516,105 @@ class WorkerThread3(threading.Thread):
             logger.error("exception in home_random_clicking()", exc_info=True)
 
 
+class WorkerThread4(threading.Thread):
+    def __init__(
+        self, main_window, actions_data, repeat_all, delay_time, i
+    ):
+        super().__init__()
+        self.main_window = main_window
+        self.actions_data = actions_data
+        self.repeat_all = repeat_all
+        self.delay_time = delay_time
+        self.i = i
+
+
+    def run(self):
+        try:
+            logger.info(
+                "start execution of function: start_record_action(): playing back record actions from record screen"
+            )
+            last_line = 0
+            if self.delay_time > 2:
+                repeat = int(self.delay_time / 2)
+                last = float(self.delay_time - (repeat * 2))
+                delay = 2
+            else:
+                repeat = 1
+                last = 0
+                delay = self.delay_time
+            for b in range(int(self.repeat_all)):
+                for a in range(self.i - 1):
+                    last_line += 1
+                    if self.actions_data[a][0] == "mouse":
+                        try:
+                            click_for_record(
+                                int(self.actions_data[a][1]),
+                                int(self.actions_data[a][2]),
+                                self.actions_data[a][3].lower(),
+                                self.actions_data[a][4],
+                                int(self.actions_data[a][5]),
+                            )
+                        except:
+                            logger.error("Exception occurred", exc_info=True)
+                            break
+                    elif self.actions_data[a][0] == "keyboard":
+                        try:
+                            type_for_record(
+                                self.actions_data[a][1],
+                                self.actions_data[a][2],
+                                self.actions_data[a][3],
+                                int(self.actions_data[a][4]),
+                            )
+                        except:
+                            logger.error("Exception occurred", exc_info=True)
+                            break
+                    else:
+                        try:
+                            scroll_for_record(
+                                int(self.actions_data[a][1]),
+                                int(self.actions_data[a][2]),
+                                self.actions_data[a][3],
+                                int(self.actions_data[a][4]),
+                                int(self.actions_data[a][5]),
+                            )
+                        except:
+                            logger.error("Exception occurred", exc_info=True)
+                            break
+                    if stop_record_event.is_set():
+                        break
+                if stop_record_event.is_set():
+                    stop_record_event.clear()
+                    break
+                for j in range(repeat):
+                    sleep(delay)
+                    if stop_record_event.is_set():
+                        break
+                sleep(last)
+                if stop_record_event.is_set():
+                    stop_record_event.clear()
+                    break
+            for c in range(self.i - 1):
+                if self.actions_data[c][0] == "keyboard":
+                    converted_key = (
+                        self.actions_data[c][1]
+                            .replace("Key.", "")
+                            .replace("_l", "")
+                            .replace("_r", "")
+                            .lower()
+                    )
+                    if keyboard.is_pressed(converted_key):
+                        type_for_record(converted_key, self.actions_data[c][2], "Release", 0)
+            self.main_window.maximize_signal.emit()
+            # self.main_window.close_signal.emit()
+            UIWindow.after_record_thread(last_line)
+            clicking_event.clear()
+            logger.info(
+                "ending execution of function: start_record_action(): playing back record actions from record screen"
+            )
+        except:
+            logger.error("exception in start_record_action()", exc_info=True)
+
+
 def combine(str1, str2):
     try:
         l1 = len(str1)
@@ -1396,6 +1495,7 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
 class UI(QMainWindow):
     # defines all variables and UI elements for the app
     maximize_signal = pyqtSignal()
+    close_signal = pyqtSignal()
 
     def __init__(self):
         try:
@@ -2103,12 +2203,12 @@ class UI(QMainWindow):
                 self.home_start_stop_hotkey, lambda: self.play_button.click()
             )
             # keyboard.add_hotkey(self.add_record_line_hotkey, lambda: self.record_add_button.click())
-            keyboard.add_hotkey(
-                self.record_start_stop_hotkey, lambda: self.record_play_button.click()
-            )
-            keyboard.add_hotkey(
-                self.record_recording_hotkey, lambda: self.record_record_button.click()
-            )
+            # keyboard.add_hotkey(
+            #     self.record_start_stop_hotkey, lambda: self.record_play_button.click()
+            # )
+            # keyboard.add_hotkey(
+            #     self.record_recording_hotkey, lambda: self.record_record_button.click()
+            # )
             # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.multiple_hotkey_actions_home())
 
             self.home_start_stop_hotkey_label.setText(str(home_start_hotkey))
@@ -2216,6 +2316,7 @@ class UI(QMainWindow):
             self.save_home_params = 0
             self.load_home_settings()
             self.maximize_signal.connect(self.maximise)
+            self.close_signal.connect(self.close_small)
             logger.info("ending initialisation of main window")
         except:
             logger.error("exception in init()", exc_info=True)
@@ -2226,6 +2327,14 @@ class UI(QMainWindow):
         self.showNormal()
         logger.info("after calling shownormal")
         # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
+
+    def close_small(self):
+        logger.info("inside function to close small window")
+        if not self.small_window_checkbox.isChecked():
+            if self.small_window_opened is not None:
+                logger.info("small window is opened")
+                self.small_window_opened.close()
+        logger.info("after closing small window")
 
     def open_email_dialog(self):
         try:
@@ -2263,7 +2372,7 @@ class UI(QMainWindow):
                 stop_hotkey_text = self.playback_start_stop_hotkey_label.text()
             elif run_mode == "recording":
                 indicator = 1
-                logger.info("recording mein small window")
+                logger.info("small window while recording")
                 stop_hotkey_text = self.record_start_stop_hotkey_label.text()
 
             self.small_window_opened = UI_SmallWindow(
@@ -3213,6 +3322,14 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            except:
+                logger.info("record_start_stop_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_recording_hotkey)
+            except:
+                logger.info("record_recording_hotkey was not active")
             self.navigation_frame.lower()
             self.home_frame.show()
 
@@ -3227,6 +3344,12 @@ class UI(QMainWindow):
         try:
             keyboard.add_hotkey(
                 self.add_record_line_hotkey, lambda: self.record_add_button.click()
+            )
+            keyboard.add_hotkey(
+                self.record_start_stop_hotkey, lambda: self.record_play_button.click()
+            )
+            keyboard.add_hotkey(
+                self.record_recording_hotkey, lambda: self.record_record_button.click()
             )
             self.navigation_frame.lower()
             self.view_settings_frame.hide()
@@ -3244,6 +3367,14 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            except:
+                logger.info("record_start_stop_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_recording_hotkey)
+            except:
+                logger.info("record_recording_hotkey was not active")
             self.navigation_frame.lower()
 
             self.record_frame.hide()
@@ -3261,6 +3392,14 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            except:
+                logger.info("record_start_stop_hotkey was not active")
+            try:
+                keyboard.remove_hotkey(self.record_recording_hotkey)
+            except:
+                logger.info("record_recording_hotkey was not active")
             self.navigation_frame.lower()
 
             self.record_frame.hide()
@@ -6325,7 +6464,6 @@ class UI(QMainWindow):
             logger.info("started execution of function: multiple_hotkey_actions_home()")
             if not self.small_window_checkbox.isChecked():
                 if self.small_window_opened is not None:
-                    # self.small_window_opened.button_action(self)
                     logger.info("small window is opened")
                     self.small_window_opened.close()
                     logger.info("here")
@@ -6616,12 +6754,18 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.record_recording_hotkey)
             except:
                 logger.error("error in removing screen recording hotkey", exc_info=True)
-            thread_2 = threading.Thread(
-                target=lambda: start_record_actions(
-                    actions_data, repeat_all, delay_time, self.i
-                )
+            # thread_2 = threading.Thread(
+            #     target=lambda: start_record_actions(
+            #         actions_data, repeat_all, delay_time, self.i
+            #     )
+            # )
+            # thread_2.start()
+
+            worker = WorkerThread4(
+                self, actions_data, repeat_all, delay_time, self.i
             )
-            thread_2.start()
+            worker.start()
+
             logger.info("ending execution of function: record_start_process()")
         except:
             logger.error("exception in record_start_process()", exc_info=True)
@@ -6647,12 +6791,12 @@ class UI(QMainWindow):
                 if self.small_window_opened is not None:
                     logger.info("small window is opened")
                     self.small_window_opened.close()
-            if self.show_after_complete_checkbox.isChecked():
-
-                if main_window_visible.is_set() == False:
-                    self.showNormal()
-                    # self.maximize_signal.emit()
-                    main_window_visible.set()
+            # if self.show_after_complete_checkbox.isChecked():
+            #
+            #     if main_window_visible.is_set() == False:
+            #         self.showNormal()
+            #         # self.maximize_signal.emit()
+            #         main_window_visible.set()
             toaster.show_toast(
                 title="Playback completed",
                 msg=f"Press {self.record_start_stop_hotkey.upper()} to start again",

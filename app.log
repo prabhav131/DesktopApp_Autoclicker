@@ -1,148 +1,116 @@
-16-Aug-23 17:24:14 - INFO     [main.py:7584] - importing app_settings stored in database
-16-Aug-23 17:24:14 - INFO     [main.py:1403] - starting initialisation function of the main UI window
-16-Aug-23 17:24:14 - INFO     [main.py:1429] - setting value of validity to avoid server call
-16-Aug-23 17:24:14 - INFO     [main.py:1432] - token is valid under 24 hours, now no need to call server
-16-Aug-23 17:24:14 - INFO     [main.py:1443] - showing the current active threads:
-16-Aug-23 17:24:14 - INFO     [main.py:1445] - <_MainThread(MainThread, started 696)>
-16-Aug-23 17:24:14 - INFO     [main.py:1446] - list complete
-16-Aug-23 17:24:15 - INFO     [main.py:5268] - starting function call to start thread to write live mouse position to screen
-16-Aug-23 17:24:15 - INFO     [main.py:5273] - created new thread for get live mouse function
-16-Aug-23 17:24:15 - INFO     [main.py:5289] - starting function to constantly write the live cursor position to the screen
-16-Aug-23 17:24:15 - INFO     [main.py:5275] - started the new thread for get live mouse function
-16-Aug-23 17:24:15 - INFO     [main.py:5276] - showing the current active threads:
-16-Aug-23 17:24:15 - INFO     [main.py:5278] - <_MainThread(MainThread, started 696)>
-16-Aug-23 17:24:15 - INFO     [main.py:5278] - <Thread(Thread-1, started daemon 9548)>
-16-Aug-23 17:24:15 - INFO     [main.py:5279] - list complete
-16-Aug-23 17:24:15 - INFO     [main.py:5280] - ending function call to start thread to write live mouse position to screen
-16-Aug-23 17:24:15 - INFO     [main.py:2303] - starting function to toggle show_tool_after_clicking checkbox
-16-Aug-23 17:24:15 - INFO     [main.py:2338] - ending function to toggle show_tool_after_clicking checkbox
-16-Aug-23 17:24:15 - INFO     [main.py:5182] - starting function to toggle disable_small_window checkbox
-16-Aug-23 17:24:15 - INFO     [main.py:5218] - ending function to toggle disable_small_window checkbox
-16-Aug-23 17:24:15 - INFO     [main.py:4385] - started function to load saved home settings on the home screen
-16-Aug-23 17:24:15 - INFO     [main.py:4394] - no data saved in home run settings
-16-Aug-23 17:24:15 - INFO     [main.py:4396] - ending function to load saved home settings on the home screen
-16-Aug-23 17:24:15 - INFO     [main.py:2219] - ending initialisation of main window
-16-Aug-23 17:24:17 - INFO     [main.py:3246] - add_record_line_hotkey was not active
-16-Aug-23 17:24:19 - INFO     [main.py:3215] - add_record_line_hotkey was not active
-16-Aug-23 17:24:21 - INFO     [main.py:6844] - starting function to start thread to start recording user actions from screen
-16-Aug-23 17:24:21 - INFO     [main.py:5066] - started function to remove All lines from record actions
-16-Aug-23 17:24:21 - INFO     [main.py:5080] - ending function to remove All lines from record actions
-16-Aug-23 17:24:21 - INFO     [main.py:2255] - started function call to open small window
-16-Aug-23 17:24:21 - INFO     [main.py:6868] - starting function to start recording user actions from screen
-16-Aug-23 17:24:21 - INFO     [main.py:6852] - created and started new thread for live record process function
-16-Aug-23 17:24:21 - INFO     [main.py:6855] - showing the current active threads:
-16-Aug-23 17:24:21 - INFO     [main.py:6857] - <_MainThread(MainThread, started 696)>
-16-Aug-23 17:24:21 - INFO     [main.py:6857] - <Thread(Thread-1, started daemon 9548)>
-16-Aug-23 17:24:21 - INFO     [main.py:6857] - <Thread(Thread-2, started daemon 18732)>
-16-Aug-23 17:24:21 - INFO     [main.py:6857] - <Thread(Thread-3, started daemon 19688)>
-16-Aug-23 17:24:21 - INFO     [main.py:6857] - <Thread(Thread-4, started daemon 13512)>
-16-Aug-23 17:24:21 - INFO     [main.py:6858] - list complete
-16-Aug-23 17:24:21 - INFO     [main.py:6859] - ending function to start thread to start recording user actions from screen
-16-Aug-23 17:24:21 - INFO     [main.py:7013] - ending function to start recording user actions from screen
-16-Aug-23 17:24:25 - INFO     [main.py:7020] - starting function to stop recording user actions from screen
-16-Aug-23 17:24:25 - INFO     [main.py:7047] - inserting record actions
-16-Aug-23 17:24:25 - INFO     [main.py:6713] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Aug-23 17:24:25 - INFO     [main.py:6718] - the events recorded are- [[829, 851, <Button.left: (4, 2, 0)>, True, 0.7], [829, 851, <Button.left: (4, 2, 0)>, False, 0.07], [814, 528, <Button.left: (4, 2, 0)>, True, 0.46], [814, 528, <Button.left: (4, 2, 0)>, False, 0.1], [722, 613, <Button.left: (4, 2, 0)>, True, 0.48], [722, 613, <Button.left: (4, 2, 0)>, False, 0.07], [950, 324, <Button.left: (4, 2, 0)>, True, 0.52], [950, 324, <Button.left: (4, 2, 0)>, False, 0.08], [<Key.f9: <120>>, 'key', 1.09, 'press', 0, 0]]
-16-Aug-23 17:24:25 - INFO     [main.py:5066] - started function to remove All lines from record actions
-16-Aug-23 17:24:25 - INFO     [main.py:5080] - ending function to remove All lines from record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:25 - INFO     [main.py:6835] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Aug-23 17:24:25 - INFO     [main.py:7049] - showing mainwindow
-16-Aug-23 17:24:25 - INFO     [main.py:7060] - ending function to stop recording user actions from screen
-16-Aug-23 17:24:28 - INFO     [main.py:6424] - started function record_start_process()
-16-Aug-23 17:24:28 - INFO     [main.py:6461] - user doesnt have to connect to internet
-16-Aug-23 17:24:28 - INFO     [main.py:6469] - green signal given to perform recorded autoclicking!!
-16-Aug-23 17:24:29 - INFO     [main.py:2255] - started function call to open small window
-16-Aug-23 17:24:29 - INFO     [main.py:6614] - starting thread for playing back recorded actions
-16-Aug-23 17:24:29 - ERROR    [main.py:6618] - error in removing screen recording hotkey
+16-Aug-23 19:42:03 - INFO     [main.py:7728] - importing app_settings stored in database
+16-Aug-23 19:42:03 - INFO     [main.py:1503] - starting initialisation function of the main UI window
+16-Aug-23 19:42:03 - INFO     [main.py:1529] - setting value of validity to avoid server call
+16-Aug-23 19:42:03 - INFO     [main.py:1532] - token is valid under 24 hours, now no need to call server
+16-Aug-23 19:42:03 - INFO     [main.py:1543] - showing the current active threads:
+16-Aug-23 19:42:03 - INFO     [main.py:1545] - <_MainThread(MainThread, started 21112)>
+16-Aug-23 19:42:03 - INFO     [main.py:1546] - list complete
+16-Aug-23 19:42:04 - INFO     [main.py:5407] - starting function call to start thread to write live mouse position to screen
+16-Aug-23 19:42:04 - INFO     [main.py:5412] - created new thread for get live mouse function
+16-Aug-23 19:42:04 - INFO     [main.py:5428] - starting function to constantly write the live cursor position to the screen
+16-Aug-23 19:42:04 - INFO     [main.py:5414] - started the new thread for get live mouse function
+16-Aug-23 19:42:04 - INFO     [main.py:5415] - showing the current active threads:
+16-Aug-23 19:42:04 - INFO     [main.py:5417] - <_MainThread(MainThread, started 21112)>
+16-Aug-23 19:42:04 - INFO     [main.py:5417] - <Thread(Thread-1, started daemon 8420)>
+16-Aug-23 19:42:04 - INFO     [main.py:5418] - list complete
+16-Aug-23 19:42:04 - INFO     [main.py:5419] - ending function call to start thread to write live mouse position to screen
+16-Aug-23 19:42:04 - INFO     [main.py:2412] - starting function to toggle show_tool_after_clicking checkbox
+16-Aug-23 19:42:04 - INFO     [main.py:2447] - ending function to toggle show_tool_after_clicking checkbox
+16-Aug-23 19:42:04 - INFO     [main.py:4524] - started function to load saved home settings on the home screen
+16-Aug-23 19:42:04 - INFO     [main.py:4533] - no data saved in home run settings
+16-Aug-23 19:42:04 - INFO     [main.py:4535] - ending function to load saved home settings on the home screen
+16-Aug-23 19:42:04 - INFO     [main.py:2320] - ending initialisation of main window
+16-Aug-23 19:42:06 - INFO     [main.py:6988] - starting function to start thread to start recording user actions from screen
+16-Aug-23 19:42:06 - INFO     [main.py:5205] - started function to remove All lines from record actions
+16-Aug-23 19:42:06 - INFO     [main.py:5219] - ending function to remove All lines from record actions
+16-Aug-23 19:42:06 - INFO     [main.py:2364] - started function call to open small window
+16-Aug-23 19:42:06 - INFO     [main.py:2375] - small window while recording
+16-Aug-23 19:42:06 - INFO     [main.py:7213] - started initialisation of small window UI
+16-Aug-23 19:42:06 - INFO     [main.py:7221] -  Screen size : 1200x1920
+16-Aug-23 19:42:06 - INFO     [main.py:7256] - ending initialisation of small window UI
+16-Aug-23 19:42:06 - INFO     [main.py:2382] - starting to show small window
+16-Aug-23 19:42:06 - INFO     [main.py:2384] - small window should be visible
+16-Aug-23 19:42:06 - INFO     [main.py:2386] - completed function call to open small window
+16-Aug-23 19:42:06 - INFO     [main.py:7012] - starting function to start recording user actions from screen
+16-Aug-23 19:42:06 - INFO     [main.py:6996] - created and started new thread for live record process function
+16-Aug-23 19:42:06 - INFO     [main.py:6999] - showing the current active threads:
+16-Aug-23 19:42:06 - INFO     [main.py:7001] - <_MainThread(MainThread, started 21112)>
+16-Aug-23 19:42:06 - INFO     [main.py:7001] - <Thread(Thread-1, started daemon 8420)>
+16-Aug-23 19:42:06 - INFO     [main.py:7001] - <Thread(Thread-2, started daemon 18012)>
+16-Aug-23 19:42:06 - INFO     [main.py:7001] - <Thread(Thread-3, started daemon 15708)>
+16-Aug-23 19:42:06 - INFO     [main.py:7001] - <Thread(Thread-4, started daemon 15644)>
+16-Aug-23 19:42:06 - INFO     [main.py:7002] - list complete
+16-Aug-23 19:42:06 - INFO     [main.py:7003] - ending function to start thread to start recording user actions from screen
+16-Aug-23 19:42:06 - INFO     [main.py:7157] - ending function to start recording user actions from screen
+16-Aug-23 19:42:11 - INFO     [main.py:7164] - starting function to stop recording user actions from screen
+16-Aug-23 19:42:11 - INFO     [main.py:7185] - small window is opened
+16-Aug-23 19:42:11 - INFO     [main.py:7191] - inserting record actions
+16-Aug-23 19:42:11 - INFO     [main.py:6857] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
+16-Aug-23 19:42:11 - INFO     [main.py:6862] - the events recorded are- [[938, 884, <Button.left: (4, 2, 0)>, True, 0.65], [938, 884, <Button.left: (4, 2, 0)>, False, 0.08], [938, 732, <Button.left: (4, 2, 0)>, True, 0.44], [938, 732, <Button.left: (4, 2, 0)>, False, 0.09], [943, 588, <Button.left: (4, 2, 0)>, True, 0.43], [943, 588, <Button.left: (4, 2, 0)>, False, 0.08], [1006, 678, <Button.left: (4, 2, 0)>, True, 0.43], [1006, 678, <Button.left: (4, 2, 0)>, False, 0.08], [<Key.f9: <120>>, 'key', 2.39, 'press', 0, 0]]
+16-Aug-23 19:42:11 - INFO     [main.py:5205] - started function to remove All lines from record actions
+16-Aug-23 19:42:11 - INFO     [main.py:5219] - ending function to remove All lines from record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4729] - started function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:4882] - ending function to add new mouse line in record actions
+16-Aug-23 19:42:11 - INFO     [main.py:6979] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
+16-Aug-23 19:42:11 - INFO     [main.py:7193] - showing mainwindow
+16-Aug-23 19:42:11 - INFO     [main.py:7204] - ending function to stop recording user actions from screen
+16-Aug-23 19:42:13 - INFO     [main.py:5179] - started function to add remove line from record actions
+16-Aug-23 19:42:13 - INFO     [main.py:5198] - ending function to add remove line from record actions
+16-Aug-23 19:42:16 - INFO     [main.py:6562] - started function record_start_process()
+16-Aug-23 19:42:16 - INFO     [main.py:6599] - user doesnt have to connect to internet
+16-Aug-23 19:42:16 - INFO     [main.py:6607] - green signal given to perform recorded autoclicking!!
+16-Aug-23 19:42:16 - INFO     [main.py:2364] - started function call to open small window
+16-Aug-23 19:42:16 - INFO     [main.py:7213] - started initialisation of small window UI
+16-Aug-23 19:42:16 - INFO     [main.py:7221] -  Screen size : 1200x1920
+16-Aug-23 19:42:16 - INFO     [main.py:7256] - ending initialisation of small window UI
+16-Aug-23 19:42:16 - INFO     [main.py:2382] - starting to show small window
+16-Aug-23 19:42:16 - INFO     [main.py:2384] - small window should be visible
+16-Aug-23 19:42:16 - INFO     [main.py:2386] - completed function call to open small window
+16-Aug-23 19:42:16 - INFO     [main.py:6752] - starting thread for playing back recorded actions
+16-Aug-23 19:42:16 - ERROR    [main.py:6756] - error in removing screen recording hotkey
 Traceback (most recent call last):
-  File "main.py", line 6616, in record_start_process
+  File "main.py", line 6754, in record_start_process
     keyboard.remove_hotkey(self.record_recording_hotkey)
   File "C:\Users\pgupta23\Desktop\Personal\GG auto clicker\GG-autoclicker\gg_venv\lib\site-packages\keyboard\__init__.py", line 750, in remove_hotkey
     _hotkeys[hotkey_or_callback]()
 KeyError: 'f9'
-16-Aug-23 17:24:29 - INFO     [main.py:1313] - start execution of function: start_record_action(): playing back record actions from record screen
-16-Aug-23 17:24:29 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:29 - INFO     [main.py:6625] - ending execution of function: record_start_process()
-16-Aug-23 17:24:29 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:29 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:29 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:29 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:30 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:30 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:30 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:30 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:1197] - start execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:1212] - ending execution of function: click for record: clicking action for record screen
-16-Aug-23 17:24:31 - INFO     [main.py:6632] - starting execution of function: after_record_thread()
-16-Aug-23 17:24:31 - INFO     [main.py:6705] - ending execution of function: after_record_thread()
-16-Aug-23 17:24:31 - INFO     [main.py:1389] - ending execution of function: start_record_action(): playing back record actions from record screen
-16-Aug-23 17:24:36 - INFO     [main.py:5066] - started function to remove All lines from record actions
-16-Aug-23 17:24:36 - INFO     [main.py:5080] - ending function to remove All lines from record actions
-16-Aug-23 17:24:37 - INFO     [main.py:6844] - starting function to start thread to start recording user actions from screen
-16-Aug-23 17:24:37 - INFO     [main.py:5066] - started function to remove All lines from record actions
-16-Aug-23 17:24:37 - INFO     [main.py:5080] - ending function to remove All lines from record actions
-16-Aug-23 17:24:37 - INFO     [main.py:2255] - started function call to open small window
-16-Aug-23 17:24:37 - INFO     [main.py:6868] - starting function to start recording user actions from screen
-16-Aug-23 17:24:37 - INFO     [main.py:6852] - created and started new thread for live record process function
-16-Aug-23 17:24:37 - INFO     [main.py:6855] - showing the current active threads:
-16-Aug-23 17:24:37 - INFO     [main.py:6857] - <_MainThread(MainThread, started 696)>
-16-Aug-23 17:24:37 - INFO     [main.py:6857] - <Thread(Thread-1, started daemon 9548)>
-16-Aug-23 17:24:37 - INFO     [main.py:6857] - <Thread(Thread-2, started daemon 18732)>
-16-Aug-23 17:24:37 - INFO     [main.py:6857] - <Thread(Thread-3, started daemon 19688)>
-16-Aug-23 17:24:37 - INFO     [main.py:6857] - <Thread(Thread-12, started daemon 3732)>
-16-Aug-23 17:24:37 - INFO     [main.py:6858] - list complete
-16-Aug-23 17:24:37 - INFO     [main.py:6859] - ending function to start thread to start recording user actions from screen
-16-Aug-23 17:24:37 - INFO     [main.py:7013] - ending function to start recording user actions from screen
-16-Aug-23 17:24:41 - INFO     [main.py:7020] - starting function to stop recording user actions from screen
-16-Aug-23 17:24:41 - INFO     [main.py:7047] - inserting record actions
-16-Aug-23 17:24:41 - INFO     [main.py:6713] - starting function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Aug-23 17:24:41 - INFO     [main.py:6718] - the events recorded are- [[<Key.f9: <120>>, 'key', 0.04, 'release', 0, 0], [860, 420, <Button.left: (4, 2, 0)>, True, 1.48], [860, 420, <Button.left: (4, 2, 0)>, False, 0.08], [1039, 564, <Button.left: (4, 2, 0)>, True, 0.5], [1039, 564, <Button.left: (4, 2, 0)>, False, 0.08], [900, 697, <Button.left: (4, 2, 0)>, True, 0.47], [900, 697, <Button.left: (4, 2, 0)>, False, 0.09], [<Key.f9: <120>>, 'key', 0.75, 'press', 0, 0]]
-16-Aug-23 17:24:41 - INFO     [main.py:5066] - started function to remove All lines from record actions
-16-Aug-23 17:24:41 - INFO     [main.py:5080] - ending function to remove All lines from record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4590] - started function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:4743] - ending function to add new mouse line in record actions
-16-Aug-23 17:24:41 - INFO     [main.py:6835] - ending function: insert_recording_list()- gets data from recording and inserts into list in record screen
-16-Aug-23 17:24:41 - INFO     [main.py:7049] - showing mainwindow
-16-Aug-23 17:24:41 - INFO     [main.py:7060] - ending function to stop recording user actions from screen
-16-Aug-23 17:24:42 - INFO     [main.py:2345] - starting function to exit app
-16-Aug-23 17:24:42 - INFO     [main.py:2374] - showing the current active threads:
-16-Aug-23 17:24:42 - INFO     [main.py:2376] - <_MainThread(MainThread, started 696)>
-16-Aug-23 17:24:42 - INFO     [main.py:2376] - <Thread(Thread-1, started daemon 9548)>
-16-Aug-23 17:24:42 - INFO     [main.py:2376] - <Thread(Thread-2, started daemon 18732)>
-16-Aug-23 17:24:42 - INFO     [main.py:2376] - <Thread(Thread-3, started daemon 19688)>
-16-Aug-23 17:24:42 - INFO     [main.py:2376] - <Thread(Thread-16, started 8632)>
-16-Aug-23 17:24:42 - INFO     [main.py:2377] - list complete
-16-Aug-23 17:24:42 - INFO     [main.py:2399] - deleting any stored home settings
-16-Aug-23 17:24:42 - INFO     [main.py:2404] - exiting app
-16-Aug-23 17:24:43 - ERROR    [main.py:5306] - exception in get_live_mouse()
-Traceback (most recent call last):
-  File "main.py", line 5294, in get_live_mouse
-    if self.mouse_location_checkbox.isChecked():
-RuntimeError: wrapped C/C++ object of type QCheckBox has been deleted
+16-Aug-23 19:42:16 - INFO     [main.py:533] - start execution of function: start_record_action(): playing back record actions from record screen
+16-Aug-23 19:42:16 - INFO     [main.py:6769] - ending execution of function: record_start_process()
+16-Aug-23 19:42:16 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:17 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:17 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:17 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:17 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:18 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:19 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:19 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:19 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:19 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:19 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:20 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:20 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:20 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:20 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:21 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:21 - INFO     [main.py:1296] - start execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:21 - INFO     [main.py:1311] - ending execution of function: click for record: clicking action for record screen
+16-Aug-23 19:42:21 - INFO     [main.py:6776] - starting execution of function: after_record_thread()
+16-Aug-23 19:42:21 - INFO     [main.py:6792] - small window is opened
