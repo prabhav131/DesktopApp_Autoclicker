@@ -184,7 +184,7 @@ class WorkerThread1(threading.Thread):
                                 stop_home_event.clear()
                                 break
             logger.info("done current clicking")
-            clicking_event.clear()
+            home_clicking_event.clear()
             self.main_window.maximize_signal.emit()
             UIWindow.after_home_thread()
 
@@ -338,7 +338,7 @@ class WorkerThread2(threading.Thread):
                                 break
 
             logger.info("done fixed clicking")
-            clicking_event.clear()
+            home_clicking_event.clear()
             self.main_window.maximize_signal.emit()
             UIWindow.after_home_thread()
 
@@ -508,7 +508,7 @@ class WorkerThread3(threading.Thread):
                                 stop_home_event.clear()
                                 break
             logger.info("done random clicking")
-            clicking_event.clear()
+            home_clicking_event.clear()
             self.main_window.maximize_signal.emit()
             UIWindow.after_home_thread()
             logger.info("ending execution of function: home_random_clicking()")
@@ -516,7 +516,7 @@ class WorkerThread3(threading.Thread):
             logger.error("exception in home_random_clicking()", exc_info=True)
 
 
-class WorkerThread4(threading.Thread):
+class WorkerThread_playback(threading.Thread):
     def __init__(
         self, main_window, actions_data, repeat_all, delay_time, i
     ):
@@ -542,7 +542,9 @@ class WorkerThread4(threading.Thread):
                 repeat = 1
                 last = 0
                 delay = self.delay_time
+            logger.info(f"self.repeat_all- {self.repeat_all}")
             for b in range(int(self.repeat_all)):
+                logger.info(f"inside the loop, value of i is: {self.i}")
                 for a in range(self.i - 1):
                     last_line += 1
                     if self.actions_data[a][0] == "mouse":
@@ -581,6 +583,7 @@ class WorkerThread4(threading.Thread):
                             logger.error("Exception occurred", exc_info=True)
                             break
                     if stop_record_event.is_set():
+                        logger.info("break here")
                         break
                 if stop_record_event.is_set():
                     stop_record_event.clear()
@@ -604,15 +607,175 @@ class WorkerThread4(threading.Thread):
                     )
                     if keyboard.is_pressed(converted_key):
                         type_for_record(converted_key, self.actions_data[c][2], "Release", 0)
+            record_playback_event.clear()
+            logger.info("clearing record playback event")
+            self.main_window.close_signal.emit()
             self.main_window.maximize_signal.emit()
-            # self.main_window.close_signal.emit()
+
             UIWindow.after_record_thread(last_line)
-            clicking_event.clear()
+
             logger.info(
                 "ending execution of function: start_record_action(): playing back record actions from record screen"
             )
         except:
             logger.error("exception in start_record_action()", exc_info=True)
+
+
+class WorkerThread_recording_actions(threading.Thread):
+    def __init__(
+        self, main_window
+    ):
+        super().__init__()
+        self.main_window = main_window
+
+
+    def run(self):
+        try:
+            logger.info("starting function to start recording user actions from screen")
+
+            # try:
+            #     keyboard.remove_hotkey(self.main_window.record_start_stop_hotkey)
+            # except:
+            #     logger.error(
+            #         "error in removing record start stop hotkey", exc_info=True
+            #     )
+
+            def on_click(x, y, button, pressed):
+                nonlocal time_counter
+                old_time = time_counter
+                time_counter = time.time()
+                delay = round(time_counter - old_time, 2)
+                new_list = [x, y, button, pressed, delay]
+                self.main_window.record_events.append(new_list)
+
+            def on_scroll(x, y, dx, dy):
+                nonlocal time_counter
+                old_time = time_counter
+                time_counter = time.time()
+                delay = round(time_counter - old_time, 2)
+                new_list = [x, y, dy, delay]
+                self.main_window.record_events.append(new_list)
+
+            def on_press(key):
+                nonlocal time_counter
+                old_time = time_counter
+                time_counter = time.time()
+                delay = round(time_counter - old_time, 2)
+                press_type = "press"
+                if hasattr(key, "char"):
+                    if str(key)[0] == "<":
+                        key_type = "key"
+                        new_list = [key, key_type, delay, press_type, 0, 0]
+                    elif str(key)[0] == "[":
+                        key_type = "char"
+                        new_list = [
+                            str(key)[2:-2].lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                    elif str(key)[1] == "\\":
+                        key_type = "char"
+                        converted_key = functions.char_converter(str(key)[1:-1])
+                        new_list = [
+                            converted_key.lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                    else:
+                        key_type = "char"
+                        new_list = [
+                            str(key)[1:-1].lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                else:
+                    key_type = "key"
+                    new_list = [key, key_type, delay, press_type, 0, 0]
+                self.main_window.record_events.append(new_list)
+
+            def on_release(key):
+                nonlocal time_counter
+                old_time = time_counter
+                time_counter = time.time()
+                delay = round(time_counter - old_time, 2)
+                press_type = "release"
+                if hasattr(key, "char"):
+                    if str(key)[0] == "<":
+                        key_type = "key"
+                        new_list = [key, key_type, delay, press_type, 0, 0]
+                    elif str(key)[0] == "[":
+                        key_type = "char"
+                        new_list = [
+                            str(key)[2:-2].lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                    elif str(key)[1] == "\\":
+                        key_type = "char"
+                        converted_key = functions.char_converter(str(key)[1:-1])
+                        new_list = [
+                            converted_key.lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                    else:
+                        key_type = "char"
+                        new_list = [
+                            str(key)[1:-1].lower(),
+                            key_type,
+                            delay,
+                            press_type,
+                            0,
+                            0,
+                        ]
+                else:
+                    key_type = "key"
+                    new_list = [key, key_type, delay, press_type, 0, 0]
+                self.main_window.record_events.append(new_list)
+
+            self.main_window.record_record_button.disconnect()
+            self.main_window.record_record_button.clicked.connect(self.main_window.stop_live_record)
+            self.main_window.record_record_button.setText("Stop")
+            self.main_window.record_events = []
+            self.main_window.mouse_listener = pynput.mouse.Listener(
+                on_click=on_click, on_scroll=on_scroll
+            )
+            self.main_window.keyboard_listener = pynput.keyboard.Listener(
+                on_press=on_press, on_release=on_release
+            )
+            # self.main_window.showMinimized()
+            self.main_window.minimize_signal.emit()
+            main_window_visible.clear()
+            # send notification to desktop
+            toaster.show_toast(
+                title="Recording Started",
+                msg=f"Press {self.main_window.record_recording_hotkey.upper()} to stop recording",
+                icon_path=functions.resource_path(r"images/ico_logo.ico"),
+                threaded=True,
+                duration=2,
+            )
+            self.main_window.record_play_button.setEnabled(False)
+            self.main_window.mouse_listener.start()
+            self.main_window.keyboard_listener.start()
+            time_counter = time.time()
+            logger.info("ending function to start recording user actions from screen")
+        except:
+            logger.error("exception in live_record_process()", exc_info=True)
 
 
 def combine(str1, str2):
@@ -932,7 +1095,7 @@ def home_fixed_clicking(
                             break
 
         logger.info("done fixed clicking")
-        clicking_event.clear()
+        # clicking_event.clear()
         UIWindow.after_home_thread()
         # UIWindow.showNormal()
         # global is_clicking
@@ -1112,12 +1275,9 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                             stop_home_event.clear()
                             break
         logger.info("done current clicking")
-        clicking_event.clear()
+        # clicking_event.clear()
 
         UIWindow.after_home_thread()
-        # UIWindow.showNormal()
-        # global is_clicking
-        # is_clicking = False
 
         logger.info("ending execution of function: home_current_clicking()")
     except:
@@ -1280,7 +1440,7 @@ def home_random_clicking(
                             stop_home_event.clear()
                             break
         logger.info("done random clicking")
-        clicking_event.clear()
+        # clicking_event.clear()
         UIWindow.after_home_thread()
         # UIWindow.showNormal()
         # global is_clicking
@@ -1298,13 +1458,18 @@ def click_for_record(location_x, location_y, mouse_type, action_type, wait_inter
         )
         delay = wait_interval / 1000
         current = mouse.get_position()
+        logger.info("a")
         if action_type == "Press":
+            logger.info("b")
             sleep(delay)
+            logger.info("c")
             if not current == (location_x, location_y):
                 mouse.move(location_x, location_y, duration=0.01)
             mouse.press(button=mouse_type)
         else:
+            logger.info("d")
             sleep(delay)
+            logger.info("e")
             if not current == (location_x, location_y):
                 mouse.move(location_x, location_y, duration=0.10)
             mouse.release(button=mouse_type)
@@ -1484,7 +1649,7 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
                 if keyboard.is_pressed(converted_key):
                     type_for_record(converted_key, actions_data[c][2], "Release", 0)
         UIWindow.after_record_thread(last_line)
-        clicking_event.clear()
+        # clicking_event.clear()
         logger.info(
             "ending execution of function: start_record_action(): playing back record actions from record screen"
         )
@@ -1495,6 +1660,7 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
 class UI(QMainWindow):
     # defines all variables and UI elements for the app
     maximize_signal = pyqtSignal()
+    minimize_signal = pyqtSignal()
     close_signal = pyqtSignal()
 
     def __init__(self):
@@ -2316,6 +2482,7 @@ class UI(QMainWindow):
             self.save_home_params = 0
             self.load_home_settings()
             self.maximize_signal.connect(self.maximise)
+            self.minimize_signal.connect(self.minimise)
             self.close_signal.connect(self.close_small)
             logger.info("ending initialisation of main window")
         except:
@@ -2323,17 +2490,26 @@ class UI(QMainWindow):
 
     def maximise(self):
         logger.info("inside function to maximise window")
-        # self.showMaximized()
-        self.showNormal()
+        if self.show_after_complete_checkbox.isChecked():
+            self.showNormal()
         logger.info("after calling shownormal")
-        # keyboard.add_hotkey(self.home_start_stop_hotkey, lambda: self.play_button.click())
+
+    def minimise(self):
+        logger.info("inside function to minimise window")
+        self.showMinimized()
+        logger.info("after calling showminimized")
 
     def close_small(self):
         logger.info("inside function to close small window")
+
         if not self.small_window_checkbox.isChecked():
+            logger.info(f"small window status - {self.small_window_opened}")
             if self.small_window_opened is not None:
                 logger.info("small window is opened")
                 self.small_window_opened.close()
+                self.small_window_opened.deleteLater()
+                # self.small_window_opened = None
+                logger.info(f"small window status - {self.small_window_opened}")
         logger.info("after closing small window")
 
     def open_email_dialog(self):
@@ -2374,7 +2550,7 @@ class UI(QMainWindow):
                 indicator = 1
                 logger.info("small window while recording")
                 stop_hotkey_text = self.record_start_stop_hotkey_label.text()
-
+            logger.info(f"status of small window is : {self.small_window_opened}")
             self.small_window_opened = UI_SmallWindow(
                 stop_hotkey_text, UIWindow, indicator
             )
@@ -3322,14 +3498,26 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_start_stop_hotkey)
-            except:
-                logger.info("record_start_stop_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.info("record_recording_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            # except:
+            #     logger.info("record_start_stop_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.info("record_recording_hotkey was not active")
+            # try:
+            #     keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+            # except:
+            #     logger.error("error in adding mouse location hotkey", exc_info=True)
+
+            # try:
+            #     keyboard.add_hotkey(
+            #         self.home_start_stop_hotkey, lambda: self.play_button.click()
+            #     )
+            # except:
+            #     logger.error("error in adding home start stop hotkey", exc_info=True)
+
             self.navigation_frame.lower()
             self.home_frame.show()
 
@@ -3341,6 +3529,7 @@ class UI(QMainWindow):
             logger.error("exception in get_home_screen()", exc_info=True)
 
     def get_record_screen(self):
+        logger.info("getting record screen to front")
         try:
             keyboard.add_hotkey(
                 self.add_record_line_hotkey, lambda: self.record_add_button.click()
@@ -3367,14 +3556,14 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_start_stop_hotkey)
-            except:
-                logger.info("record_start_stop_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.info("record_recording_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            # except:
+            #     logger.info("record_start_stop_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.info("record_recording_hotkey was not active")
             self.navigation_frame.lower()
 
             self.record_frame.hide()
@@ -3392,14 +3581,19 @@ class UI(QMainWindow):
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.info("add_record_line_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_start_stop_hotkey)
-            except:
-                logger.info("record_start_stop_hotkey was not active")
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.info("record_recording_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            # except:
+            #     logger.info("record_start_stop_hotkey was not active")
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.info("record_recording_hotkey was not active")
+            # try:
+            #     keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+            # except:
+            #     logger.error("error in adding mouse location hotkey", exc_info=True)
+
             self.navigation_frame.lower()
 
             self.record_frame.hide()
@@ -5341,12 +5535,8 @@ class UI(QMainWindow):
             else:
                 self.small_window_checkbox.setChecked(True)
                 if self.dark_theme_activated:
-                    self.small_window_checkbox2.setIcon(
-                        QtGui.QIcon(functions.resource_path("images/check_icon_dark"))
-                    )
-                    self.small_window_checkbox2.setStyleSheet(
-                        "border: none;" "background-color: #10131b;"
-                    )
+                    self.small_window_checkbox2.setIcon(QtGui.QIcon(functions.resource_path("images/check_icon_dark")))
+                    self.small_window_checkbox2.setStyleSheet("border: none;" "background-color: #10131b;")
                 else:
                     self.small_window_checkbox2.setIcon(
                         QtGui.QIcon(functions.resource_path("images/check_icon"))
@@ -5358,7 +5548,7 @@ class UI(QMainWindow):
         except:
             logger.error("exception in trigger_small_window_checkbox()", exc_info=True)
 
-    # triggers live mouse checkbox
+# triggers live mouse checkbox
     def trigger_live_mouse(self):
         try:
             logger.info("starting function to toggle live_mouse checkbox")
@@ -6237,6 +6427,14 @@ class UI(QMainWindow):
     def home_start_process(self):
         try:
             logger.info("start execution of function: home_start_process()")
+            if record_playback_event.is_set():
+                logger.info("wont start home clicking bcos playback recording is taking place.")
+                return
+            elif record_recording_event.is_set():
+                logger.info("wont start home clicking bcos screen recording is taking place.")
+                return
+            logger.info("setting home clicking event")
+            home_clicking_event.set() # home clicking has started
             self.get_home_screen()
             if self.validity_infinity == 0 and self.validity_24_hour == 0:
                 logger.info("user has to connect to internet for authentication")
@@ -6282,6 +6480,7 @@ class UI(QMainWindow):
 
             else:
                 logger.info("token is valid for infinity")
+
 
             mouse_type = self.mouse_button_combobox.currentText().lower()
             click_type = self.click_type_combobox.currentText()
@@ -6390,22 +6589,22 @@ class UI(QMainWindow):
             self.play_button.setEnabled(False)
             # global is_clicking
             # is_clicking = True
-            clicking_event.set()
+            # clicking_event.set()
             try:
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.error("error in removing add record line hotkey", exc_info=True)
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.error("error in removing screen recording hotkey", exc_info=True)
-
-            try:
-                keyboard.remove_hotkey(self.record_start_stop_hotkey)
-            except:
-                logger.error(
-                    "error in removing playback start stop hotkey", exc_info=True
-                )
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.error("error in removing screen recording hotkey", exc_info=True)
+            #
+            # try:
+            #     keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            # except:
+            #     logger.error(
+            #         "error in removing playback start stop hotkey", exc_info=True
+            #     )
 
             try:
                 keyboard.remove_hotkey(self.mouse_location_hotkey)
@@ -6466,6 +6665,7 @@ class UI(QMainWindow):
                 if self.small_window_opened is not None:
                     logger.info("small window is opened")
                     self.small_window_opened.close()
+                    self.small_window_opened = None
                     logger.info("here")
             self.home_stop_process()
             self.record_stop_process()
@@ -6497,28 +6697,28 @@ class UI(QMainWindow):
 
             computer_type = self.complete_combobox_3.currentText()
 
-            try:
-                keyboard.add_hotkey(
-                    self.record_recording_hotkey,
-                    lambda: self.record_record_button.click(),
-                )
-            except:
-                logger.error("error in adding screen recording hotkey", exc_info=True)
+            # try:
+            #     keyboard.add_hotkey(
+            #         self.record_recording_hotkey,
+            #         lambda: self.record_record_button.click(),
+            #     )
+            # except:
+            #     logger.error("error in adding screen recording hotkey", exc_info=True)
+            #
+            # try:
+            #     keyboard.add_hotkey(
+            #         self.record_start_stop_hotkey,
+            #         lambda: self.record_play_button.click(),
+            #     )
+            # except:
+            #     logger.error(
+            #         "error in adding playback start stop hotkey", exc_info=True
+            #     )
 
-            try:
-                keyboard.add_hotkey(
-                    self.record_start_stop_hotkey,
-                    lambda: self.record_play_button.click(),
-                )
-            except:
-                logger.error(
-                    "error in adding playback start stop hotkey", exc_info=True
-                )
-
-            try:
-                keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
-            except:
-                logger.error("error in adding mouse location hotkey", exc_info=True)
+            # try:
+            #     keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+            # except:
+            #     logger.error("error in adding mouse location hotkey", exc_info=True)
 
             if computer_type == " Turn off":
                 os.system("shutdown /s /t 1")
@@ -6540,7 +6740,7 @@ class UI(QMainWindow):
     # stops the actions set in home screen (intervenes the thread)
     def home_stop_process(self):
         try:
-            clicking_event.clear()
+            # clicking_event.clear()
             stop_home_event.set()
 
         except:
@@ -6549,7 +6749,7 @@ class UI(QMainWindow):
     # stops the actions set in record screen (intervenes the thread)
     def record_stop_process(self):
         try:
-            clicking_event.clear()
+            # clicking_event.clear()
             stop_record_event.set()
 
         except:
@@ -6558,8 +6758,17 @@ class UI(QMainWindow):
     # starts the process for record -> play button
     def record_start_process(self):
         try:
-            self.get_record_screen()
+
             logger.info("started function record_start_process()")
+            if home_clicking_event.is_set():
+                logger.info("wont start record playback bcos home clicking is taking place.")
+                return
+            elif record_recording_event.is_set():
+                logger.info("wont start record playback bcos screen recording is taking place.")
+                return
+            logger.info("setting record playback event")
+            record_playback_event.set()
+            self.get_record_screen()
 
             if self.validity_infinity == 0 and self.validity_24_hour == 0:
                 logger.info("user has to connect to internet for authentication")
@@ -6602,6 +6811,8 @@ class UI(QMainWindow):
                 logger.error("Exception occurred- no actions available", exc_info=True)
                 logger.info("ending execution of function: record_start_process()")
                 self.foot_note_label.setText("error: no actions available")
+                record_playback_event.clear()
+                logger.info("clearing record playback event")
                 return
 
             logger.info("green signal given to perform recorded autoclicking!!")
@@ -6721,21 +6932,20 @@ class UI(QMainWindow):
                 self.record_start_stop_hotkey, self.multiple_hotkey_actions_home
             )
             self.record_play_button.setEnabled(False)
-            clicking_event.set()
             try:
                 keyboard.remove_hotkey(self.add_record_line_hotkey)
             except:
                 logger.error("error in removing add record line hotkey", exc_info=True)
 
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.error("error in removing screen recording hotkey", exc_info=True)
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.error("error in removing screen recording hotkey", exc_info=True)
 
-            try:
-                keyboard.remove_hotkey(self.home_start_stop_hotkey)
-            except:
-                logger.error("error in removing home start stop hotkey", exc_info=True)
+            # try:
+            #     keyboard.remove_hotkey(self.home_start_stop_hotkey)
+            # except:
+            #     logger.error("error in removing home start stop hotkey", exc_info=True)
 
             try:
                 keyboard.remove_hotkey(self.mouse_location_hotkey)
@@ -6750,21 +6960,16 @@ class UI(QMainWindow):
                 duration=2,
             )
             logger.info("starting thread for playing back recorded actions")
-            try:
-                keyboard.remove_hotkey(self.record_recording_hotkey)
-            except:
-                logger.error("error in removing screen recording hotkey", exc_info=True)
-            # thread_2 = threading.Thread(
-            #     target=lambda: start_record_actions(
-            #         actions_data, repeat_all, delay_time, self.i
-            #     )
-            # )
-            # thread_2.start()
+            # try:
+            #     keyboard.remove_hotkey(self.record_recording_hotkey)
+            # except:
+            #     logger.error("error in removing screen recording hotkey", exc_info=True)
+            #
 
-            worker = WorkerThread4(
+            worker_playback = WorkerThread_playback(
                 self, actions_data, repeat_all, delay_time, self.i
             )
-            worker.start()
+            worker_playback.start()
 
             logger.info("ending execution of function: record_start_process()")
         except:
@@ -6787,16 +6992,7 @@ class UI(QMainWindow):
             keyboard.add_hotkey(
                 self.record_start_stop_hotkey, lambda: self.record_play_button.click()
             )
-            if not self.small_window_checkbox.isChecked():
-                if self.small_window_opened is not None:
-                    logger.info("small window is opened")
-                    self.small_window_opened.close()
-            # if self.show_after_complete_checkbox.isChecked():
-            #
-            #     if main_window_visible.is_set() == False:
-            #         self.showNormal()
-            #         # self.maximize_signal.emit()
-            #         main_window_visible.set()
+            logger.info("record_start_stop_hotkey is now detached from multiple_hotkey_actions")
             toaster.show_toast(
                 title="Playback completed",
                 msg=f"Press {self.record_start_stop_hotkey.upper()} to start again",
@@ -6804,30 +7000,27 @@ class UI(QMainWindow):
                 threaded=True,
                 duration=2,
             )
-            keyboard.add_hotkey(
-                self.record_recording_hotkey, lambda: self.record_record_button.click()
-            )
             computer_type = self.complete_combobox_3.currentText()
 
-            try:
-                keyboard.add_hotkey(
-                    self.record_recording_hotkey,
-                    lambda: self.record_record_button.click(),
-                )
-            except:
-                logger.error("error in adding screen recording hotkey", exc_info=True)
+            # try:
+            #     keyboard.add_hotkey(
+            #         self.record_recording_hotkey,
+            #         lambda: self.record_record_button.click(),
+            #     )
+            # except:
+            #     logger.error("error in adding screen recording hotkey", exc_info=True)
 
-            try:
-                keyboard.add_hotkey(
-                    self.home_start_stop_hotkey, lambda: self.play_button.click()
-                )
-            except:
-                logger.error("error in adding home start stop hotkey", exc_info=True)
-
-            try:
-                keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
-            except:
-                logger.error("error in adding mouse location hotkey", exc_info=True)
+            # try:
+            #     keyboard.add_hotkey(
+            #         self.home_start_stop_hotkey, lambda: self.play_button.click()
+            #     )
+            # except:
+            #     logger.error("error in adding home start stop hotkey", exc_info=True)
+            #
+            # try:
+            #     keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
+            # except:
+            #     logger.error("error in adding mouse location hotkey", exc_info=True)
 
             if computer_type == " Turn off":
                 os.system("shutdown /s /t 1")
@@ -6988,11 +7181,25 @@ class UI(QMainWindow):
             logger.info(
                 "starting function to start thread to start recording user actions from screen"
             )
+
+
+            if home_clicking_event.is_set():
+                logger.info("wont start screen recording bcos home clicking is taking place.")
+                return
+            elif record_playback_event.is_set():
+                logger.info("wont start screen recording bcos record playback is taking place.")
+                return
+            logger.info("setting record recording event")
+            record_recording_event.set()
             self.remove_all_lines()
             self.open_small_window(run_mode="recording")
-            new_thread = threading.Thread(target=self.live_record_process)
-            new_thread.setDaemon(True)
-            new_thread.start()
+            # new_thread = threading.Thread(target=self.live_record_process)
+            # new_thread.setDaemon(True)
+            # new_thread.start()
+            worker_recording = WorkerThread_recording_actions(self)
+            worker_recording.start()
+
+
             logger.info(
                 "created and started new thread for live record process function"
             )
@@ -7011,12 +7218,12 @@ class UI(QMainWindow):
         try:
             logger.info("starting function to start recording user actions from screen")
 
-            try:
-                keyboard.remove_hotkey(self.record_start_stop_hotkey)
-            except:
-                logger.error(
-                    "error in removing record start stop hotkey", exc_info=True
-                )
+            # try:
+            #     keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            # except:
+            #     logger.error(
+            #         "error in removing record start stop hotkey", exc_info=True
+            #     )
 
             def on_click(x, y, button, pressed):
                 nonlocal time_counter
@@ -7171,35 +7378,30 @@ class UI(QMainWindow):
                 threaded=True,
                 duration=2,
             )
-
+            logger.info("clearing record recording event")
+            record_recording_event.clear()
             self.record_record_button.setIcon(
                 QtGui.QIcon(functions.resource_path("images/red-circle"))
             )
             self.record_record_button.disconnect()
             self.record_record_button.clicked.connect(self.thread_for_live_record)
             self.record_record_button.setText("Record")
-            keyboard.add_hotkey(
-                self.record_start_stop_hotkey, lambda: self.record_play_button.click()
-            )
+            # keyboard.add_hotkey(
+            #     self.record_start_stop_hotkey, lambda: self.record_play_button.click()
+            # )
             if self.small_window_opened is not None:
                 logger.info("small window is opened")
                 self.small_window_opened.close()
-            if (
-                clicking_event.is_set() == False
-                and main_window_visible.is_set() == False
-            ):
-                logger.info("inserting record actions")
-                self.insert_recording_list(self.record_events)
-                logger.info("showing mainwindow")
-                self.showNormal()
-                main_window_visible.set()
+            # if (
+            #     clicking_event.is_set() == False
+            #     and main_window_visible.is_set() == False
+            # ):
+            logger.info("inserting record actions")
+            self.insert_recording_list(self.record_events)
+            logger.info("showing mainwindow")
+            self.showNormal()
+            main_window_visible.set()
 
-            if clicking_event.is_set() == True:
-                self.flag = 1
-            # self.window_status = True
-            # main_window_visible.set()
-            # self.insert_recording_list(self.record_events)
-            # stop_current_action.clear()
             self.record_play_button.setEnabled(True)
             logger.info("ending function to stop recording user actions from screen")
         except:
@@ -7772,7 +7974,9 @@ toaster = ToastNotifier()
 stop_home_event = threading.Event()
 stop_record_event = threading.Event()
 wrong_key_event = threading.Event()
-clicking_event = threading.Event()
+home_clicking_event = threading.Event()
+record_recording_event = threading.Event()
+record_playback_event = threading.Event()
 main_window_visible = threading.Event()
 app = QApplication(sys.argv)
 UIWindow = UI()
