@@ -13,15 +13,13 @@ import threading
 import time
 import webbrowser
 from datetime import timedelta
-from time import sleep
-
 import keyboard
 import mouse
 import pynput
 import requests
 from appdirs import *
 from email_validator import EmailNotValidError, validate_email
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5 import QtCore, QtGui, QtWidgets, uic, QtTest
 from PyQt5.QtCore import QSize, Qt, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon, QIntValidator
 from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
@@ -79,10 +77,10 @@ class WorkerThread1(threading.Thread):
                         for i in range(self.click_repeat):
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -90,10 +88,10 @@ class WorkerThread1(threading.Thread):
                         for i in range(self.click_repeat):
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -104,10 +102,10 @@ class WorkerThread1(threading.Thread):
                         while True:
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -115,10 +113,10 @@ class WorkerThread1(threading.Thread):
                         while True:
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -140,10 +138,10 @@ class WorkerThread1(threading.Thread):
                         for i in range(self.click_repeat):
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -151,10 +149,10 @@ class WorkerThread1(threading.Thread):
                         for i in range(self.click_repeat):
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -165,10 +163,10 @@ class WorkerThread1(threading.Thread):
                         while True:
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -176,10 +174,10 @@ class WorkerThread1(threading.Thread):
                         while True:
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -225,10 +223,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -237,10 +235,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -252,10 +250,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -264,10 +262,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -289,10 +287,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -302,10 +300,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -317,10 +315,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -329,10 +327,10 @@ class WorkerThread2(threading.Thread):
                             mouse.move(self.location_x, self.location_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -385,10 +383,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -399,10 +397,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -416,10 +414,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -430,10 +428,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -455,10 +453,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -469,10 +467,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -486,10 +484,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -500,10 +498,10 @@ class WorkerThread3(threading.Thread):
                             mouse.move(random_x, random_y)
                             mouse.double_click(button=self.mouse_type)
                             for j in range(repeat):
-                                sleep(delay)
+                                QtTest.QTest.qWait(int(delay*1000))
                                 if stop_home_event.is_set():
                                     break
-                            sleep(last)
+                            QtTest.QTest.qWait(int(last*1000))
                             if stop_home_event.is_set():
                                 stop_home_event.clear()
                                 break
@@ -589,10 +587,10 @@ class WorkerThread_playback(threading.Thread):
                     stop_record_event.clear()
                     break
                 for j in range(repeat):
-                    sleep(delay)
+                    QtTest.QTest.qWait(int(delay*1000))
                     if stop_record_event.is_set():
                         break
-                sleep(last)
+                QtTest.QTest.qWait(int(last*1000))
                 if stop_record_event.is_set():
                     stop_record_event.clear()
                     break
@@ -760,7 +758,7 @@ class WorkerThread_recording_actions(threading.Thread):
             )
             # self.main_window.showMinimized()
             self.main_window.minimize_signal.emit()
-            main_window_visible.clear()
+            # main_window_visible.clear()
             # send notification to desktop
             toaster.show_toast(
                 title="Recording Started",
@@ -982,10 +980,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -994,10 +992,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1009,10 +1007,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1021,10 +1019,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1046,10 +1044,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1059,10 +1057,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1074,10 +1072,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1086,10 +1084,10 @@ def home_fixed_clicking(
                         mouse.move(location_x, location_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1171,10 +1169,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     for i in range(click_repeat):
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1182,10 +1180,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     for i in range(click_repeat):
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1196,10 +1194,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     while True:
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1207,10 +1205,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     while True:
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1231,10 +1229,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     for i in range(click_repeat):
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1242,10 +1240,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     for i in range(click_repeat):
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1256,10 +1254,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     while True:
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1267,10 +1265,10 @@ def home_current_clicking(mouse_type, click_type, click_repeat, waiting_interval
                     while True:
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1317,10 +1315,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1331,10 +1329,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1348,10 +1346,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1362,10 +1360,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1387,10 +1385,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1401,10 +1399,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1418,10 +1416,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1432,10 +1430,10 @@ def home_random_clicking(
                         mouse.move(random_x, random_y)
                         mouse.double_click(button=mouse_type)
                         for j in range(repeat):
-                            sleep(delay)
+                            QtTest.QTest.qWait(int(delay*1000))
                             if stop_home_event.is_set():
                                 break
-                        sleep(last)
+                        QtTest.QTest.qWait(int(last*1000))
                         if stop_home_event.is_set():
                             stop_home_event.clear()
                             break
@@ -1461,14 +1459,14 @@ def click_for_record(location_x, location_y, mouse_type, action_type, wait_inter
         logger.info("a")
         if action_type == "Press":
             logger.info("b")
-            sleep(delay)
+            QtTest.QTest.qWait(int(delay*1000))
             logger.info("c")
             if not current == (location_x, location_y):
                 mouse.move(location_x, location_y, duration=0.01)
             mouse.press(button=mouse_type)
         else:
             logger.info("d")
-            sleep(delay)
+            QtTest.QTest.qWait(int(delay*1000))
             logger.info("e")
             if not current == (location_x, location_y):
                 mouse.move(location_x, location_y, duration=0.10)
@@ -1492,7 +1490,7 @@ def scroll_for_record(
         current = mouse.get_position()
         if scroll_type == "Up":
             for i in range(click_repeat):
-                sleep(delay)
+                QtTest.QTest.qWait(int(delay*1000))
                 if not current == (location_x, location_y):
                     mouse.move(location_x, location_y)
                 mouse.wheel(1)
@@ -1503,7 +1501,7 @@ def scroll_for_record(
                     return
         else:
             for i in range(click_repeat):
-                sleep(delay)
+                QtTest.QTest.qWait(int(delay*1000))
                 if not current == (location_x, location_y):
                     mouse.move(location_x, location_y)
                 mouse.wheel(-1)
@@ -1531,7 +1529,7 @@ def type_for_record(key, key_type, action_type, waiting_interval):
                     logger.error("Exception occurred", exc_info=True)
                     stop_record_event.set()
                     return
-                sleep(waiting_interval / 1000)
+                QtTest.QTest.qWait(waiting_interval)
                 if action_type == "Press":
                     controller.press(pressed_key)
                 else:
@@ -1548,7 +1546,7 @@ def type_for_record(key, key_type, action_type, waiting_interval):
                     )
                     return
                 else:
-                    sleep(waiting_interval / 1000)
+                    QtTest.QTest.qWait(waiting_interval)
                     if action_type == "Press":
                         controller.press(pressed_key)
                     else:
@@ -1557,7 +1555,7 @@ def type_for_record(key, key_type, action_type, waiting_interval):
             type_no = len(key)
             delay = int(waiting_interval / type_no) / 1000
             for i in range(type_no):
-                sleep(delay)
+                QtTest.QTest.qWait(int(delay*1000))
                 if action_type == "Press":
                     controller.press(key[i])
                 else:
@@ -1630,10 +1628,10 @@ def start_record_actions(actions_data, repeat_all, delay_time, i):
                 stop_record_event.clear()
                 break
             for j in range(repeat):
-                sleep(delay)
+                QtTest.QTest.qWait(int(delay*1000))
                 if stop_record_event.is_set():
                     break
-            sleep(last)
+            QtTest.QTest.qWait(int(last*1000))
             if stop_record_event.is_set():
                 stop_record_event.clear()
                 break
@@ -1667,9 +1665,7 @@ class UI(QMainWindow):
         try:
             super(UI, self).__init__()
             logger.info("starting initialisation function of the main UI window")
-            # self.maximize_signal.connect(self.showNormal)
-            # flags = QtCore.Qt.WindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-            # self.setWindowFlags(flags)
+
             self.validity_24_hour = 0
             self.validity_infinity = 0
             conn = sqlite3.connect(file_path)
@@ -1712,7 +1708,7 @@ class UI(QMainWindow):
             logger.info("list complete")
             self.small_window_opened = None
             self.small_window = None
-            main_window_visible.set()
+            # main_window_visible.set()
             # self.window_status = True
             uic.loadUi(functions.resource_path("version2.ui"), self)
             self.threadLock = threading.Lock()
@@ -2153,6 +2149,7 @@ class UI(QMainWindow):
             self.save_settings_button.clicked.connect(self.save_home_settings)
             # self.save_settings_button.clicked.connect(self.window_home_save)
             self.record_play_button.clicked.connect(self.record_start_process)
+            # self.record_play_button.clicked.connect(self.sample)
             self.theme_button.clicked.connect(self.get_dark_theme)
             self.record_remove_all_button.clicked.connect(self.remove_all_lines)
             self.never_stop_combobox.currentIndexChanged.connect(
@@ -2508,7 +2505,7 @@ class UI(QMainWindow):
                 logger.info("small window is opened")
                 self.small_window_opened.close()
                 self.small_window_opened.deleteLater()
-                # self.small_window_opened = None
+                self.small_window_opened = None
                 logger.info(f"small window status - {self.small_window_opened}")
         logger.info("after closing small window")
 
@@ -2623,6 +2620,19 @@ class UI(QMainWindow):
             logger.info("ending function to toggle show_tool_after_clicking checkbox")
         except:
             logger.error("exception in trigger_show_tool()", exc_info=True)
+
+    def sample(self):
+        logger.info("YO")
+        if home_clicking_event.is_set():
+            logger.info("wont start record playback bcos home clicking is taking place.")
+            return
+        elif record_recording_event.is_set():
+            logger.info("wont start record playback bcos screen recording is taking place.")
+            return
+        logger.info("setting record playback event")
+        record_playback_event.set()
+        self.get_record_screen()
+        logger.info("YO finish")
 
     # exits app
     def exit_app(self):
@@ -3531,12 +3541,31 @@ class UI(QMainWindow):
     def get_record_screen(self):
         logger.info("getting record screen to front")
         try:
+
+            try:
+                keyboard.remove_hotkey(self.add_record_line_hotkey)
+            except:
+                logger.error(
+                    "error in removing record line hotkey", exc_info=True
+                )
             keyboard.add_hotkey(
                 self.add_record_line_hotkey, lambda: self.record_add_button.click()
             )
+            try:
+                keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            except:
+                logger.error(
+                    "error in removing record start stop hotkey", exc_info=True
+                )
             keyboard.add_hotkey(
                 self.record_start_stop_hotkey, lambda: self.record_play_button.click()
             )
+            try:
+                keyboard.remove_hotkey(self.record_recording_hotkey)
+            except:
+                logger.error(
+                    "error in removing record recording hotkey", exc_info=True
+                )
             keyboard.add_hotkey(
                 self.record_recording_hotkey, lambda: self.record_record_button.click()
             )
@@ -3692,14 +3721,14 @@ class UI(QMainWindow):
                     new_hotkey += str(key)[14:-6]
             new_hotkey = new_hotkey.replace(" + enter ", "")
             if new_hotkey == "":
-                # keyboard.add_hotkey(self.add_record_line_hotkey, lambda: self.record_add_button.click())
+                keyboard.add_hotkey(self.add_record_line_hotkey, lambda: self.record_add_button.click())
                 self.add_record_line_hotkey_label.setText(
                     str(self.add_record_line_hotkey)
                 )
             else:
                 try:
                     self.add_record_line_hotkey = new_hotkey
-                    # keyboard.add_hotkey(self.add_record_line_hotkey, lambda: self.record_add_button.click())
+                    keyboard.add_hotkey(self.add_record_line_hotkey, lambda: self.record_add_button.click())
                     self.add_record_line_hotkey_label.setText(new_hotkey)
                 except ValueError:
                     logger.error("Exception occurred", exc_info=True)
@@ -5627,7 +5656,7 @@ class UI(QMainWindow):
                 self.live_mouse_label.setText(
                     f"X: {mouse_location[0]}, Y: {mouse_location[1]}"
                 )
-                sleep(0.05)
+                QtTest.QTest.qWait(50)
             logger.info(
                 "ending function to constantly write the live cursor position to the screen"
             )
@@ -6571,7 +6600,7 @@ class UI(QMainWindow):
             else:
                 radio_button = 3
             self.showMinimized()
-            main_window_visible.clear()
+            # main_window_visible.clear()
             # self.window_status = False
             self.open_small_window(run_mode="home")
             # ----------------------
@@ -6696,29 +6725,6 @@ class UI(QMainWindow):
             )
 
             computer_type = self.complete_combobox_3.currentText()
-
-            # try:
-            #     keyboard.add_hotkey(
-            #         self.record_recording_hotkey,
-            #         lambda: self.record_record_button.click(),
-            #     )
-            # except:
-            #     logger.error("error in adding screen recording hotkey", exc_info=True)
-            #
-            # try:
-            #     keyboard.add_hotkey(
-            #         self.record_start_stop_hotkey,
-            #         lambda: self.record_play_button.click(),
-            #     )
-            # except:
-            #     logger.error(
-            #         "error in adding playback start stop hotkey", exc_info=True
-            #     )
-
-            # try:
-            #     keyboard.add_hotkey(self.mouse_location_hotkey, self.get_mouse_location)
-            # except:
-            #     logger.error("error in adding mouse location hotkey", exc_info=True)
 
             if computer_type == " Turn off":
                 os.system("shutdown /s /t 1")
@@ -6919,7 +6925,7 @@ class UI(QMainWindow):
                     delay_time = int(self.delay_2.text()) * 1440
             self.foot_note_label.setText("")
             self.showMinimized()
-            main_window_visible.clear()
+            # main_window_visible.clear()
             self.open_small_window(run_mode="record playback")
             # -------------------------
             try:
@@ -7182,7 +7188,6 @@ class UI(QMainWindow):
                 "starting function to start thread to start recording user actions from screen"
             )
 
-
             if home_clicking_event.is_set():
                 logger.info("wont start screen recording bcos home clicking is taking place.")
                 return
@@ -7346,7 +7351,7 @@ class UI(QMainWindow):
             self.showMinimized()
 
             # self.window_status = False
-            main_window_visible.clear()
+            # main_window_visible.clear()
             # send notification to desktop
             toaster.show_toast(
                 title="Recording Started",
@@ -7386,9 +7391,15 @@ class UI(QMainWindow):
             self.record_record_button.disconnect()
             self.record_record_button.clicked.connect(self.thread_for_live_record)
             self.record_record_button.setText("Record")
-            # keyboard.add_hotkey(
-            #     self.record_start_stop_hotkey, lambda: self.record_play_button.click()
-            # )
+            try:
+                keyboard.remove_hotkey(self.record_start_stop_hotkey)
+            except:
+                logger.error(
+                    "error in removing record start stop hotkey", exc_info=True
+                )
+            keyboard.add_hotkey(
+                self.record_start_stop_hotkey, lambda: self.record_play_button.click()
+            )
             if self.small_window_opened is not None:
                 logger.info("small window is opened")
                 self.small_window_opened.close()
@@ -7400,7 +7411,7 @@ class UI(QMainWindow):
             self.insert_recording_list(self.record_events)
             logger.info("showing mainwindow")
             self.showNormal()
-            main_window_visible.set()
+            # main_window_visible.set()
 
             self.record_play_button.setEnabled(True)
             logger.info("ending function to stop recording user actions from screen")
@@ -7473,7 +7484,7 @@ class UI_SmallWindow(QMainWindow):
             else:
                 self.close()
                 MainWindow.showNormal()
-                main_window_visible.set()
+                # main_window_visible.set()
                 logger.info("calling function home_stop_process()")
                 MainWindow.home_stop_process()
                 logger.info("calling function record_stop_process()")
@@ -7516,6 +7527,13 @@ class new_dialog(QDialog):
 
     def closeEvent(self, event):
         try:
+            try:
+                keyboard.remove_hotkey(self.parent.add_record_line_hotkey)
+            except:
+                logger.error(
+                    "error in parent.add_record_line_hotkey", exc_info=True
+                )
+
             keyboard.add_hotkey(
                 self.parent.add_record_line_hotkey,
                 lambda: self.parent.record_add_button.click(),
@@ -7550,6 +7568,13 @@ class UI_no_actions(QDialog):
 
     def closeEvent(self, event):
         try:
+            try:
+                keyboard.remove_hotkey(self.parent.add_record_line_hotkey)
+            except:
+                logger.error(
+                    "error in parent.add_record_line_hotkey", exc_info=True
+                )
+
             keyboard.add_hotkey(
                 self.parent.add_record_line_hotkey,
                 lambda: self.parent.record_add_button.click(),
@@ -7977,7 +8002,6 @@ wrong_key_event = threading.Event()
 home_clicking_event = threading.Event()
 record_recording_event = threading.Event()
 record_playback_event = threading.Event()
-main_window_visible = threading.Event()
 app = QApplication(sys.argv)
 UIWindow = UI()
 UIWindow.show()
