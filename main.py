@@ -33,20 +33,6 @@ from win10toast import ToastNotifier
 import resource_rc
 from functions_file import functions
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    filename=functions.resource_path("app.log"),
-    filemode="w",
-    format="%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s",
-    datefmt="%d-%b-%y %H:%M:%S",
-)
-
-
-form = functions.resource_path("version2.ui")
-Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
-responses = []
-
 
 class WorkerThread1(threading.Thread):
     def __init__(
@@ -836,6 +822,8 @@ def prompt_internet_issue():
 
 def initialise_db():
     try:
+
+        logger.info("inside init db")
         conn = sqlite3.connect(file_path)
         cursor = conn.cursor()
         cursor.execute("DROP TABLE IF EXISTS app_settings")
@@ -844,7 +832,7 @@ def initialise_db():
         cursor.execute("DROP TABLE IF EXISTS record_run_settings")
         cursor.execute("DROP TABLE IF EXISTS session_details")
         cursor.execute("DROP TABLE IF EXISTS user_info")
-
+        logger.info("deleted tables")
         sql = """CREATE TABLE "app_settings" (
         "show_tool_after"	INTEGER NOT NULL,
         "hide_system_tray"	INTEGER NOT NULL,
@@ -858,7 +846,7 @@ def initialise_db():
         "mouse_location_hotkey"	TEXT NOT NULL
         )"""
         cursor.execute(sql)
-
+        logger.info("created table")
         add_new_row = f"""INSERT INTO app_settings VALUES (
                         '1',
                         '0',
@@ -872,6 +860,7 @@ def initialise_db():
                         'f6'
                         )"""
         cursor.execute(add_new_row)
+        logger.info("created table")
         sql = """CREATE TABLE "home_run_settings" (
         "save_name"	TEXT NOT NULL,
         "mouse_type"	TEXT NOT NULL,
@@ -889,7 +878,7 @@ def initialise_db():
         "saved_date"	TEXT NOT NULL
         )"""
         cursor.execute(sql)
-
+        logger.info("created table")
         sql = """CREATE TABLE "local_table" (
         "email"	TEXT,
         "access_token"	TEXT,
@@ -898,6 +887,7 @@ def initialise_db():
         "timestamp" TEXT
         )"""
         cursor.execute(sql)
+        logger.info("created table")
 
         sql = """CREATE TABLE record_run_settings (
                 save_name TEXT NOT NULL UNIQUE,
@@ -908,6 +898,7 @@ def initialise_db():
                 delay_type TEXT NOT NULL
                 )"""
         cursor.execute(sql)
+        logger.info("created table")
 
         sql = """CREATE TABLE "session_details" (
         "username"	TEXT,
@@ -917,6 +908,7 @@ def initialise_db():
         PRIMARY KEY("application_id")
         )"""
         cursor.execute(sql)
+        logger.info("created table")
 
         sql = """CREATE TABLE "user_info" (
         "username"	TEXT,
@@ -925,6 +917,7 @@ def initialise_db():
         "unique_device_id"	TEXT
         )"""
         cursor.execute(sql)
+        logger.info("created table")
 
         conn.commit()
         conn.close()
@@ -7928,6 +7921,21 @@ class CaptureScreen(QtWidgets.QSplashScreen):
                 "exception in capture_screen_mouse_release_event()", exc_info=True
             )
 
+# print(f"starting- {datetime.datetime.now()}")
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    filename=functions.resource_path("app.log"),
+    filemode="w",
+    format="%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] - %(message)s",
+    datefmt="%d-%b-%y %H:%M:%S",
+)
+logger.info("starting")
+
+form = functions.resource_path("version2.ui")
+Ui_MainWindow, QtBaseClass = uic.loadUiType(form)
+responses = []
+
 
 appname = "GG-Autoclicker"
 appauthor = "GG"
@@ -7935,6 +7943,7 @@ appauthor = "GG"
 dir_path = os.path.join(user_data_dir(appname, appauthor), "GG_autoclicker")
 # dir_path = os.path.join(os.environ['APPDATA'], 'GG_autoclicker')
 
+logger.info("before db init")
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
     file_path = os.path.join(dir_path, "autoclicker.db")
@@ -7945,6 +7954,7 @@ else:
     if not os.path.exists(file_path):
         # generateKey.generate()
         initialise_db()
+logger.info("after db init")
 
 file_path = os.path.join(dir_path, "autoclicker.db")
 # below 7 lines gets the latest preferences of the user from the database
@@ -7956,12 +7966,15 @@ logger.info("importing app_settings stored in database")
 sql = """SELECT * FROM app_settings LIMIT 1"""
 cursor.execute(sql)
 app_settings = cursor.fetchone()
-
+logger.info("getting app settings")
 sql = """SELECT * FROM home_run_settings LIMIT 1"""
 cursor.execute(sql)
 home_settings = cursor.fetchone()
 cursor.close()
 conn.close()
+
+logger.info("getting home run settings")
+
 (
     show_tool_after,
     hide_system_tray,
@@ -8004,5 +8017,6 @@ record_recording_event = threading.Event()
 record_playback_event = threading.Event()
 app = QApplication(sys.argv)
 UIWindow = UI()
+logger.info("about to show UI")
 UIWindow.show()
 app.exec_()
